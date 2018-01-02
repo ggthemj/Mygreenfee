@@ -94,8 +94,15 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         return view;
+    }
+
+    private void addMarkers() {
+        if (clubsRepo.clubsData != null && clubsRepo.clubsData.clubsdata != null && mMap != null) {
+            for (ClubData club : clubsRepo.clubsData.clubsdata) {
+                mMap.addMarker(new MarkerOptions().position(new LatLng(club.latitude, club.longitude)).title(club.name));
+            }
+        }
     }
 
     //Il faudra les surcharger pour traiter les cas d'erreurs -> JBU
@@ -148,6 +155,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         }
 
         updateLocationUI();
+        addMarkers();
     }
 
     @Override
@@ -308,6 +316,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     public void handleSuccess(){
         Toast toast = Toast.makeText(getActivity(), "Succès de la récupération des clubs :)", Toast.LENGTH_LONG);
         toast.show();
+
+        addMarkers();
 
     }
 }
