@@ -15,12 +15,12 @@ import android.widget.Toast;
 public class ConnectMemberActivity extends AppCompatActivity {
     private ConnectMemberRepository connectMemberRepository ;
     private boolean is_login_ok;
-    private boolean is_validateButton_ok;
 
     // Méthode appelée quand l'utilisateur appuie sur le bouton de login
     // Appelle la BDD et vérifie si l'utilisateur existe
     public void handleValidation(){
-        if(is_validateButton_ok) {
+        updateLoginStatus();
+        if(is_login_ok) {
             EditText editText = (EditText) findViewById(R.id.email);
             String email = editText.getText().toString();
 
@@ -59,7 +59,6 @@ public class ConnectMemberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connect_member);
         this.connectMemberRepository = new ConnectMemberRepository(this);
         is_login_ok = false;
-        is_validateButton_ok = false;
 
         //Mise en place de la custom app bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
@@ -73,13 +72,7 @@ public class ConnectMemberActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    EditText editText = (EditText) findViewById(R.id.email);
-                    String email = editText.getText().toString();
-                    is_login_ok = email.contains("@") && email.contains(".");
-                    if(!is_login_ok){
-                        TextView loginError = (TextView) findViewById(R.id.error_email);
-                        loginError.setText(R.string.connect_errorLogin);
-                    }
+                    updateLoginStatus();
                 }
                 else{
                     TextView loginError = (TextView) findViewById(R.id.error_email);
@@ -138,5 +131,15 @@ public class ConnectMemberActivity extends AppCompatActivity {
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public void updateLoginStatus(){
+        EditText editText = (EditText) findViewById(R.id.email);
+        String email = editText.getText().toString();
+        is_login_ok = email.contains("@") && email.contains(".");
+        if(!is_login_ok){
+            TextView loginError = (TextView) findViewById(R.id.error_email);
+            loginError.setText(R.string.connect_errorLogin);
+        }
     }
 }
