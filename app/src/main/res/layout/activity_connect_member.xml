@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    tools:context="com.example.mygreenfee.ConnectMemberActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/whiteColor"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/AppTheme"
+        app:titleTextColor="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:fontFamily="@font/helveticaneue"
+            android:text="@string/connect_Title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:gravity="center"
+            />
+
+    </android.support.v7.widget.Toolbar>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar2">
+
+        <LinearLayout
+            android:id="@+id/formulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightGrayColor"
+            android:orientation="vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <Button
+                android:id="@+id/buttonfacebook"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/facebookColor"
+                android:text="@string/connect_FacebookButton"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="40dp"
+                android:fontFamily="helveticaneue"
+                android:gravity="center_vertical"
+                android:text="@string/connect_Subtitle"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:gravity="center_vertical"
+                android:hint="@string/connect_Email"
+                android:inputType="textPersonName"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="64dp"
+                tools:layout_editor_absoluteY="48dp" />
+
+            <TextView
+                android:id="@+id/error_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:paddingRight="10dp"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorError" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/connect_Password"
+                android:inputType="textPassword"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/buttonvalidation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/greenAlbaColor"
+                android:text="@string/connect_BoutonValidation"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/mdpoubli"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="@string/connect_Mdpoubli"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/cgr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="@string/cgr"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/creaCompte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="60dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="@string/connect_Creacompte"
+                android:textAlignment="center"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

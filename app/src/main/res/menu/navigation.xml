@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_Golfs"
+        android:icon="@drawable/menu1"
+        android:title="@string/title_menu1" />
+
+    <item
+        android:id="@+id/navigation_MesResa"
+        android:icon="@drawable/ic_action_name"
+        android:title="@string/title_menu2" />
+
+    <item
+        android:id="@+id/navigation_MonCompte"
+        android:icon="@drawable/menu2"
+        android:title="@string/title_menu3" />
+
+</menu>
