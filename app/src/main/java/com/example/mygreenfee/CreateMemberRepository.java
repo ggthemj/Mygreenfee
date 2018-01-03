@@ -10,6 +10,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +20,7 @@ public class CreateMemberRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
     CreateMemberActivity context;
 
+    //les données de l'utilisateur qui seront mises à jour
     UserData userData ;
 
     //Les paramètres de la requête http
@@ -53,20 +57,23 @@ public class CreateMemberRepository {
                 @Override
                 public void onResponse(String response) {
                     Log.d("DEBUG", "response : "+response);
-
-                    /**
                     try {
-                        clubsData = new ClubsData(new JSONObject(response));
+                        userData = new UserData(new JSONObject(response));
+                        context.handleSuccess(userData);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                     **/
-
                 }
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("DEBUG","That didn't work! "+error.getMessage());
+                try {
+                    JSONObject messageErreur = new JSONObject(error.getMessage());
+                    context.handleError(messageErreur.getString("error_message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override

@@ -36,7 +36,13 @@
             android:label="@string/title_activity_home_maps">
         </activity>
         <activity android:name=".MonCompteActivity" />
-        <activity android:name=".CreateMemberActivity" />
+        <activity
+            android:name=".CreateMemberActivity"
+            android:parentActivityName=".ConnectMemberActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ConnectMemberActivity" />
+        </activity>
         <activity
             android:name=".ConnectMemberActivity"
             android:parentActivityName=".HomeMapsActivity">
