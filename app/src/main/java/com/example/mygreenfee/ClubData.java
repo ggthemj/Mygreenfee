@@ -1,10 +1,12 @@
 package com.example.mygreenfee;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ClubData {
+public class ClubData implements Parcelable{
 
     public int public_id;
     public String name;
@@ -102,4 +104,49 @@ public class ClubData {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(public_id);
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeString(address);
+        dest.writeString(email);
+        dest.writeString(url);
+        dest.writeDouble(longitude);
+        dest.writeDouble(latitude);
+        dest.writeString(country_code);
+        dest.writeString(currency);
+        dest.writeString(image_url);
+        dest.writeString(rating);
+    }
+
+    public static final Parcelable.Creator<ClubData> CREATOR = new Parcelable.Creator<ClubData>() {
+        public ClubData createFromParcel(Parcel in) {
+            return new ClubData(in);
+        }
+
+        public ClubData[] newArray(int size) {
+            return new ClubData[size];
+        }
+    };
+
+    private ClubData(Parcel in) {
+        public_id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+        address = in.readString();
+        email = in.readString();
+        url = in.readString();
+        longitude = in.readDouble();
+        latitude = in.readDouble();
+        country_code = in.readString();
+        currency = in.readString();
+        image_url = in.readString();
+        rating = in.readString();
+    }
 }

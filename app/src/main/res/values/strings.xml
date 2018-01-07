@@ -61,4 +61,9 @@
     <string name="title_activity_onboarding">OnboardingActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_booking">BookingActivity</string>
+    <string name="calendar_booking">Calendar</string>
+    <string name="today">today</string>
+    <string name="URL_courses">https://legreenfee-dev.albatros.net/api.php?sid=courses</string>
+    <string name="onePlayer">1 player</string>
 </resources>
