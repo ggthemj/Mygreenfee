@@ -521,4 +521,17 @@ public class CreateMemberActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
     }
+
+    public void handleSuccessRegions(RegionsData u){
+        Toast toast = Toast.makeText(this, "Ré", Toast.LENGTH_LONG);
+        toast.show();
+
+        Intent intent = new Intent(this, ConnectMemberActivity.class);
+        startActivity(intent);
+    }
+
+    public void handleErrorRegions(String s){
+        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
+    }
 }
