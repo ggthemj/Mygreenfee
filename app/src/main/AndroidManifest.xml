@@ -33,8 +33,7 @@
 
         <activity
             android:name=".HomeMapsActivity"
-            android:label="@string/title_activity_home_maps">
-        </activity>
+            android:label="@string/title_activity_home_maps" />
         <activity android:name=".MonCompteActivity" />
         <activity
             android:name=".CreateMemberActivity"
@@ -60,9 +59,12 @@
         <activity
             android:name=".OnboardingActivity"
             android:label="@string/title_activity_onboarding"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ProfileActivity"></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ProfileActivity" />
+        <activity
+            android:name=".BookingActivity"
+            android:label="@string/title_activity_booking"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

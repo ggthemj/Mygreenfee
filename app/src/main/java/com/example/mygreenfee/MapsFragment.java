@@ -1,13 +1,16 @@
 package com.example.mygreenfee;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -29,10 +32,12 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.HashMap;
 
 public class MapsFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, LocationListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1234;
@@ -45,8 +50,10 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     Location mLastLocation;
     LocationRequest mLocationRequest;
     Marker mCurrLocationMarker;
+    private HashMap<String, ClubData> clubMarkers = new HashMap<String, ClubData>();
 
     public static final String TAG = MapsFragment.class.getSimpleName();
+    private ClubData currentClub;
 
     public MapsFragment() {
 
@@ -60,18 +67,6 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
 
         this.clubsRepo = new MapsFragmentRepository((HomeMapsActivity) getActivity(), this);
         this.clubsRepo.update();
-
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                    .enableAutoManage(getActivity() /* FragmentActivity */,
-                            this /* OnConnectionFailedListener */)
-                    .addConnectionCallbacks(this)
-                    .addApi(LocationServices.API)
-                    .addApi(Places.GEO_DATA_API)
-                    .addApi(Places.PLACE_DETECTION_API)
-                    .build();
-        }
-        mGoogleApiClient.connect();
     }
 
     @Override
@@ -82,7 +77,18 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+
+        destroyGoogleAPIClient();
+
     }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        destroyGoogleAPIClient();
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,9 +96,22 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+
+        FloatingActionButton fabClub = view.findViewById(R.id.fabClub);
+        fabClub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), BookingActivity.class);
+                intent.putExtra("currentClub", currentClub);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
@@ -100,7 +119,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     private void addMarkers() {
         if (clubsRepo.clubsData != null && clubsRepo.clubsData.clubsdata != null && mMap != null) {
             for (ClubData club : clubsRepo.clubsData.clubsdata) {
-                mMap.addMarker(new MarkerOptions().position(new LatLng(club.latitude, club.longitude)).title(club.name));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.latitude, club.longitude)).title(club.name));
+                clubMarkers.put(marker.getId(), club);
             }
         }
     }
@@ -128,6 +148,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             handleError("location requested");
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
         }
+
     }
 
     // Méthode déclenchée automatiquement dès que la map est prête, c'est ici que tu peupleras avec les golfs je pense
@@ -154,6 +175,15 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             mMap.setMyLocationEnabled(true);
         }
 
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                currentClub = clubMarkers.get(marker.getId());
+                marker.showInfoWindow();
+                return true;
+            }
+        });
+
         updateLocationUI();
         addMarkers();
     }
@@ -176,7 +206,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(latLng).zoom(11f).build()));
+
 
     }
 
@@ -300,12 +331,27 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     }
 
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-        mGoogleApiClient.connect();
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addApi(LocationServices.API)
+                    .addApi(Places.GEO_DATA_API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .build();
+            mGoogleApiClient.connect();
+        }
+    }
+
+    private void destroyGoogleAPIClient() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        destroyGoogleAPIClient();
     }
 
     public void handleError(String s){
