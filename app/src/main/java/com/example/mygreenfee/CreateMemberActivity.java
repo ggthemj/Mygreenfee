@@ -31,6 +31,8 @@ public class CreateMemberActivity extends AppCompatActivity {
     private boolean is_mail_ok;
     private boolean is_mdp_ok;
     private boolean is_mdpc_ok;
+    private RegionsData regionsData;
+    private ArrayAdapter<String> spinnerArrayAdapterRegions;
 
     //Méthode qui traite le bouton validation
     public void handleValidation(){
@@ -92,8 +94,9 @@ public class CreateMemberActivity extends AppCompatActivity {
 
             mySpinner = findViewById(R.id.spinnerRegions);
             int rid = (int) mySpinner.getSelectedItemId();
+            String region_id = this.regionsData.regionsData[rid-1].public_id;
 
-            createMemberRepository.update(civ, nom, pre, ema, dob, pwd, pay, rid, pho);
+            createMemberRepository.update(civ, nom, pre, ema, dob, pwd, pay, region_id, pho);
         }
         else{
             Toast toast = Toast.makeText(this, R.string.creationCompte_ErreurValidation, Toast.LENGTH_LONG);
@@ -327,8 +330,23 @@ public class CreateMemberActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemText = (String) parent.getItemAtPosition(position);
                 if(position > 0){
-                    // Notify the selected item text
-
+                    String paysISO = "XX" ;
+                    if(position==1) {
+                        paysISO = "ZA" ;
+                    }
+                    else if(position==2) {
+                        paysISO = "DE" ;
+                    }
+                    else if(position==3) {
+                        paysISO = "AT" ;
+                    }
+                    else if(position==4) {
+                        paysISO = "FR" ;
+                    }
+                    else if(position==5) {
+                        paysISO = "CH" ;
+                    }
+                    createMemberRepository.updateRegions(paysISO);
                 }
             }
 
@@ -340,7 +358,7 @@ public class CreateMemberActivity extends AppCompatActivity {
 
         //Spinner régions
         final Spinner spinnerRegions = findViewById(R.id.spinnerRegions);
-        final ArrayAdapter<String> spinnerArrayAdapterRegions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.regionsArray)){
+        spinnerArrayAdapterRegions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.regionsArray)){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -436,7 +454,7 @@ public class CreateMemberActivity extends AppCompatActivity {
 
     //Update le champ date de naissance en le mettant au format attendu par le WS
     private void updateLabel() {
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
         EditText edittext = findViewById(R.id.bithday);
@@ -522,12 +540,12 @@ public class CreateMemberActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void handleSuccessRegions(RegionsData u){
-        Toast toast = Toast.makeText(this, "Ré", Toast.LENGTH_LONG);
-        toast.show();
+    public void handleSuccessRegions(RegionsData r){
+        Toast toast = Toast.makeText(this, "Régions récupérées", Toast.LENGTH_LONG);
+        this.regionsData = r;
 
-        Intent intent = new Intent(this, ConnectMemberActivity.class);
-        startActivity(intent);
+        //spinnerArrayAdapterRegions.
+        toast.show();
     }
 
     public void handleErrorRegions(String s){

@@ -32,7 +32,7 @@ public class CreateMemberRepository {
         this.context = c ;
     }
 
-    public void update(final String civilite, final String nom, final String prenom, final String email, final String dob, final String mdp, final String country, final int region_id, final String phone){
+    public void update(final String civilite, final String nom, final String prenom, final String email, final String dob, final String mdp, final String country, final String region_id, final String phone){
         Log.d("DEBUG", "Debut de la requete de création de compte");
 
         //Préparation de la requête
@@ -49,7 +49,7 @@ public class CreateMemberRepository {
         mParams.put("data[email]", email);
         mParams.put("data[pwd]", mdp);
         mParams.put("data[country]", country);
-        mParams.put("data[region_id]", ""+region_id);
+        mParams.put("data[region_id]", region_id);
         mParams.put("data[phone]", phone);
         mParams.put("data[auto_activate]", "1");
 
@@ -99,19 +99,19 @@ public class CreateMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void updateRegions(final int country_id){
+    public void updateRegions(final String country_id){
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
-        String url = context.getResources().getString(R.string.URL_createMember);
+        String url = context.getResources().getString(R.string.URL_getRegions)+"&data[country]="+country_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
         mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
         mParams = new HashMap<String, String>();
-        mParams.put("data[country]", ""+country_id);
+        mParams.put("data[country]", country_id);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

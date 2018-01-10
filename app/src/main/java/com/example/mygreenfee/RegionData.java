@@ -7,14 +7,14 @@ import org.json.JSONObject;
 
 public class RegionData {
 
-    public int public_id;
+    public String public_id;
     public String name;
 
     //Constructeur d'une région avec toutes les données nécessaires
     public RegionData(JSONObject json){
         try {
-            if (json.has("public_id")) {
-                this.public_id = json.getInt("public_id");
+            if (json.has("id")) {
+                this.public_id = json.getString("id");
             }
             else{
                 Log.d("DEBUG","Manque l'ID");

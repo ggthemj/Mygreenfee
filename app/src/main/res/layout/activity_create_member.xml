@@ -52,7 +52,9 @@
             android:background="@color/lightGrayColor"
             android:orientation="vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/layoutSpinnerCivilite"
