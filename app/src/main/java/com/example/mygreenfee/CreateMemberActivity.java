@@ -544,7 +544,13 @@ public class CreateMemberActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, "Régions récupérées", Toast.LENGTH_LONG);
         this.regionsData = r;
 
-        //spinnerArrayAdapterRegions.
+        Spinner mySpinner = findViewById(R.id.spinnerRegions);
+        spinnerArrayAdapterRegions.clear();
+        spinnerArrayAdapterRegions.add("Région");
+        for (int i = 0 ; i < this.regionsData.regionsData.length ; i++){
+            spinnerArrayAdapterRegions.add(this.regionsData.regionsData[i].name);
+        }
+
         toast.show();
     }
 
