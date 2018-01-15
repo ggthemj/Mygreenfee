@@ -1,12 +1,15 @@
 package com.example.mygreenfee;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -94,7 +97,13 @@ public class CreateMemberActivity extends AppCompatActivity {
 
             mySpinner = findViewById(R.id.spinnerRegions);
             int rid = (int) mySpinner.getSelectedItemId();
-            String region_id = this.regionsData.regionsData[rid-1].public_id;
+            String region_id;
+            if(rid==0) {
+                region_id = "";
+            }
+            else{
+                region_id = this.regionsData.regionsData[rid - 1].public_id;
+            }
 
             createMemberRepository.update(civ, nom, pre, ema, dob, pwd, pay, region_id, pho);
         }
@@ -358,7 +367,7 @@ public class CreateMemberActivity extends AppCompatActivity {
 
         //Spinner régions
         final Spinner spinnerRegions = findViewById(R.id.spinnerRegions);
-        spinnerArrayAdapterRegions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.regionsArray)){
+        this.spinnerArrayAdapterRegions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,getResources().getStringArray(R.array.regionsArray)){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0)
@@ -531,7 +540,22 @@ public class CreateMemberActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, R.string.creationCompte_InscriptionReussie, Toast.LENGTH_LONG);
         toast.show();
 
-        Intent intent = new Intent(this, ConnectMemberActivity.class);
+        //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("is_connected", "true");
+        editor.putInt("user_id", u.public_id);
+        editor.putString("user_title", u.title);
+        editor.putString("user_fname", u.fname);
+        editor.putString("user_lname", u.lname);
+        editor.putString("user_dob", u.dob);
+        editor.putString("user_email", u.email);
+        editor.putString("user_country", u.country);
+        editor.putInt("user_region", u.region_id);
+        editor.putString("user_phone", u.phone);
+        editor.commit();
+
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 
@@ -544,14 +568,59 @@ public class CreateMemberActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(this, "Régions récupérées", Toast.LENGTH_LONG);
         this.regionsData = r;
 
-        Spinner mySpinner = findViewById(R.id.spinnerRegions);
-        spinnerArrayAdapterRegions.clear();
-        spinnerArrayAdapterRegions.add("Région");
-        for (int i = 0 ; i < this.regionsData.regionsData.length ; i++){
-            spinnerArrayAdapterRegions.add(this.regionsData.regionsData[i].name);
+        final Spinner spinnerRegions = findViewById(R.id.spinnerRegions);
+        String[] arraySpinner = new String[this.regionsData.regionsData.length+1];
+        arraySpinner[0] = "Région";
+        for (int i = 0 ; i < this.regionsData.regionsData.length ; i++) {
+            arraySpinner[i+1] = this.regionsData.regionsData[i].name;
         }
 
-        toast.show();
+        this.spinnerArrayAdapterRegions = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,arraySpinner){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+
+                ((TextView) v).setTextSize(16);
+                if(position==0) {
+                    ((TextView) v).setTextColor(
+                            getResources().getColorStateList(R.color.grayColor)
+                    );
+                }
+                else{
+                    ((TextView) v).setTextColor(
+                            getResources().getColorStateList(R.color.colorPrimary)
+                    );
+                }
+
+                return v;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0){
+                    tv.setTextColor(getResources().getColor(R.color.grayColor));
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerArrayAdapterRegions.setDropDownViewResource(R.layout.spinner_item);
+        spinnerRegions.setAdapter(spinnerArrayAdapterRegions);
     }
 
     public void handleErrorRegions(String s){
