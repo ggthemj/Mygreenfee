@@ -15,6 +15,11 @@ public class Course{
     private String name;
     private String color;
     private Hole[] holes;
+    private Tee[] tees;
+
+    public Course() {
+
+    }
 
     // Constructeur d'un parcours avec toutes les données nécessaires
     public Course(JSONObject json){
@@ -31,27 +36,47 @@ public class Course{
             else {
                 Log.d("DEBUG","Manque le nom");
             }
-            if (json.has("colors")) {
-                this.color = json.getJSONObject("colors").getString("oolor");
-                JSONObject holesData = json.getJSONObject("holes");
 
-                JSONArray reponseJSON = json.getJSONArray("holes");
-                this.holes = new Hole[reponseJSON.length()];
-                for (int i = 0 ; i < reponseJSON.length() ; i++){
-                    this.holes[i] = new Hole(reponseJSON.getJSONObject(i));
-                    Log.d("DEBUG","trou " + this.holes[i].getNumber() + " ajouté");
+            JSONArray s = json.getJSONArray("tees");
+            this.tees = new Tee[s.length()];
+            for (int i = 0 ; i < s.length() ; i++){
+                this.tees[i] = new Tee(s.getJSONObject(i));
+                Log.d("DEBUG","tee " + this.tees[i].getPublic_id() + " ajouté");
+            }
+
+            if (json.has("colors")) {
+                JSONArray a = json.getJSONArray("colors");
+                if (a != null) {
+                    json = a.getJSONObject(0);
+                    if (json.has("color")) {
+                        this.color = json.getString("color");
+                    }
+                    else {
+                        Log.d("DEBUG","Manque le color");
+                    }
+
+
+                    JSONArray responseJSON2 = json.getJSONArray("holes");
+                    this.holes = new Hole[responseJSON2.length()];
+                    for (int i = 0; i < responseJSON2.length(); i++) {
+                        this.holes[i] = new Hole(responseJSON2.getJSONObject(i));
+                        Log.d("DEBUG", "trou " + this.holes[i].getNumber() + " ajouté");
+                    }
+                    this.length = responseJSON2.length();
                 }
-                this.length = reponseJSON.length();
             }
             else {
                 Log.d("DEBUG","Manque les trous");
             }
 
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("DEBUG","J'ajoute le club : "+ this.name);
+        Log.d("DEBUG","J'ajoute le parcours : "+ this.name);
     }
+
+
 
     public int getLength() {
         return length;
@@ -91,5 +116,13 @@ public class Course{
 
     public void setHoles(Hole[] holes) {
         this.holes = holes;
+    }
+
+    public Tee[] getTees() {
+        return tees;
+    }
+
+    public void setTees(Tee[] tees) {
+        this.tees = tees;
     }
 }

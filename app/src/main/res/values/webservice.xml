@@ -6,6 +6,8 @@
     <string name="URL_validateMember">https://dev.mygreenfee.fr/api.php?sid=member/validate</string>
     <string name="URL_updateMember">https://dev.mygreenfee.fr/api.php?sid=member/detailsChange</string>
     <string name="URL_changePassword">https://dev.mygreenfee.fr/api.php?sid=member/passwordChange</string>
+    <string name="URL_courses">https://dev.mygreenfee.fr/api.php?sid=courses</string>
+    <string name="URL_teetimes">https://dev.mygreenfee.fr/api.php?sid=teetimes</string>
     <string name="URL_getRegions">https://dev.mygreenfee.fr/api.php?sid=regions</string>
     <string name="URL_checkCard">https://dev.mygreenfee.fr/api.php?sid=paymentcard/check</string>
     <string name="URL_addCard">https://dev.mygreenfee.fr/api.php?sid=paymentcard/create</string>

@@ -2,8 +2,14 @@
 <resources>
     <plurals
         name="players">
-        <item quantity="zero">%d players</item>
-        <item quantity="one">%d player</item>
-        <item quantity="other">%d players</item>
+        <item quantity="zero">%d joueur</item>
+        <item quantity="one">%d joueur</item>
+        <item quantity="other">%d joueurs</item>
+    </plurals>
+    <plurals
+        name="holes">
+        <item quantity="zero"> </item>
+        <item quantity="one">(%d trou)</item>
+        <item quantity="other">(%d trous)</item>
     </plurals>
 </resources>

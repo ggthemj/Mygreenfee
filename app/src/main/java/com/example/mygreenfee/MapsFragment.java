@@ -1,6 +1,7 @@
 package com.example.mygreenfee;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +15,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +34,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,6 +55,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     LocationRequest mLocationRequest;
     Marker mCurrLocationMarker;
     private HashMap<String, ClubData> clubMarkers = new HashMap<String, ClubData>();
+    FloatingActionButton fabClub;
 
     public static final String TAG = MapsFragment.class.getSimpleName();
     private ClubData currentClub;
@@ -102,8 +107,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         mapFragment.getMapAsync(this);
 
 
-
-        FloatingActionButton fabClub = view.findViewById(R.id.fabClub);
+        fabClub = view.findViewById(R.id.fabClub);
+        fabClub.setVisibility(View.INVISIBLE);
         fabClub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -119,7 +124,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     private void addMarkers() {
         if (clubsRepo.clubsData != null && clubsRepo.clubsData.clubsdata != null && mMap != null) {
             for (ClubData club : clubsRepo.clubsData.clubsdata) {
-                Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.latitude, club.longitude)).title(club.name));
+                Marker marker = mMap.addMarker(new MarkerOptions().position(new LatLng(club.latitude, club.longitude)).title(club.name).icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
                 clubMarkers.put(marker.getId(), club);
             }
         }
@@ -180,12 +185,32 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             public boolean onMarkerClick(Marker marker) {
                 currentClub = clubMarkers.get(marker.getId());
                 marker.showInfoWindow();
+                fabClub.setVisibility(View.VISIBLE);
                 return true;
             }
         });
 
         updateLocationUI();
         addMarkers();
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+
+
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                try {
+                    currentClub = clubMarkers.get(marker.getId());
+                    Intent intent = new Intent(getActivity(), ClubActivity.class);
+                    intent.putExtra("currentClub", currentClub);
+                    startActivity(intent);
+
+                } catch (ArrayIndexOutOfBoundsException e) {
+
+                }
+
+            }
+        });
     }
 
     @Override
@@ -197,13 +222,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             mCurrLocationMarker.remove();
         }
 
-        //Place current location marker
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(latLng).zoom(11f).build()));
@@ -355,13 +375,13 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     }
 
     public void handleError(String s){
-        Toast toast = Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
-        toast.show();
+        //Toast toast = Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
+        //toast.show();
     }
 
     public void handleSuccess(){
-        Toast toast = Toast.makeText(getActivity(), "Succès de la récupération des clubs :)", Toast.LENGTH_LONG);
-        toast.show();
+        //Toast toast = Toast.makeText(getActivity(), "Succès de la récupération des clubs :)", Toast.LENGTH_LONG);
+        //toast.show();
 
         addMarkers();
 

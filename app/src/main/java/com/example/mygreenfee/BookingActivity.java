@@ -1,19 +1,25 @@
 package com.example.mygreenfee;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -22,14 +28,18 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     private TextView titleView;
     private TextView dateView;
-    private Calendar calendar;
     private Spinner coursesSpinner;
-    private int year, month, day;
     private CoursesRepository coursesRepo;
     private Button minusButton;
     private Button plusButton;
     private TextView playerView;
     private int nbPlayers = 1;
+    private ListView teeTimesList;
+    private ArrayAdapter<TeeTime> arrayAdapter;
+
+    private int clubId;
+    private String teeID;
+    private String dateSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         // Récupération du club séletionné
         Intent intent = getIntent();
         ClubData club = (ClubData) intent.getParcelableExtra("currentClub");
+
+        showPopUp(club.description);
 
         // Récupération des parcours du club
         this.coursesRepo = new CoursesRepository(this);
@@ -50,15 +62,31 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         // Calendar
         dateView = (TextView) findViewById(R.id.bookingDateView);
-        setDateView(Calendar.getInstance());
+        Calendar rightNow = Calendar.getInstance();
+        if (rightNow.get(Calendar.HOUR_OF_DAY) > 16) {
+            rightNow.add(Calendar.DATE, 1);
+        }
+        setDateView(rightNow);
 
         // Courses
         coursesSpinner = (Spinner) findViewById(R.id.bookingCoursesSpinner);
+        coursesSpinner.setOnItemSelectedListener(this);
 
         // number of players
         plusButton = (Button) findViewById(R.id.bookingPlusButton);
         minusButton = (Button) findViewById(R.id.bookingMinusButton);
         playerView = (TextView) findViewById(R.id.bookingPlayerView);
+
+        // TeeTimes
+        teeTimesList = (ListView) findViewById(R.id.bookingListView);
+        arrayAdapter = new TeeTimesAdapter(getApplicationContext());
+                /*new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                new ArrayList<String>());*/
+
+        teeTimesList.setAdapter(arrayAdapter);
+
 
 
     }
@@ -81,25 +109,40 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         if (calendar.get(Calendar.YEAR) == currentCal.get(Calendar.YEAR) && calendar.get(Calendar.DAY_OF_YEAR) == currentCal.get(Calendar.DAY_OF_YEAR)) {
             today = " - " + getResources().getString(R.string.today);
         }
-        dateView.setText(dateFormat.format(calendar.getTime()) + today);
 
+        dateView.setText(dateFormat.format(calendar.getTime()) + today);
+        dateSelected = dateFormat.format(calendar.getTime());
+        final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
+        coursesRepo.updateTeeTimes(new Course(), clubId, dateFormat2.format(calendar.getTime()), teeID);
+        updateTeeTimes();
     }
 
     public void addPlayer(View view)
     {
-        if (nbPlayers > 3) {
+        if (nbPlayers < 4) {
             nbPlayers++;
         }
         else {
             nbPlayers = 1;
         }
-        //playerView.setText(R.plurals.);
+        setPlayerView();
 
     }
 
     public void removePlayer(View view)
     {
-        nbPlayers--;
+        if (nbPlayers > 1) {
+            nbPlayers--;
+        }
+        else {
+            nbPlayers = 4;
+        }
+        setPlayerView();
+    }
+
+    private void setPlayerView() {
+        playerView.setText(getResources().getQuantityString(R.plurals.players, nbPlayers, nbPlayers));
     }
 
     public void datePicker(View view){
@@ -108,25 +151,93 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     }
 
     public void updateCourses() {
-        List<String> courses = new ArrayList<String>();
+
+        List<TeeSpinnerDTO> courses = new ArrayList<TeeSpinnerDTO>();
 
         for (Course course : coursesRepo.getCourses()) {
-            courses.add(course.getName());
+            if (course.getTees() != null) {
+                for (Tee tee : course.getTees()) {
+                    String fmt = getResources().getText(R.string.holes).toString();
+
+                    courses.add(new TeeSpinnerDTO(tee.getPublic_id(), course.getName() + " " + MessageFormat.format(fmt, course.getLength()) + " - " + tee.getName()));
+                }
+            }
+            else {
+                courses.add(new TeeSpinnerDTO("0", course.getName() + " - Tee 1"));
+            }
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, courses);
+        ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, android.R.layout.simple_spinner_item, courses);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coursesSpinner.setAdapter(dataAdapter);
 
+    }
 
+    public void updateTeeTimes() {
+        TeeTime[] teeTimeArray = coursesRepo.getTeeTimes();
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            //for (TeeTime tt : teeTimeArray) {
+            //    arrayAdapter.add(tt.getSlots_free() + " " + getResources().getText(R.string.slotsFree) + tt.getTime() + " " + tt.getSale_price());
+            //
+            // }
+            arrayAdapter.addAll(teeTimeArray);
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String item = parent.getItemAtPosition(position).toString();
+        TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
+        //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
+        teeID = item.getId();
+        coursesRepo.updateTeeTimes(new Course(), getClubId(), dateSelected, item.getId());
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void showPopUp(String text) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(text)
+                .setCancelable(true)
+                .setTitle(R.string.info_title);
+
+        /*LayoutInflater layoutInflater = getLayoutInflater();
+
+        View customView = layoutInflater.inflate(R.layout.custom_pop_dialog, null);
+
+        TextView tv = (TextView) customView.findViewById(R.id.text_info);
+        tv.setText(text);
+
+        builder.setView(customView);*/
+        builder.create();
+        builder.show();
+
+    }
+
+    public int getClubId() {
+        return clubId;
+    }
+
+    public void setClubId(int clubId) {
+        this.clubId = clubId;
+    }
+
+    public String getDateSelected() {
+        return dateSelected;
+    }
+
+    public void setDateSelected(String dateSelected) {
+        this.dateSelected = dateSelected;
+    }
+
+    public String getTeeID() {
+        return teeID;
+    }
+
+    public void setTeeID(String teeID) {
+        this.teeID = teeID;
     }
 }
