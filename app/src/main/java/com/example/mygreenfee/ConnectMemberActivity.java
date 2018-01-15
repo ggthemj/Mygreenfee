@@ -67,7 +67,7 @@ public class ConnectMemberActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Code qui permet de gérer le contrôle de surface sur le mail
-        EditText login = (EditText) findViewById(R.id.email);
+        EditText login = findViewById(R.id.email);
         login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -75,12 +75,12 @@ public class ConnectMemberActivity extends AppCompatActivity {
                     updateLoginStatus();
                 }
                 else{
-                    TextView loginError = (TextView) findViewById(R.id.error_email);
+                    TextView loginError = findViewById(R.id.error_email);
                     loginError.setText("");
                 }
             }
         });
-        TextView loginError = (TextView) findViewById(R.id.error_email);
+        TextView loginError = findViewById(R.id.error_email);
         loginError.setText("");
 
         //Bind des buttons avec les méthodes correspondantes
