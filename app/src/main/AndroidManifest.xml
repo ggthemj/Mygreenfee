@@ -59,6 +59,7 @@
             android:name=".BookingActivity"
             android:label="@string/title_activity_booking"
             android:theme="@style/AppTheme" />
+        <activity android:name=".ClubActivity"></activity>
     </application>
 
 </manifest>

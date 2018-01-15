@@ -2,4 +2,12 @@
 <resources>
     <string name="app_name">Mygreenfee</string>
     <string name="today">Aujourd\'hui</string>
+    <string name="onePlayer">1 joueur</string>
+    <string name="holes">{0,choice,0#|1#(1 trou)|1&lt;({0} trous)}</string>
+    <string name="emptyTeeTimes">Pas de place disponible</string>
+    <string name="slotsFree">dispo.</string>
+    <string name="booking_time">09:00</string>
+    <string name="booking_dipo">0 dispo.</string>
+    <string name="booking_reserver">Réserver</string>
+    <string name="info_title">Informations terrains</string>
 </resources>
