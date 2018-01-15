@@ -88,6 +88,31 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/alias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="-165dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,32 +130,6 @@
                     android:indeterminate="true"
                     android:visibility="invisible" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/alias"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="-195dp"
-                android:fontFamily="@font/helveticaneue"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/whiteColor"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="-195dp"
-                android:fontFamily="@font/helveticaneue"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/whiteColor"
-                android:textSize="18sp"
-                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

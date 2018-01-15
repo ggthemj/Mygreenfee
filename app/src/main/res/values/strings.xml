@@ -5,13 +5,15 @@
     <string name="title_menu1">GOLFS</string>
     <string name="title_menu2">MES RESA.</string>
     <string name="title_menu3">MON COMPTE</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
 
     <string name="mesInfos_Title">Mes infos personnelles</string>
 
     <string name="myBanking_Title">Ma carte bancaire</string>
     <string name="myBanking_Button">Modifier ma carte bancaire</string>
 
-    <string name="addCard_Title">Enregistrer une carte bancaire</string>
+    <string name="addCard_Title">Enregistrer ma carte bancaire</string>
     <string name="addCard_Button">Enregistrer les informations</string>
     <string name="addCard_Numero">Numéro de carte</string>
     <string name="addCard_Date">Date d\'expiration</string>
@@ -53,9 +55,11 @@
     <string name="connect_Mdpoubli">Mot de passe oublié</string>
     <string name="connect_Creacompte">Créer un compte</string>
     <string name="onboarding_Texte1">Je réserve mon départ sur les meilleurs golfs aux meilleurs prix&#8230; en 3 clics</string>
+    <string name="onboarding_Texte2">Plus de 250 golfs disponibles en France et bien d\'autres avec l\'étranger</string>
+    <string name="onboarding_Texte3">Un paiement simple, rapide, 100% sécurisé</string>
     <string name="onboarding_Soustitre">MON GREEN FEE EN 3 CLICS</string>
     <string name="onboarding_Skipbutton">Démarrer</string>
-    <string name="profile_titleCartes">Mes carte(s) de paiement</string>
+    <string name="profile_titleCartes">Ma carte de paiement</string>
     <string name="profile_parametres">Se déconnecter</string>
     <string name="profile_Title">Mon compte</string>
     <string-array name="civiliteArray">

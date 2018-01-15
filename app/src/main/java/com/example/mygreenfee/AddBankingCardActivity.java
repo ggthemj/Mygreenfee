@@ -1,6 +1,7 @@
 package com.example.mygreenfee;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,7 @@ public class AddBankingCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_banking_card);
 
+        addBankingCardRepository = new AddBankingCardRepository(this);
         //Mise en place de la custom app bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);
@@ -50,63 +53,29 @@ public class AddBankingCardActivity extends AppCompatActivity {
         this.dobCalendar = Calendar.getInstance();
 
         final EditText edittext = findViewById(R.id.dateexpiration);
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
+        final MonthYearPickerDialog pd = new MonthYearPickerDialog();
+        pd.setListener(new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                dobCalendar.set(Calendar.YEAR, year);
-                dobCalendar.set(Calendar.MONTH, monthOfYear);
-                dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                pd.setValues(i1,i);
+                if(i1>9) {
+                    edittext.setText(""+i1+(i-2000));
+                }
+                else{
+                    edittext.setText("0"+i1+(i-2000));
+                }
             }
+        });
 
-        };
-
-        //Listerner qui déclenche l'apparition du date picker
+        //Listener qui déclenche l'apparition du date picker
         edittext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                /*
-                DatePickerDialog dpd =  new DatePickerDialog(AddBankingCardActivity.this, date, dobCalendar
-                        .get(Calendar.YEAR), dobCalendar.get(Calendar.MONTH),
-                        dobCalendar.get(Calendar.DAY_OF_MONTH));
-                try{
-                    Field[] datePickerDialogFields = dpd.getClass().getDeclaredFields();
-                    for (Field datePickerDialogField : datePickerDialogFields) {
-                        if (datePickerDialogField.getName().equals("mDatePicker")) {
-                            datePickerDialogField.setAccessible(true);
-                            DatePicker datePicker = (DatePicker) datePickerDialogField.get(dpd);
-                            Field datePickerFields[] = datePickerDialogField.getType().getDeclaredFields();
-                            for (Field datePickerField : datePickerFields) {
-                                if ("mDayPicker".equals(datePickerField.getName())) {
-                                    datePickerField.setAccessible(true);
-                                    Object dayPicker = new Object();
-                                    dayPicker = datePickerField.get(datePicker);
-                                    ((View) dayPicker).setVisibility(View.GONE);
-                                }
-                            }
-                        }
-
-                    }
-                }catch(Exception ex){
-                }
-                */
-
-                
+                // TODO Auto-generated method stud
+               pd.show(getFragmentManager(), "MonthYearPickerDialog");
             }
         });
-    }
-
-    //Update le champ date de naissance en le mettant au format attendu par le WS
-    private void updateLabel() {
-        String myFormat = "MM/yyyy";
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-
-        EditText edittext = findViewById(R.id.dateexpiration);
-        edittext.setText(sdf.format(dobCalendar.getTime()));
     }
 
     public void handleSuccess(CardData carddata){

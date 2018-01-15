@@ -56,7 +56,7 @@ public class MyBankingCardActivity extends AppCompatActivity {
 
         final TextView datetw = (TextView) findViewById(R.id.date);
         datetw.setVisibility(View.VISIBLE);
-        datetw.setText(carddata.expiration_date);
+        datetw.setText(carddata.expiration_date.substring(0,2)+"/20"+carddata.expiration_date.substring(2,4));
 
         final Button button = (Button) findViewById(R.id.buttonvalidation);
         button.setVisibility(View.VISIBLE);

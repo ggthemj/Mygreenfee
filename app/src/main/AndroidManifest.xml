@@ -57,6 +57,13 @@
                 android:value=".ProfileActivity" />
         </activity>
         <activity
+            android:name=".AddBankingCardActivity"
+            android:parentActivityName=".MyBankingCardActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MyBankingCardActivity" />
+        </activity>
+        <activity
             android:name=".ProfileActivity"
             android:parentActivityName=".HomeMapsActivity">
             <meta-data
@@ -78,7 +85,6 @@
             android:name=".BookingActivity"
             android:label="@string/title_activity_booking"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AddBankingCardActivity"></activity>
     </application>
 
 </manifest>

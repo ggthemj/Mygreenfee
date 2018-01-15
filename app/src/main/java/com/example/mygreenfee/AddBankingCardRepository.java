@@ -32,6 +32,7 @@ public class AddBankingCardRepository {
     //Tentative de login :)
     public void addCard(final String mail, final String expiration_date, final String card_number, final String cvx, final String currency){
 
+        Log.d("DEBUG", "Début de la requête "+card_number+"/"+expiration_date);
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
         String url = context.getResources().getString(R.string.URL_addCard);
