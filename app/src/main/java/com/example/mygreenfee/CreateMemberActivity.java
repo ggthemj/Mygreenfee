@@ -34,6 +34,7 @@ public class CreateMemberActivity extends AppCompatActivity {
     private boolean is_mail_ok;
     private boolean is_mdp_ok;
     private boolean is_mdpc_ok;
+    private boolean is_bday_ok;
     private RegionsData regionsData;
     private ArrayAdapter<String> spinnerArrayAdapterRegions;
 
@@ -45,8 +46,9 @@ public class CreateMemberActivity extends AppCompatActivity {
         updateMailStatus();
         updateMdpStatus();
         updateMdpcStatus();
+        updateBdayStatus();
 
-        if(is_mail_ok && is_phone_ok && is_lname_ok && is_fname_ok && is_mdp_ok && is_mdpc_ok) {
+        if(is_mail_ok && is_phone_ok && is_lname_ok && is_fname_ok && is_mdp_ok && is_mdpc_ok && is_bday_ok) {
             //Récupération des données du formulaires et passation au Repo
             String civ = "";
             Spinner mySpinner = findViewById(R.id.spinnerCivilite);
@@ -146,6 +148,8 @@ public class CreateMemberActivity extends AppCompatActivity {
         mdpError.setText("");
         TextView mdpcError = findViewById(R.id.error_mdpc);
         mdpcError.setText("");
+        TextView dobError = findViewById(R.id.error_dob);
+        dobError.setText("");
 
         //Code qui permet de gérer le contrôle de surface sur le prénom
         EditText prenom = findViewById(R.id.prenom);
@@ -478,6 +482,17 @@ public class CreateMemberActivity extends AppCompatActivity {
         if(!is_fname_ok){
             TextView loginError = findViewById(R.id.error_prenom);
             loginError.setText(R.string.creationCompte_ErreurPrenom);
+        }
+    }
+
+    //Met à jour le statut du champ prénom, et affiche éventuellement les erreurs s'il y en a
+    public void updateBdayStatus(){
+        EditText editText = findViewById(R.id.bithday);
+        String bday = editText.getText().toString();
+        is_bday_ok = (bday.length()>0);
+        if(!is_bday_ok){
+            TextView loginError = findViewById(R.id.error_dob);
+            loginError.setText(R.string.creationCompte_ErreurBday);
         }
     }
 

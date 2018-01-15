@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGrayColor"
-    tools:context="com.example.mygreenfee.MyBankingCardActivity">
+    tools:context="com.example.mygreenfee.AddBankingCardActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar2"
@@ -19,18 +19,18 @@
         app:theme="@style/AppTheme"
         app:titleTextColor="@color/colorPrimary">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolbar_title"
-        android:fontFamily="@font/helveticaneue"
-        android:text="@string/myBanking_Title"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginRight="?attr/actionBarSize"
-        android:gravity="center"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:fontFamily="@font/helveticaneue"
+            android:text="@string/addCard_Title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:gravity="center"
+            />
     </android.support.v7.widget.Toolbar>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -62,17 +62,60 @@
                 android:adjustViewBounds="true"
                 app:srcCompat="@drawable/headerbank" />
 
-            <ImageView
-                android:id="@+id/CB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginTop="40dp"
-                android:adjustViewBounds="true"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar"
-                app:srcCompat="@drawable/modifiercb_3x" />
+            <EditText
+                android:id="@+id/numerocarte"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Numero"
+                android:inputType="textPersonName"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="64dp"
+                tools:layout_editor_absoluteY="48dp" />
+
+
+            <EditText
+                android:id="@+id/dateexpiration"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Date"
+                android:inputType="phone"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Cvx"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/buttonvalidation"
@@ -82,11 +125,11 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="40dp"
                 android:backgroundTint="@color/greenAlbaColor"
-                android:text="@string/myBanking_Button"
+                android:text="@string/addCard_Button"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/whiteColor"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
