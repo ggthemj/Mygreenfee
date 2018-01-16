@@ -15,7 +15,32 @@
         android:background="@color/greenAlbaColor"
         android:elevation="4dp"
         app:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="16dp">
+
+            <ImageView
+                android:id="@+id/maps_title"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/splashscreen" />
+
+            <ImageButton
+                android:id="@+id/recherche_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0"
+                android:background="@android:color/transparent"
+                app:srcCompat="@android:drawable/ic_menu_search" />
+        </LinearLayout>
+    </android.support.v7.widget.Toolbar>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"

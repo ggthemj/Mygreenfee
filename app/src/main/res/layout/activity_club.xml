@@ -93,7 +93,7 @@
                     android:padding="10dp">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageView"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
@@ -116,7 +116,7 @@
                     android:padding="10dp">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/imageView7"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"

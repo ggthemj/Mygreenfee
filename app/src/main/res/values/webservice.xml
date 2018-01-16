@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="API_KEY">4B6A56C4-F9B3-444A-883F-F276594614D4</string>
-    <string name="URL_getAllClubs">https://legreenfee-dev.albatros.net/api.php?sid=clubs</string>
+    <string name="URL_getAllClubs">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
     <string name="URL_createMember">https://dev.mygreenfee.fr/api.php?sid=member/create</string>
     <string name="URL_validateMember">https://dev.mygreenfee.fr/api.php?sid=member/validate</string>
     <string name="URL_updateMember">https://dev.mygreenfee.fr/api.php?sid=member/detailsChange</string>
