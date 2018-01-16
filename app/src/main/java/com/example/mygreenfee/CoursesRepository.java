@@ -22,7 +22,8 @@ import java.util.Map;
 
 public class CoursesRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    BookingActivity context;
+    BookingActivity bookingContext;
+    ClubListActivity clubListContext;
 
     //Les paramètres de la requête http
     Map<String, String> mHeaders;
@@ -32,18 +33,22 @@ public class CoursesRepository {
 
     //Constructeur
     public CoursesRepository(BookingActivity c){
-        this.context = c ;
+        this.bookingContext = c ;
         mHeaders = new HashMap<String, String>();
-        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("X-API-KEY", bookingContext.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", bookingContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+    }
+
+    public CoursesRepository(ClubListActivity clubListActivity) {
+        clubListContext = clubListActivity;
     }
 
     public void update(final ClubData club){
         Log.d("DEBUG", "Debut de la requete de création de parcours");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
-        String url = context.getResources().getString(R.string.URL_courses) + "&data%5Bclub_id%5D=" + club.public_id;
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
+        String url = bookingContext.getResources().getString(R.string.URL_courses) + "&data%5Bclub_id%5D=" + club.public_id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -67,9 +72,9 @@ public class CoursesRepository {
                                 }
                                 Date today = rightNow.getTime();
                                 updateTeeTimes(getCourses()[0], club.public_id, df.format(today), "0");
-                                context.setClubId(club.public_id);
+                                bookingContext.setClubId(club.public_id);
                             }
-                            context.updateCourses();
+                            bookingContext.updateCourses();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -105,13 +110,13 @@ public class CoursesRepository {
         Log.d("DEBUG", "Debut de la requete de création de parcours");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
         String stringParams = "&data%5Bclub_id%5D=" + clubId;
         stringParams += "&data%5Bdate%5D=" + date;
         if (teeId != null && !"".equals(teeId) && !"0".equals(teeId)) {
             stringParams += "&data%5Btee_id%5D=" + teeId;
         }
-        String url = context.getResources().getString(R.string.URL_teetimes) + stringParams;
+        String url = bookingContext.getResources().getString(R.string.URL_teetimes) + stringParams;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -127,7 +132,7 @@ public class CoursesRepository {
                                 getTeeTimes()[i] = new TeeTime(reponseJSON.getJSONObject(i));
                                 Log.d("DEBUG","TeeTime " + getTeeTimes()[i].getTee_public_id() + " ajouté");
                             }
-                            context.updateTeeTimes();
+                            bookingContext.updateTeeTimes();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

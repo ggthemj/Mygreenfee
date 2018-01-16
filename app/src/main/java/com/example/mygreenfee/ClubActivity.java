@@ -52,8 +52,8 @@ public class ClubActivity extends AppCompatActivity {
             }
         });
 
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        collapsingToolbarLayout.setTitle(club.name);
+        //CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        //collapsingToolbarLayout.setTitle(club.name);
         //collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
     }

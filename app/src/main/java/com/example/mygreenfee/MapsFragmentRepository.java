@@ -1,6 +1,6 @@
 package com.example.mygreenfee;
 
-import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -17,27 +17,51 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapsFragmentRepository {
+    ClubListActivity clubListContext;
     public ClubsData clubsData;
     MapsFragment fragmentContext;
     HomeMapsActivity activityContext;
     Map<String, String> mHeaders;
+
 
     public MapsFragmentRepository(HomeMapsActivity h, MapsFragment m){
         this.fragmentContext = m ;
         this.activityContext = h;
     }
 
-    public void update(){
+    public MapsFragmentRepository(ClubListActivity clubListActivity) {
+        this.clubListContext = clubListActivity;
+    }
+
+    public void updateFromSearch(){
+        RequestQueue queue = Volley.newRequestQueue(clubListContext);
         //Récupération des clubs de golf
         Log.d("DEBUG", "UPDATE REPO CLUBS");
-        RequestQueue queue = Volley.newRequestQueue(activityContext);
-        String url = activityContext.getResources().getString(R.string.URL_getAllClubs);
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", clubListContext.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", clubListContext.getResources().getString(R.string.CONTENT_LANGUAGE));
 
+        String url = clubListContext.getResources().getString(R.string.URL_getAllClubs);
+        StringRequest stringRequest = updateClubs(url);
+        queue.add(stringRequest);
+    }
+
+    public void updateFromMaps(){
+        //Récupération des clubs de golf
+        Log.d("DEBUG", "UPDATE REPO CLUBS");
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", activityContext.getResources().getString(R.string.API_KEY));
         mHeaders.put("CONTENT-LANGUAGE", activityContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+        RequestQueue queue = Volley.newRequestQueue(activityContext);
+        String url = activityContext.getResources().getString(R.string.URL_getAllClubs);
+        StringRequest stringRequest = updateClubs(url);
+        queue.add(stringRequest);
+    }
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+    @NonNull
+    private StringRequest updateClubs(String url) {
+
+        return new StringRequest(Request.Method.GET, url,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -45,7 +69,12 @@ public class MapsFragmentRepository {
 
                     try {
                         clubsData = new ClubsData(new JSONObject(response));
-                        fragmentContext.handleSuccess();
+                        if (fragmentContext != null) {
+                            fragmentContext.handleSuccess();
+                        }
+                        if (clubListContext != null) {
+                            clubListContext.updateclubs();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -57,7 +86,12 @@ public class MapsFragmentRepository {
                 Log.d("DEBUG","Erreur !"+error.getMessage());
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
-                    fragmentContext.handleError(messageErreur.getString("error_message"));
+                    if (fragmentContext != null) {
+                        fragmentContext.handleError(messageErreur.getString("error_message"));
+                    }
+                    if (clubListContext != null) {
+                        clubListContext.handleError(messageErreur.getString("error_message"));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -77,7 +111,6 @@ public class MapsFragmentRepository {
                 return volleyError;
             }
         };
-        queue.add(stringRequest);
     }
 
 

@@ -20,6 +20,7 @@ public class ClubData implements Parcelable{
     public String currency;
     public String image_url;
     public String rating;
+    public double distance;
 
     //Constructeur d'un club avec toutes les données nécessaires
     public ClubData(JSONObject json){

@@ -31,26 +31,26 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".HomeMapsActivity"
-            android:label="@string/title_activity_home_maps" />
-        <activity android:name=".MonCompteActivity" />
-        <activity
-            android:name=".CreateMemberActivity"
-            android:parentActivityName=".ConnectMemberActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ConnectMemberActivity" />
-        </activity>
-        <activity
-            android:name=".ConnectMemberActivity"
-            android:parentActivityName=".HomeMapsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeMapsActivity" />
-        </activity>
-        <activity
-            android:name=".MyBankingCardActivity"
+    <activity
+        android:name=".HomeMapsActivity"
+        android:label="@string/title_activity_home_maps" />
+    <activity android:name=".MonCompteActivity" />
+    <activity
+        android:name=".CreateMemberActivity"
+        android:parentActivityName=".ConnectMemberActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".ConnectMemberActivity" />
+    </activity>
+    <activity
+        android:name=".ConnectMemberActivity"
+        android:parentActivityName=".HomeMapsActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".HomeMapsActivity" />
+    </activity>
+    <activity
+        android:name=".MyBankingCardActivity"
             android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -63,28 +63,29 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MyBankingCardActivity" />
         </activity>
-        <activity
-            android:name=".ProfileActivity"
-            android:parentActivityName=".HomeMapsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeMapsActivity" />
-        </activity>
-        <activity android:name=".SpashscreenActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".ProfileActivity"
+        android:parentActivityName=".HomeMapsActivity">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".HomeMapsActivity" />
+    </activity>
+    <activity android:name=".SpashscreenActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".OnboardingActivity"
-            android:label="@string/title_activity_onboarding"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".BookingActivity"
-            android:label="@string/title_activity_booking"
-            android:theme="@style/AppTheme" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".OnboardingActivity"
+        android:label="@string/title_activity_onboarding"
+        android:theme="@style/AppTheme.NoActionBar" />
+    <activity
+        android:name=".BookingActivity"
+        android:label="@string/title_activity_booking"
+        android:theme="@style/AppTheme" />
+<activity android:name=".ClubActivity"></activity>
+        <activity android:name=".ClubListActivity" />
+        <activity android:name=".SearchClubActivity"></activity>
     </application>
-
-</manifest>
+    </manifest>

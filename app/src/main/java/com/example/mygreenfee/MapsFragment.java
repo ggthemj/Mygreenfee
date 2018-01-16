@@ -1,8 +1,6 @@
 package com.example.mygreenfee;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,13 +13,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,7 +29,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -59,6 +53,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
 
     public static final String TAG = MapsFragment.class.getSimpleName();
     private ClubData currentClub;
+    private LatLng myPosition;
 
     public MapsFragment() {
 
@@ -71,7 +66,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         mLocationPermissionGranted = false;
 
         this.clubsRepo = new MapsFragmentRepository((HomeMapsActivity) getActivity(), this);
-        this.clubsRepo.update();
+        this.clubsRepo.updateFromMaps();
     }
 
     @Override
@@ -222,11 +217,10 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             mCurrLocationMarker.remove();
         }
 
-
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        myPosition = new LatLng(location.getLatitude(), location.getLongitude());
 
         //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(latLng).zoom(11f).build()));
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(myPosition).zoom(11f).build()));
 
 
     }
@@ -385,5 +379,13 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
 
         addMarkers();
 
+    }
+
+    public LatLng getMyPosition() {
+        return myPosition;
+    }
+
+    public void setMyPosition(LatLng myPosition) {
+        this.myPosition = myPosition;
     }
 }

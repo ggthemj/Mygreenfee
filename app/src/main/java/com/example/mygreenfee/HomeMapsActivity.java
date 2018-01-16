@@ -10,11 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
 public class HomeMapsActivity extends AppCompatActivity {
 
+    private MapsFragment newFragment;
+
     protected void displayMaps(){
-        MapsFragment newFragment = new MapsFragment();
+        newFragment = new MapsFragment();
         Bundle args = new Bundle();
         args.putInt("1", 1);
         newFragment.setArguments(args);
@@ -32,7 +36,8 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayReservations(){
-
+        Intent intent = new Intent(this, ReservationsActivity.class);
+        startActivity(intent);
     }
 
     protected void displayCompte(){
@@ -56,6 +61,8 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         bottomNavigationView.setItemTextColor(bottomNavigationView.getItemTextColor());
+
+        ImageButton imageButton = (ImageButton) findViewById(R.id.recherche_button);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);
@@ -95,14 +102,26 @@ public class HomeMapsActivity extends AppCompatActivity {
                 }
             }
         );
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ClubListActivity.class);
+                if (newFragment.getMyPosition() != null) {
+                    intent.putExtra("latitude", newFragment.getMyPosition().latitude);
+                    intent.putExtra("longitude", newFragment.getMyPosition().longitude);
+                }
+                startActivity(intent);
+            }
+        });
     }
 
     /**
      * AlertDialog.Builder builder;
      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-     builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+     builder = new AlertDialog.Builder(bookingContext, android.R.style.Theme_Material_Dialog_Alert);
      } else {
-     builder = new AlertDialog.Builder(context);
+     builder = new AlertDialog.Builder(bookingContext);
      }
      builder.setTitle("Delete entry")
      .setMessage("Are you sure you want to delete this entry?")
