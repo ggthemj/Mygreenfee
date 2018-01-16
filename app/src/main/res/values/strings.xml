@@ -5,6 +5,20 @@
     <string name="title_menu1">GOLFS</string>
     <string name="title_menu2">MES RESA.</string>
     <string name="title_menu3">MON COMPTE</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
+
+    <string name="mesInfos_Title">Mes infos personnelles</string>
+
+    <string name="myBanking_Title">Ma carte bancaire</string>
+    <string name="myBanking_Button">Modifier ma carte bancaire</string>
+
+    <string name="addCard_Title">Enregistrer ma carte bancaire</string>
+    <string name="addCard_Button">Enregistrer les informations</string>
+    <string name="addCard_Numero">Numéro de carte</string>
+    <string name="addCard_Date">Date d\'expiration</string>
+    <string name="addCard_Cvx">Code de sécurité</string>
+
     <string name="creationCompte_Title">Créer un compte</string>
     <string name="creationCompte_Civilite">Civilité</string>
     <string name="creationCompte_Nom">Nom</string>
@@ -23,9 +37,12 @@
     <string name="creationCompte_ErreurMail">Veuillez remplir votre adresse mail</string>
     <string name="creationCompte_ErreurPhone">Veuillez saisir un numéro au bon format</string>
     <string name="creationCompte_ErreurMdp">Veuillez saisir un mot de passe valide</string>
+    <string name="creationCompte_ErreurBday">Veuillez choisir une date de naissance</string>
     <string name="creationCompte_InscriptionReussie">Inscription réussie ! Veuillez consultez vos mails</string>
     <string name="creationCompte_ErreurMdpc">Saisie non conforme au champ précédent</string>
     <string name="creationCompte_ErreurValidation">Des informations sont manquantes ou erronées sur le formulaire d\'enregistrement</string>
+
+
     <string name="cgr">Conditions générales de réservation</string>
     <string name="connect_FacebookButton">Me connecter avec Facebook</string>
     <string name="connect_Title">Me connecter</string>
@@ -38,15 +55,18 @@
     <string name="connect_Mdpoubli">Mot de passe oublié</string>
     <string name="connect_Creacompte">Créer un compte</string>
     <string name="onboarding_Texte1">Je réserve mon départ sur les meilleurs golfs aux meilleurs prix&#8230; en 3 clics</string>
+    <string name="onboarding_Texte2">Plus de 250 golfs disponibles en France et bien d\'autres avec l\'étranger</string>
+    <string name="onboarding_Texte3">Un paiement simple, rapide, 100% sécurisé</string>
     <string name="onboarding_Soustitre">MON GREEN FEE EN 3 CLICS</string>
     <string name="onboarding_Skipbutton">Démarrer</string>
-    <string name="profile_titleCartes">Mes carte(s) de paiement</string>
+    <string name="profile_titleCartes">Ma carte de paiement</string>
     <string name="profile_parametres">Se déconnecter</string>
     <string name="profile_Title">Mon compte</string>
     <string-array name="civiliteArray">
         <item>Civilité</item>
+        <item>Ms</item>
+        <item>Mrs</item>
         <item>Mr</item>
-        <item>Mme</item>
     </string-array>
     <string-array name="regionsArray">
         <item>Région</item>

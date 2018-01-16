@@ -85,5 +85,15 @@ public class UserData {
         Log.d("DEBUG","J'ajoute l'utilisateur : "+ this.public_id);
     }
 
-
+    public UserData(int id, String tit, String fna, String lna, String dob, String ema, String cou, int reg, String pho){
+        this.public_id = id;
+        this.title = tit;
+        this.fname = fna;
+        this.lname = lna;
+        this.dob = dob;
+        this.email = ema;
+        this.country = cou;
+        this.region_id = reg;
+        this.phone = pho;
+    }
 }

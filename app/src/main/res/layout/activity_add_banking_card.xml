@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightGrayColor"
+    tools:context="com.example.mygreenfee.AddBankingCardActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/whiteColor"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/AppTheme"
+        app:titleTextColor="@color/colorPrimary">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar_title"
+            android:fontFamily="@font/helveticaneue"
+            android:text="@string/addCard_Title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginRight="?attr/actionBarSize"
+            android:gravity="center"
+            />
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar2">
+
+        <LinearLayout
+            android:id="@+id/formulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/lightGrayColor"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp">
+
+            <ImageView
+                android:id="@+id/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                app:srcCompat="@drawable/headerbank" />
+
+            <EditText
+                android:id="@+id/numerocarte"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Numero"
+                android:inputType="textPersonName"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp"
+                tools:layout_editor_absoluteX="64dp"
+                tools:layout_editor_absoluteY="48dp" />
+
+
+            <EditText
+                android:id="@+id/dateexpiration"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Date"
+                android:inputType="phone"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_Cvx"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/buttonvalidation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/greenAlbaColor"
+                android:text="@string/addCard_Button"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/simpleProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="false"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:indeterminate="true"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/alias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="-195dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="-195dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

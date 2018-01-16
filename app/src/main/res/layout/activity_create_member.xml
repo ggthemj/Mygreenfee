@@ -307,6 +307,16 @@
                 android:paddingLeft="16dp"
                 android:textSize="16sp" />
 
+            <TextView
+                android:id="@+id/error_dob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:paddingRight="8dp"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorError" />
+
             <Button
                 android:id="@+id/buttonvalidation"
                 style="@style/Widget.AppCompat.Button"
