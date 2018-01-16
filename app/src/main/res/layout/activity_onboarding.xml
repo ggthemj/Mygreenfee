@@ -55,6 +55,7 @@
         android:id="@+id/vp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toTopOf="@+id/circles"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -74,7 +75,8 @@
         android:src="@drawable/illustration_onboarding3x"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/circles1" />
 
     <Button
         android:id="@+id/button3"

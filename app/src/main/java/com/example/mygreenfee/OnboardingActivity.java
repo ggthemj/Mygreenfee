@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class OnboardingActivity extends AppCompatActivity implements OnboardPageFragment.OnFragmentInteractionListener {
@@ -45,11 +47,22 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
-
+        modifyCircles(0);
         // Set up the ViewPager with the sections adapter.
         mPager = (ViewPager) findViewById(R.id.vp);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+
+            }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            public void onPageSelected(int position) {
+                modifyCircles(position);
+            }
+        });
 
         final Button buttonValidation = findViewById(R.id.button3);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +87,19 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
 
     }
 
+    public void modifyCircles(int p) {
+        ImageView i = findViewById(R.id.circles);
+        if(p==0) {
+            i.setImageResource(R.drawable.circles1);
+        }
+        else if(p==1) {
+            i.setImageResource(R.drawable.circles2);
+        }
+        else if(p==2) {
+            i.setImageResource(R.drawable.circles3);
+        }
+    }
+
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
@@ -81,7 +107,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
 
         @Override
         public Fragment getItem(int position) {
-            return new OnboardPageFragment();
+            return OnboardPageFragment.newInstance(position);
         }
 
         @Override
