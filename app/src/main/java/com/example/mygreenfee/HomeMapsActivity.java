@@ -36,7 +36,8 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayReservations(){
-
+        Intent intent = new Intent(this, ReservationsActivity.class);
+        startActivity(intent);
     }
 
     protected void displayCompte(){

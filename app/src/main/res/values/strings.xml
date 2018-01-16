@@ -8,6 +8,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Annuler</string>
 
+    <string name="mesResas_name">Réservation au nom de : </string>
+
     <string name="mesInfos_Title">Mes infos personnelles</string>
 
     <string name="myBanking_Title">Ma carte bancaire</string>
@@ -98,4 +100,5 @@
     <string name="booking_price">0 €</string>
     <string name="booking_reserver">Book</string>
     <string name="info_title">Informations terrains</string>
+    <string name="title_activity_reservations">ReservationsActivity</string>
 </resources>
