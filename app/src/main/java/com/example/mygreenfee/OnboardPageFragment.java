@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -24,8 +25,7 @@ public class OnboardPageFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private int position;
 
     private OnFragmentInteractionListener mListener;
 
@@ -33,20 +33,11 @@ public class OnboardPageFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OnboardPageFragment.
-     */
     // TODO: Rename and change types and number of parameters
-    public static OnboardPageFragment newInstance(String param1, String param2) {
+    public static OnboardPageFragment newInstance(int p) {
         OnboardPageFragment fragment = new OnboardPageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt("position", p);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,8 +46,7 @@ public class OnboardPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            this.position = getArguments().getInt("position");
         }
     }
 
@@ -66,10 +56,21 @@ public class OnboardPageFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_onboard_page, container, false);
 
+        TextView t = rootView.findViewById(R.id.Texte);
+        if (position==0) {
+            t.setText(getResources().getString(R.string.onboarding_Texte1));
+        }
+        else if (position==1) {
+            t.setText(getResources().getString(R.string.onboarding_Texte2));
+        }
+        if (position==2) {
+            t.setText(getResources().getString(R.string.onboarding_Texte3));
+        }
+
         return rootView;
     }
 
-    // TODO: Rename method, updateFromMaps argument and hook method into UI event
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
