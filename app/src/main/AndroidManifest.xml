@@ -63,7 +63,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MyBankingCardActivity" />
         </activity>
-        <activityandroid:name=".ProfileActivity"
+        <activity android:name=".ProfileActivity"
         android:parentActivityName=".HomeMapsActivity">
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
