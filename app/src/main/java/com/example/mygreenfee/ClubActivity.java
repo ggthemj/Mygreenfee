@@ -2,8 +2,10 @@ package com.example.mygreenfee;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,9 +24,6 @@ public class ClubActivity extends AppCompatActivity {
         Intent intent = getIntent();
         final ClubData club = (ClubData) intent.getParcelableExtra("currentClub");
 
-        TextView title = (TextView) findViewById(R.id.club_title);
-        title.setText(club.name);
-
         TextView titleView = (TextView) findViewById(R.id.club_info);
         titleView.setText(club.description);
 
@@ -41,6 +40,14 @@ public class ClubActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) findViewById(R.id.club_app_bar_image);
             imageView.setImageURI(Uri.parse(club.image_url));
         }
+
+        final Toolbar toolbar = findViewById(R.id.club_toolbar);
+
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(club.name);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(getApplicationContext(), R.color.whiteColor));
+        collapsingToolbarLayout.setExpandedTitleTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.whiteColor));
+        collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(getApplicationContext(), R.color.greenAlbaColor));
 
         FloatingActionButton fabBook = findViewById(R.id.fab_book);
         fabBook.setOnClickListener(new View.OnClickListener() {

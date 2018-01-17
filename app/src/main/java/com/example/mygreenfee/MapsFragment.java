@@ -1,6 +1,7 @@
 package com.example.mygreenfee;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -34,6 +37,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.HashMap;
 
@@ -49,11 +54,15 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
     LocationRequest mLocationRequest;
     Marker mCurrLocationMarker;
     private HashMap<String, ClubData> clubMarkers = new HashMap<String, ClubData>();
-    FloatingActionButton fabClub;
+    FloatingActionButton fabClubResa;
+    FloatingActionButton fabClubInfo;
+
 
     public static final String TAG = MapsFragment.class.getSimpleName();
     private ClubData currentClub;
     private LatLng myPosition;
+    private TextView clubNameView;
+    private CoordinatorLayout clubItems;
 
     public MapsFragment() {
 
@@ -101,13 +110,27 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        clubItems = view.findViewById(R.id.maps_club_items);
 
-        fabClub = view.findViewById(R.id.fabClub);
-        fabClub.setVisibility(View.INVISIBLE);
-        fabClub.setOnClickListener(new View.OnClickListener() {
+        clubNameView = view.findViewById(R.id.maps_club_name);
+
+        fabClubResa = view.findViewById(R.id.fabClubResa);
+        fabClubResa.setVisibility(View.INVISIBLE);
+        fabClubResa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), BookingActivity.class);
+                intent.putExtra("currentClub", currentClub);
+                startActivity(intent);
+            }
+        });
+
+        fabClubInfo = view.findViewById(R.id.fabClubInfo);
+        fabClubInfo.setVisibility(View.INVISIBLE);
+        fabClubInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ClubActivity.class);
                 intent.putExtra("currentClub", currentClub);
                 startActivity(intent);
             }
@@ -179,33 +202,25 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
             @Override
             public boolean onMarkerClick(Marker marker) {
                 currentClub = clubMarkers.get(marker.getId());
-                marker.showInfoWindow();
-                fabClub.setVisibility(View.VISIBLE);
+                clubNameView.setText(currentClub.name);
+                clubItems.setVisibility(View.VISIBLE);
+                fabClubResa.setVisibility(View.VISIBLE);
+                fabClubInfo.setVisibility(View.VISIBLE);
                 return true;
+            }
+        });
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                clubItems.setVisibility(View.INVISIBLE);
+                fabClubResa.setVisibility(View.INVISIBLE);
+                fabClubInfo.setVisibility(View.INVISIBLE);
             }
         });
 
         updateLocationUI();
         addMarkers();
 
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-
-
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-
-                try {
-                    currentClub = clubMarkers.get(marker.getId());
-                    Intent intent = new Intent(getActivity(), ClubActivity.class);
-                    intent.putExtra("currentClub", currentClub);
-                    startActivity(intent);
-
-                } catch (ArrayIndexOutOfBoundsException e) {
-
-                }
-
-            }
-        });
     }
 
     @Override
@@ -288,8 +303,11 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         }
     }
 
+    @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
-        // a coder - méthode qui centrera la map sur la position de l'utilisateur
+
+        //move map camera
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(myPosition).zoom(11f).build()));
     }
 
     // Callback quand l'utilisateur accepte ou refuse de se localiser - attention pour l'instant je
@@ -331,7 +349,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
                 Log.d("UpdateLocation", "Permission ok");
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                getDeviceLocation();
+                //getDeviceLocation();
             } else {
                 Log.d("UpdateLocation", "Permission KO");
                 mMap.setMyLocationEnabled(false);

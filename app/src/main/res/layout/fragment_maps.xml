@@ -19,16 +19,101 @@
         map:layout_constraintTop_toTopOf="parent"
         tools:context="com.example.mygreenfee.MapsFragment" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabClub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:contextClickable="false"
-        android:src="@drawable/ic_book"
-        android:tooltipText="Réserver"
-        android:backgroundTint="@android:color/holo_orange_dark" />
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/maps_club_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <RelativeLayout
+            style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:elevation="0dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/maps_club_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme">
+
+                <TextView
+                    android:id="@+id/maps_club_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:textSize="20sp" />
+            </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            map:elevation="6dp"
+            map:layout_anchor="@id/maps_club_toolbar"
+            map:layout_anchorGravity="bottom|right|end"
+            map:pressedTranslationZ="12dp">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabClubInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                android:contextClickable="false"
+                android:src="@drawable/icon_club_info"
+                map:backgroundTint="@color/red_maps" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginBottom="13dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginRight="13dp"
+                android:elevation="16dp"
+                android:text="Information"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red_maps"
+                android:textSize="16sp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabClubResa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:clickable="true"
+                android:contextClickable="false"
+                map:backgroundTint="@color/red_maps"
+                map:srcCompat="@drawable/icon_club_flag" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="13dp"
+                android:layout_marginRight="13dp"
+                android:elevation="16dp"
+                android:text="Réserver"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/red_maps"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </FrameLayout>

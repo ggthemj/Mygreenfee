@@ -107,7 +107,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
 
         @Override
         public Fragment getItem(int position) {
-            return OnboardPageFragment.newInstance(position);
+            return null;//OnboardPageFragment.newInstance(position);
         }
 
         @Override
