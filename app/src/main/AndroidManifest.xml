@@ -76,6 +76,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
+        <activity
+            android:name=".ReservationsActivity"
+            android:parentActivityName=".HomeMapsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeMapsActivity" />
+        </activity>
     <activity
         android:name=".OnboardingActivity"
         android:label="@string/title_activity_onboarding"
@@ -84,8 +91,11 @@
         android:name=".BookingActivity"
         android:label="@string/title_activity_booking"
         android:theme="@style/AppTheme" />
-<activity android:name=".ClubActivity"></activity>
+    <activity android:name=".ClubActivity"></activity>
         <activity android:name=".ClubListActivity" />
-        <activity android:name=".SearchClubActivity"></activity>
+
     </application>
     </manifest>
+
+
+

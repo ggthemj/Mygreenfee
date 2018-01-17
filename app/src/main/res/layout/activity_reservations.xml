@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/test"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.mygreenfee.CreateMemberActivity">
+    android:visibility="visible"
+    tools:context="com.example.mygreenfee.ReservationsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/greenAlbaColor"
+        android:paddingRight="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/scrollv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/AppTheme"
+        app:titleTextColor="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helveticaneue"
+            android:gravity="center"
+            android:text="@string/mesResas_title"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+    </android.support.v7.widget.Toolbar>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollv"
@@ -18,19 +46,69 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_toolbar2">
 
-    <LinearLayout
-        android:id="@+id/formulaire"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/lightGrayColor"
-        android:orientation="vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+        <LinearLayout
+            android:id="@+id/formulaire"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteColor"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
 
+            <android.support.design.widget.TabLayout
+                style="@style/AppTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp">
 
-    </LinearLayout>
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesResas_titre1" />
+
+                <android.support.design.widget.TabItem
+                    android:id="@+id/tab2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mesResas_titre2" />
+            </android.support.design.widget.TabLayout>
+
+            <TextView
+                android:id="@+id/compteurResa"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/lightGrayColor"
+                android:fontFamily="@font/helveticaneue"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:text="@string/creationCompte_Title"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/simpleProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="false"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:indeterminate="true"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

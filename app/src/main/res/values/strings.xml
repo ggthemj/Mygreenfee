@@ -9,6 +9,10 @@
     <string name="cancel">Annuler</string>
 
     <string name="mesResas_name">Réservation au nom de : </string>
+    <string name="mesResas_titre1">en cours</string>
+    <string name="mesResas_titre2">passées</string>
+    <string name="mesResas_title">Mes réservations</string>
+    <string name="mesResas_personne">personne</string>
 
     <string name="mesInfos_Title">Mes infos personnelles</string>
 

@@ -1,5 +1,7 @@
 package com.example.mygreenfee;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -7,52 +9,75 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ReservationsActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private boolean isEnCours;
+    private ReservationsRepository reservationsRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservations);
 
-        LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
+        isEnCours = true;
 
-        getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(), "someTag1").commit();
-        getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(), "someTag2").commit();
+        //Mise en place de la custom app bar
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String user_id = sharedPref.getString("user_id", "false");
+
+        reservationsRepository = new ReservationsRepository(this);
+        reservationsRepository.getReservations(user_id);
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.VISIBLE);
     }
 
     public void handleError(String s){
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
     }
 
     public void handleSuccess(ReservationData[] open, ReservationData[] closed){
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
 
+        LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
+
+        if(isEnCours){
+            for(int i = 0 ; i < open.length ;i++) {
+                getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(open[i]), "someTag1").commit();
+            }
+        }
+        else{
+            for(int i = 0 ; i < closed.length ;i++) {
+                getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(closed[i]), "someTag1").commit();
+            }
+        }
     }
 
     @Override
@@ -105,9 +130,9 @@ public class ReservationsActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_reservations, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.activity_reservations, container, false);
+            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
+            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
