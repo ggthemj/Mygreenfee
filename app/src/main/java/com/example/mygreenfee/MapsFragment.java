@@ -42,7 +42,9 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.HashMap;
 
-public class MapsFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, LocationListener {
+import static android.location.LocationManager.GPS_PROVIDER;
+
+public class MapsFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, OnMapReadyCallback, LocationListener, ActivityCompat.OnRequestPermissionsResultCallback  {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 1234;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap mMap;
@@ -148,7 +150,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         }
     }
 
-    //Il faudra les surcharger pour traiter les cas d'erreurs -> JBU
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -186,11 +188,8 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
                     == PackageManager.PERMISSION_GRANTED) {
                 //Location Permission already granted
                 buildGoogleApiClient();
+                mLocationPermissionGranted = true;
                 mMap.setMyLocationEnabled(true);
-                handleError("maps ready and location perm ok");
-            } else {
-                //Request Location Permission
-                checkLocationPermission();
             }
         }
         else {
@@ -240,18 +239,18 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
 
     }
 
-    // Méthode qui checke si l'utilisateur a accepté ou pas d'être localisé (j'ai codé cette partie)
+    // Méthode qui checke si l'utilisateur a accepté ou pas d'être localisé
     private void getLocationPermission(){
         Log.d("DEBUG", "Je lance la requete de permission");
         if (ContextCompat.checkSelfPermission(getActivity().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Log.d("DEBUG", "Permission OK");
             mLocationPermissionGranted = true;
             updateLocationUI();
+            getDeviceLocation();
         } else {
             Log.d("DEBUG", "Permission KO");
             mLocationPermissionGranted = false;
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
+            this.requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                     MY_PERMISSIONS_REQUEST_LOCATION);
             Log.d("DEBUG", "Autorisation demandée");
         }
@@ -267,47 +266,10 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         }
     }
 
-    private void checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Location Permission Needed")
-                        .setMessage("This app needs the Location permission, please accept to use location functionality")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //Prompt the user once explanation has been shown
-                                ActivityCompat.requestPermissions(getActivity(),
-                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                        MY_PERMISSIONS_REQUEST_LOCATION );
-                            }
-                        })
-                        .create()
-                        .show();
-
-
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(getActivity(),
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION );
-            }
-        }
-    }
 
     @SuppressLint("MissingPermission")
     private void getDeviceLocation() {
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder().target(myPosition).zoom(11f).build()));
+        mFusedLocationClient.flushLocations();
     }
 
     // Callback quand l'utilisateur accepte ou refuse de se localiser - attention pour l'instant je
@@ -349,7 +311,7 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
                 Log.d("UpdateLocation", "Permission ok");
                 mMap.setMyLocationEnabled(true);
                 mMap.getUiSettings().setMyLocationButtonEnabled(true);
-                //getDeviceLocation();
+                getDeviceLocation();
             } else {
                 Log.d("UpdateLocation", "Permission KO");
                 mMap.setMyLocationEnabled(false);
