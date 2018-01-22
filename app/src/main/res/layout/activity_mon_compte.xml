@@ -40,6 +40,7 @@
         android:id="@+id/scrollv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@color/lightGrayColor"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,271 +52,388 @@
             android:id="@+id/formulaire"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:background="@color/lightGrayColor"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
+            android:visibility="visible">
 
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/layoutSpinnerCivilite"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                <Spinner
-                    android:id="@+id/spinnerCivilite"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@color/whiteColor"
-                    android:paddingLeft="8dp"
-                    android:textColor="@color/grayColor" />
-
-                <ImageView
-                    android:id="@+id/imageView"
+                <ProgressBar
+                    android:id="@+id/simpleProgressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_downarrow" />
-            </android.support.constraint.ConstraintLayout>
+                    android:layout_centerHorizontal="false"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/nom"
+            <LinearLayout
+                android:id="@+id/hori1"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:gravity="center_vertical"
-                android:hint="@string/creationCompte_Nom"
-                android:inputType="textPersonName"
+                android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="48dp" />
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/error_nom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
+                <TextView
+                    android:id="@+id/titreciv"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/creationCompte_Civilite"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/prenom"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutSpinnerCivilite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Spinner
+                        android:id="@+id/spinnerCivilite"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@color/whiteColor"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/grayColor" />
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_downarrow" />
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori2"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Prenom"
-                android:inputType="textPersonName"
+                android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp"
-                tools:layout_editor_absoluteX="64dp"
-                tools:layout_editor_absoluteY="48dp" />
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/error_prenom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
+                <TextView
+                    android:id="@+id/titrenom"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/creationCompte_Nom"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/phone"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Telephone"
-                android:inputType="phone"
-                android:paddingLeft="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/error_tel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
-
-            <EditText
-                android:id="@+id/email"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Email"
-                android:inputType="textEmailAddress"
-                android:paddingLeft="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/error_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Mdp"
-                android:inputType="textPassword"
-                android:paddingLeft="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/error_mdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
-
-            <EditText
-                android:id="@+id/passwordconfirmation"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Confirmationmdp"
-                android:inputType="textPassword"
-                android:paddingLeft="16dp"
-                android:textColorHint="@color/grayColor"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/error_mdpc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/layoutSpinnerPays"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="4dp">
-
-                <Spinner
-                    android:id="@+id/spinnerPays"
+                <EditText
+                    android:id="@+id/nom"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_weight="1"
+                    android:layout_marginTop="4dp"
                     android:background="@color/whiteColor"
-                    android:paddingLeft="8dp"
-                    android:textColor="@color/grayColor" />
+                    android:ems="10"
+                    android:fontFamily="@font/helveticaneue"
+                    android:gravity="center_vertical"
+                    android:hint="@string/creationCompte_Nom"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="@color/grayColor"
+                    android:textSize="16sp"
+                    tools:layout_editor_absoluteX="64dp"
+                    tools:layout_editor_absoluteY="48dp" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_downarrow" />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/layoutSpinnerRegions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="453dp">
-
-                <Spinner
-                    android:id="@+id/spinnerRegions"
+                <TextView
+                    android:id="@+id/error_nom"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@color/whiteColor"
-                    android:paddingLeft="8dp"
-                    android:textColor="@color/grayColor" />
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_downarrow" />
+                    android:layout_marginTop="-20dp"
+                    android:paddingRight="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorError" />
 
-            </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/bithday"
+            <LinearLayout
+                android:id="@+id/hori3"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="4dp"
-                android:background="@color/whiteColor"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:ems="10"
-                android:fontFamily="@font/helveticaneue"
-                android:hint="@string/creationCompte_Birthday"
-                android:inputType="date"
+                android:orientation="horizontal"
                 android:paddingLeft="16dp"
-                android:textSize="16sp" />
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/error_dob"
+                <TextView
+                    android:id="@+id/titreprenom"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/creationCompte_Prenom"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/prenom"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+
+                    android:background="@color/whiteColor"
+                    android:ems="10"
+                    android:fontFamily="@font/helveticaneue"
+                    android:hint="@string/creationCompte_Prenom"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColorHint="@color/grayColor"
+                    android:textSize="16sp"
+                    tools:layout_editor_absoluteX="64dp"
+                    tools:layout_editor_absoluteY="48dp" />
+
+                <TextView
+                    android:id="@+id/error_prenom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:paddingRight="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorError" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-20dp"
-                android:paddingRight="8dp"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/colorError" />
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/titrephone"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/creationCompte_Telephone"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/whiteColor"
+                    android:ems="10"
+                    android:fontFamily="@font/helveticaneue"
+                    android:hint="@string/creationCompte_Telephone"
+                    android:inputType="phone"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="@color/grayColor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/error_tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:paddingRight="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorError" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori5"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/titreemail"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/creationCompte_Email"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/whiteColor"
+                    android:ems="10"
+                    android:fontFamily="@font/helveticaneue"
+                    android:hint="@string/creationCompte_Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="16dp"
+                    android:textColorHint="@color/grayColor"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/error_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:paddingRight="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorError" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori6"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/titrepays"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/creationCompte_Pays"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutSpinnerPays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="4dp">
+
+                    <Spinner
+                        android:id="@+id/spinnerPays"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@color/whiteColor"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/grayColor" />
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_downarrow" />
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori7"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/titreregion"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/creationCompte_Region"
+
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutSpinnerRegions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="453dp">
+
+                    <Spinner
+                        android:id="@+id/spinnerRegions"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:background="@color/whiteColor"
+                        android:paddingLeft="8dp"
+                        android:textColor="@color/grayColor" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingRight="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_downarrow" />
+
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/hori8"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/titredob"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/mesInfos_dob"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/bithday"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@color/whiteColor"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/helveticaneue"
+                    android:hint="@string/creationCompte_Birthday"
+                    android:inputType="date"
+                    android:paddingLeft="16dp"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/error_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-20dp"
+                    android:paddingRight="8dp"
+                    android:text="TextView"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorError" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/buttonvalidation"
@@ -324,27 +442,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/greenAlbaColor"
-                android:text="@string/creationCompte_Boutonvalider"
+                android:text="@string/mesInfos_validerPage"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/whiteColor"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/mentionslegales"
+            <Button
+                android:id="@+id/buttonvalidation2"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/creationCompte_Mentions"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/cgr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="16dp"
-                android:text="@string/cgr"
-                android:textAlignment="center" />
+                android:backgroundTint="@color/grayColor"
+                android:text="@string/mesInfos_changeMdp"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/whiteColor"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </ScrollView>

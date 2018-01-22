@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,13 @@ public class ConnectMemberActivity extends AppCompatActivity {
 
             editText = (EditText) findViewById(R.id.password);
             String password = editText.getText().toString();
+
+            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            editor.putString("user_password", password);
+            editor.commit();
+
             connectMemberRepository.update(email, password);
         }
         else{
@@ -50,6 +58,20 @@ public class ConnectMemberActivity extends AppCompatActivity {
     public void handleCrea(){
         Intent intent = new Intent(this, CreateMemberActivity.class);
         startActivity(intent);
+    }
+
+    // Bouton de login
+    // Vérifie si le compte existe
+    public void handleOubli(){
+        EditText editText = (EditText) findViewById(R.id.email);
+        String email = editText.getText().toString();
+        if(email.length()<2) {
+            Toast toast = Toast.makeText(this, R.string.connect_errorMailMdp, Toast.LENGTH_LONG);
+            toast.show();
+        }
+        else {
+            connectMemberRepository.updateMdpOubli(email);
+        }
     }
 
     @Override
@@ -98,6 +120,13 @@ public class ConnectMemberActivity extends AppCompatActivity {
             }
         });
 
+        final TextView mdpOubli = findViewById(R.id.mdpoubli);
+        mdpOubli.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handleOubli();
+            }
+        });
+
         final Button facebookButton = findViewById(R.id.buttonfacebook);
         facebookButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -130,6 +159,18 @@ public class ConnectMemberActivity extends AppCompatActivity {
     // Méthode appelée quand le login est refusé (avec message d'erreur) !
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    // Méthode appelée quand le login est refusé (avec message d'erreur) !
+    public void handleErrorMdp(String s){
+        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    // Méthode appelée quand le login est refusé (avec message d'erreur) !
+    public void handleSuccessMdp(){
+        Toast toast = Toast.makeText(this, R.string.connect_successMdp, Toast.LENGTH_LONG);
         toast.show();
     }
 

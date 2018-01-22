@@ -2,6 +2,7 @@ package com.example.mygreenfee;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 public class ReservationsActivity extends AppCompatActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
+    public boolean hasSucceeded;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -35,7 +38,7 @@ public class ReservationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservations);
-
+        this.hasSucceeded = false;
         isEnCours = true;
 
         //Mise en place de la custom app bar
@@ -45,66 +48,127 @@ public class ReservationsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String user_id = sharedPref.getString("user_id", "false");
+        String user_id = ""+sharedPref.getInt("user_id", 1);
 
         reservationsRepository = new ReservationsRepository(this);
         reservationsRepository.getReservations(user_id);
 
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabby);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(hasSucceeded) {
+                    Log.d("DEBUG", "Succès "+tab.getPosition());
+                    if (tab.getPosition()==0) {
+                        isEnCours = true;
+                        handleSuccess(reservationsRepository.enCours, reservationsRepository.closedResas);
+                    }
+                    else {
+                        isEnCours = false;
+                        handleSuccess(reservationsRepository.enCours, reservationsRepository.closedResas);
+                    }
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     public void handleError(String s){
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
 
+        TextView enCours = findViewById(R.id.compteurResa);
+        if(isEnCours) {
+            enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours));
+        }
+        else{
+            enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status));
+        }
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
     }
 
     public void handleSuccess(ReservationData[] open, ReservationData[] closed){
+
+        Log.d("DEBUG", "SUCCESS "+isEnCours);
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
 
         LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
+        TextView enCours = findViewById(R.id.compteurResa);
+
 
         if(isEnCours){
-            for(int i = 0 ; i < open.length ;i++) {
-                getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(open[i]), "someTag1").commit();
+            if(hasSucceeded){
+                for (int i = 0; i < closed.length; i++) {
+                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
+                    Log.d("DEBUG", "Je remove "+i);
+                }
+            }
+            if(open!=null) {
+                for (int i = 0; i < open.length; i++) {
+                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(open[i]), "someTag"+i).commit();
+                    Log.d("DEBUG", "en cours "+i);
+                }
+                String texteCompteur;
+                if (open.length > 1) {
+                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_enCours) ;
+                } else {
+                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+                }
+                enCours.setText(texteCompteur);
+            }
+            else{
+                String texteCompteur;
+                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+
+                enCours.setText(texteCompteur);
             }
         }
         else{
-            for(int i = 0 ; i < closed.length ;i++) {
-                getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(closed[i]), "someTag1").commit();
+            if(hasSucceeded){
+                for (int i = 0; i < open.length; i++) {
+                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
+                }
+            }
+            if(closed!=null) {
+
+                for (int i = 0; i < closed.length; i++) {
+                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(closed[i]), "someTag"+i).commit();
+                    //android.app.Fragment fragment = getFragmentManager().findFragmentByTag("someTag"+i);
+                    Log.d("DEBUG", "closed "+i);
+                }
+                String texteCompteur;
+                if (closed.length > 1) {
+                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_status) + "s";
+                } else {
+                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status);
+                }
+                enCours.setText(texteCompteur);
+            }
+            else{
+                String texteCompteur;
+                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+
+                enCours.setText(texteCompteur);
             }
         }
+        this.hasSucceeded = true;
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_reservations, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
     public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -151,13 +215,17 @@ public class ReservationsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
+
+
             return PlaceholderFragment.newInstance(position + 1);
+
+
         }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
     }
 }

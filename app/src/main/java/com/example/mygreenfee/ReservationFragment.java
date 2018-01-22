@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 public class ReservationFragment extends Fragment {
 
+    ReservationData reservationData;
     public ReservationFragment() {
 
     }
@@ -24,33 +25,14 @@ public class ReservationFragment extends Fragment {
     public static ReservationFragment newInstance(ReservationData r) {
 
         ReservationFragment f = new ReservationFragment();
-        f.setTexts(r);
+        f.reservationData = r;
+
         return f;
     }
 
-    public void setTexts(ReservationData r){
-        TextView textView = (TextView) getView().findViewById(R.id.titreclub);
-        textView.setText(r.club_name);
+    public void setTexts(){
 
-        textView = (TextView) getView().findViewById(R.id.date);
-        textView.setText(r.date);
 
-        textView = (TextView) getView().findViewById(R.id.date2);
-        textView.setText(r.time);
-
-        textView = (TextView) getView().findViewById(R.id.date3);
-        if(r.players>1) {
-            textView.setText(r.players+" "+R.string.mesResas_personne+"s - "+r.cost+" "+r.currency);
-        }
-        else{
-            textView.setText(r.players+" "+R.string.mesResas_personne+" - "+r.cost+" "+r.currency);
-        }
-
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String fname = sharedPref.getString("user_fname", "false");
-        String lname = sharedPref.getString("user_lname", "false");
-        textView = (TextView) getView().findViewById(R.id.date5);
-        textView.setText(fname+" "+lname);
     }
 
     @Override
@@ -58,6 +40,31 @@ public class ReservationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.fragment_reservation, container, false);
+        TextView textView = (TextView) view.findViewById(R.id.titreclub);
+        textView.setText(reservationData.club_name);
+
+        textView = (TextView) view.findViewById(R.id.date);
+        textView.setText(reservationData.date);
+
+        textView = (TextView) view.findViewById(R.id.date2);
+        textView.setText(reservationData.time);
+
+        textView = (TextView) view.findViewById(R.id.date4);
+        textView.setText(getResources().getString(R.string.mesResas_name));
+
+        textView = (TextView) view.findViewById(R.id.date3);
+        if(reservationData.players>1) {
+            textView.setText(reservationData.players+" "+getResources().getString(R.string.mesResas_personne)+"s - "+reservationData.cost+" "+reservationData.currency);
+        }
+        else{
+            textView.setText(reservationData.players+" "+getResources().getString(R.string.mesResas_personne)+" - "+reservationData.cost+" "+reservationData.currency);
+        }
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String fname = sharedPref.getString("user_fname", "false");
+        String lname = sharedPref.getString("user_lname", "false");
+        textView = (TextView) view.findViewById(R.id.date5);
+        textView.setText(fname+" "+lname);
 
         return view;
     }

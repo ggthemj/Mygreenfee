@@ -107,6 +107,11 @@ public class CreateMemberActivity extends AppCompatActivity {
                 region_id = this.regionsData.regionsData[rid - 1].public_id;
             }
 
+            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            editor.putString("user_password", pwd);
+            editor.commit();
             createMemberRepository.update(civ, nom, pre, ema, dob, pwd, pay, region_id, pho);
         }
         else{

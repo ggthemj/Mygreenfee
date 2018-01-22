@@ -56,8 +56,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void handleMonProfil(){
-        //Intent intent = new Intent(this, MonCompteActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, MonCompteActivity.class);
+        startActivity(intent);
     }
 
     public void handleMaCarte(){

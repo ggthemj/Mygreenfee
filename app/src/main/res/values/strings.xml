@@ -12,9 +12,15 @@
     <string name="mesResas_titre1">en cours</string>
     <string name="mesResas_titre2">passées</string>
     <string name="mesResas_title">Mes réservations</string>
+    <string name="mesResas_commande">commande</string>
+    <string name="mesResas_status">passée</string>
+    <string name="mesResas_enCours">en cours</string>
     <string name="mesResas_personne">personne</string>
 
     <string name="mesInfos_Title">Mes infos personnelles</string>
+    <string name="mesInfos_changeMdp">Modifier mon mot de passe</string>
+    <string name="mesInfos_validerPage">Valider</string>
+    <string name="mesInfos_dob">Naissance</string>
 
     <string name="myBanking_Title">Ma carte bancaire</string>
     <string name="myBanking_Button">Modifier ma carte bancaire</string>
@@ -54,6 +60,8 @@
     <string name="connect_Title">Me connecter</string>
     <string name="connect_Subtitle">Me connecter</string>
     <string name="connect_errorLogin">Le mail n\'est pas au bon format</string>
+    <string name="connect_successMdp">Un mail a été envoyé sur votre messagerie avec votre nouveau mot de passe</string>
+    <string name="connect_errorMailMdp">Veuillez saisir votre adresse mail</string>
     <string name="connect_Email">Email</string>
     <string name="connect_validateError">Veuillez remplir mail et mot de passe</string>
     <string name="connect_Password">Mot de passe</string>

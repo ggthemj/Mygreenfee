@@ -21,7 +21,7 @@ public class ReservationData {
     public ReservationData(JSONObject json){
         try {
             JSONObject reponseJSON = null;
-            reponseJSON = json.getJSONObject("member");
+            reponseJSON = json;
 
             if (reponseJSON.has("public_id")) {
                 this.public_id = reponseJSON.getInt("public_id");

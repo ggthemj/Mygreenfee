@@ -21,7 +21,8 @@ public class ReservationsRepository {
     ReservationsActivity context;
 
     //les données de l'utilisateur qui seront mises à jour
-    ReservationData reservationData ;
+    public ReservationData[] enCours ;
+    public ReservationData[] closedResas ;
 
     //Les paramètres de la requête http
     Map<String, String> mHeaders;
@@ -36,7 +37,7 @@ public class ReservationsRepository {
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
-        String url = context.getResources().getString(R.string.URL_getReservations)+"&data[member_id]=2550";
+        String url = context.getResources().getString(R.string.URL_getReservations)+"&data[member_id]="+member_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
         mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
@@ -50,16 +51,16 @@ public class ReservationsRepository {
                         try {
                             JSONObject rep = new JSONObject(response);
                             JSONArray open = rep.getJSONArray("open");
-                            ReservationData[] reservationData = new ReservationData[open.length()] ;
+                            enCours = new ReservationData[open.length()] ;
                             for (int i = 0 ; i < open.length(); i++){
-                                reservationData[i] = new ReservationData(open.getJSONObject(i));
+                                enCours[i] = new ReservationData(open.getJSONObject(i));
                             }
-                            JSONArray closed = rep.getJSONArray("open");
-                            ReservationData[] reservationData2 = new ReservationData[closed.length()] ;
+                            JSONArray closed = rep.getJSONArray("closed");
+                            closedResas = new ReservationData[closed.length()] ;
                             for (int i = 0 ; i < closed.length(); i++){
-                                reservationData2[i] = new ReservationData(closed.getJSONObject(i));
+                                closedResas[i] = new ReservationData(closed.getJSONObject(i));
                             }
-                            context.handleSuccess(reservationData, reservationData2);
+                            context.handleSuccess(enCours, closedResas);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
