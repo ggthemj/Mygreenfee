@@ -40,6 +40,10 @@ public class SpashscreenActivity extends Activity {
                     startActivity(intent);
                 }
 
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("is_booking", "false");
+                editor.commit();
+
                 // close this activity
                 finish();
             }
