@@ -393,6 +393,16 @@ public class MonCompteActivity extends AppCompatActivity {
                         dobCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
+
+        //Bind des buttons avec les méthodes correspondantes
+        final Button buttonMdp = findViewById(R.id.buttonvalidation2);
+        buttonMdp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handleMdp();
+            }
+        });
+
+
         sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String mailenr = sharedPref.getString("user_email", "false");
         String mdp = sharedPref.getString("user_password", "false");
@@ -400,6 +410,11 @@ public class MonCompteActivity extends AppCompatActivity {
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+mailenr+"/"+mdp);
 
         updateMemberRepository.update(mailenr, mdp);
+    }
+
+    public void handleMdp(){
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(intent);
     }
 
     //Update le champ date de naissance en le mettant au format attendu par le WS
@@ -479,6 +494,7 @@ public class MonCompteActivity extends AppCompatActivity {
 
             SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
             int id = sharedPref.getInt("user_id", 12);
+            String sid = ""+id;
 
             mySpinner = findViewById(R.id.spinnerRegions);
             int rid = (int) mySpinner.getSelectedItemId();
@@ -489,7 +505,32 @@ public class MonCompteActivity extends AppCompatActivity {
                 region_id = Integer.parseInt(this.regionsData.regionsData[rid - 1].public_id);
             }
 
-            //updateMemberRepository.updateInfos(id, civ, nom, pre, ema, dob, pay, region_id, pho);
+            final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+            simpleProgressBar.setVisibility(View.GONE);
+
+            LinearLayout lay = (LinearLayout)findViewById(R.id.hori1);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori2);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori3);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori4);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori5);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori6);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori7);
+            lay.setVisibility(View.GONE);
+            lay = (LinearLayout)findViewById(R.id.hori8);
+            lay.setVisibility(View.GONE);
+
+            Button but = (Button)findViewById(R.id.buttonvalidation);
+            but.setVisibility(View.GONE);
+            but = (Button)findViewById(R.id.buttonvalidation2);
+            but.setVisibility(View.GONE);
+
+            updateMemberRepository.updateMember(sid, civ, nom, pre, ema, dob, pay, ""+region_id, pho);
         } else {
             Toast toast = Toast.makeText(this, R.string.creationCompte_ErreurValidation, Toast.LENGTH_LONG);
             toast.show();
@@ -640,6 +681,41 @@ public class MonCompteActivity extends AppCompatActivity {
         phone.setText(u.phone);
         EditText mail = findViewById(R.id.email);
         mail.setText(u.email);
+        EditText dob = findViewById(R.id.bithday);
+        dob.setText(u.dob);
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
+        LinearLayout lay = (LinearLayout)findViewById(R.id.hori1);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori2);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori3);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori4);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori5);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori6);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori7);
+        lay.setVisibility(View.VISIBLE);
+        lay = (LinearLayout)findViewById(R.id.hori8);
+        lay.setVisibility(View.VISIBLE);
+
+        Button but = (Button)findViewById(R.id.buttonvalidation);
+        but.setVisibility(View.VISIBLE);
+        but = (Button)findViewById(R.id.buttonvalidation2);
+        but.setVisibility(View.VISIBLE);
+
+        Toast toast = Toast.makeText(this, "Informations enregistrées", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    // Méthode appelée quand le login est réussi !
+    public void handleSuccessUpdate(UserData u){
+        //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
 
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
@@ -674,5 +750,8 @@ public class MonCompteActivity extends AppCompatActivity {
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
     }
 }

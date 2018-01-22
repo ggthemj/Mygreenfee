@@ -126,13 +126,6 @@ public class ConnectMemberActivity extends AppCompatActivity {
                 handleOubli();
             }
         });
-
-        final Button facebookButton = findViewById(R.id.buttonfacebook);
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                facebookConnection();
-            }
-        });
     }
 
     // Méthode appelée quand le login est réussi !
@@ -152,7 +145,7 @@ public class ConnectMemberActivity extends AppCompatActivity {
         editor.putString("user_phone", u.phone);
         editor.commit();
 
-        Intent intent = new Intent(this, MonCompteActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
 

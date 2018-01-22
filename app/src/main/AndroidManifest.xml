@@ -13,9 +13,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logoappbla"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logoappbla"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -31,26 +31,32 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-    <activity
-        android:name=".HomeMapsActivity"
-        android:label="@string/title_activity_home_maps" />
-    <activity android:name=".MonCompteActivity" />
-    <activity
-        android:name=".CreateMemberActivity"
-        android:parentActivityName=".ConnectMemberActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".ConnectMemberActivity" />
-    </activity>
-    <activity
-        android:name=".ConnectMemberActivity"
-        android:parentActivityName=".HomeMapsActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".HomeMapsActivity" />
-    </activity>
-    <activity
-        android:name=".MyBankingCardActivity"
+        <activity
+            android:name=".HomeMapsActivity"
+            android:label="@string/title_activity_home_maps" />
+        <activity
+            android:name=".MonCompteActivity"
+            android:parentActivityName=".ProfileActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProfileActivity" />
+        </activity>
+        <activity
+            android:name=".CreateMemberActivity"
+            android:parentActivityName=".ConnectMemberActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ConnectMemberActivity" />
+        </activity>
+        <activity
+            android:name=".ConnectMemberActivity"
+            android:parentActivityName=".HomeMapsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeMapsActivity" />
+        </activity>
+        <activity
+            android:name=".MyBankingCardActivity"
             android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -58,24 +64,25 @@
         </activity>
         <activity
             android:name=".AddBankingCardActivity"
-            android:parentActivityName=".MyBankingCardActivity">
+            android:parentActivityName=".ProfileActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MyBankingCardActivity" />
+                android:value=".ProfileActivity" />
         </activity>
-        <activity android:name=".ProfileActivity"
-        android:parentActivityName=".HomeMapsActivity">
-        <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value=".HomeMapsActivity" />
-    </activity>
-    <activity android:name=".SpashscreenActivity">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        <activity
+            android:name=".ProfileActivity"
+            android:parentActivityName=".HomeMapsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeMapsActivity" />
+        </activity>
+        <activity android:name=".SpashscreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ReservationsActivity"
             android:parentActivityName=".HomeMapsActivity">
@@ -83,19 +90,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".HomeMapsActivity" />
         </activity>
-    <activity
-        android:name=".OnboardingActivity"
-        android:label="@string/title_activity_onboarding"
-        android:theme="@style/AppTheme.NoActionBar" />
-    <activity
-        android:name=".BookingActivity"
-        android:label="@string/title_activity_booking"
-        android:theme="@style/AppTheme" />
-    <activity android:name=".ClubActivity"></activity>
+        <activity
+            android:name=".OnboardingActivity"
+            android:label="@string/title_activity_onboarding"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".BookingActivity"
+            android:label="@string/title_activity_booking"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ClubActivity" />
         <activity android:name=".ClubListActivity" />
-
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:parentActivityName=".MonCompteActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MonCompteActivity" />
+        </activity>
+        <activity android:name=".OrderActivity"></activity>
     </application>
-    </manifest>
 
-
-
+</manifest>

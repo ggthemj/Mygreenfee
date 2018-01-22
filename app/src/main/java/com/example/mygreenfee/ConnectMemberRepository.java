@@ -35,7 +35,7 @@ public class ConnectMemberRepository {
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
-        String url = context.getResources().getString(R.string.URL_validateMember)+"?data[email]="+email+"&data[pwd]="+pwd;
+        String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
         mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
