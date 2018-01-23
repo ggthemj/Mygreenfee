@@ -32,6 +32,12 @@
     <string name="mesInfos_validerPage">Valider</string>
     <string name="mesInfos_dob">Naissance</string>
 
+    <string name="order_Title">Ma commande</string>
+    <string name="order_Reussite">Votre commande a bien été enregistrée!</string>
+    <string name="order_Fail">Le paiement a échoué, veuillez réessayer</string>
+    <string name="order_Button">Retour à l\'accueil</string>
+    <string name="order_ButtonFail">Retour au paiement</string>
+
     <string name="myBanking_Title">Ma carte bancaire</string>
     <string name="myBanking_Button">Modifier ma carte bancaire</string>
 
@@ -114,7 +120,7 @@
     <string name="calendar_booking">Calendar</string>
     <string name="today">today</string>
     <string name="onePlayer">1 player</string>
-    <string name="holes">{0,choice,0#1#(1 hole)|1&lt;({0} holes)}</string>
+    <string name="holes">{0,choice,0#|1#(1 trou)|1&lt;({0} trous)}</string>
     <string name="emptyTeeTimes">No tee times</string>
     <string name="slotsFree">availables</string>
     <string name="booking_time">09:00</string>

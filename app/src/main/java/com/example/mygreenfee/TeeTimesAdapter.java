@@ -1,6 +1,8 @@
 package com.example.mygreenfee;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -99,8 +101,20 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
                 final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+                SharedPreferences sharedPref = context.getSharedPreferences("appData", Context.MODE_PRIVATE);
+                String is_logged = sharedPref.getString("user_email", "false");
 
-                coursesRepo.book(context.getClubId(), teeTime, context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()));
+                if ("false".equals(is_logged)) {
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("order_id", "true");
+                    editor.commit();
+
+                    Intent intent = new Intent(context.getApplicationContext(), ConnectMemberActivity.class);
+                    context.startActivity(intent);
+                }
+                else {
+                    coursesRepo.book(context.getClubId(), teeTime, context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged);
+                }
             }
         });
 

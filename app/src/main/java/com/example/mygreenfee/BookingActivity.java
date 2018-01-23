@@ -195,7 +195,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
         //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
         teeID = item.getId();
-        coursesRepo.updateTeeTimes(new Course(), getClubId(), dateSelected, item.getId());
+        final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
+        coursesRepo.updateTeeTimes(new Course(), getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
     }
 
     @Override
@@ -224,21 +226,13 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     public void book(String orderId) {
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_logged = sharedPref.getString("user_id", "false");
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.order_id), orderId);
         editor.commit();
 
 
-
-        if ("false".equals(is_logged)) {
-            Intent intent = new Intent(getApplicationContext(), ConnectMemberActivity.class);
-            startActivity(intent);
-        }
-        else {
-            Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(getApplicationContext(), MyBankingCardActivity.class);
+        startActivity(intent);
     }
 
     public int getClubId() {

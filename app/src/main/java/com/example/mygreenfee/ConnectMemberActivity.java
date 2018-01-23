@@ -42,17 +42,6 @@ public class ConnectMemberActivity extends AppCompatActivity {
         }
     }
 
-    // Futur bouton de connexion Facebook, inactif pour l'instant
-    // Sert actuellement à reset le tutoriel !
-    public void facebookConnection(){
-        Toast toast = Toast.makeText(this, "Tutoriel remis à zéro", Toast.LENGTH_LONG);
-        toast.show();
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("has_ended_tutorial", "false");
-        editor.commit();
-    }
-
     // Bouton de login
     // Vérifie si le compte existe
     public void handleCrea(){

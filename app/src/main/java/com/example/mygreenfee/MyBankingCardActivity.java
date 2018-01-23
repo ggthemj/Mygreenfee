@@ -71,6 +71,11 @@ public class MyBankingCardActivity extends AppCompatActivity {
         imagev.setVisibility(View.VISIBLE);
     }
 
+    public void handleSuccessPayment(CardData carddata){
+        Intent intent = new Intent(this, OrderActivity.class);
+        startActivity(intent);
+    }
+
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
@@ -80,6 +85,7 @@ public class MyBankingCardActivity extends AppCompatActivity {
     }
 
     public void handleValidation(){
+
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String is_order = sharedPref.getString("order_id", "false");
 
