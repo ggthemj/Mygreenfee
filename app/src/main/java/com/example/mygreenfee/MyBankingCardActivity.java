@@ -25,8 +25,8 @@ public class MyBankingCardActivity extends AppCompatActivity {
         //Mise en place de la custom app bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         bcRepository = new BankingCardRepository(this);
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
@@ -44,6 +44,12 @@ public class MyBankingCardActivity extends AppCompatActivity {
                 handleValidation();
             }
         });
+
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            buttonValidation.setText(getResources().getString(R.string.myBanking_Tunnel));
+        }
     }
 
     public void handleSuccess(CardData carddata){
@@ -74,7 +80,16 @@ public class MyBankingCardActivity extends AppCompatActivity {
     }
 
     public void handleValidation(){
-        Intent intent = new Intent(this, AddBankingCardActivity.class);
-        startActivity(intent);
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(is_order.equals("false")){
+            Intent intent = new Intent(this, AddBankingCardActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, OrderActivity.class);
+            startActivity(intent);
+        }
     }
 }

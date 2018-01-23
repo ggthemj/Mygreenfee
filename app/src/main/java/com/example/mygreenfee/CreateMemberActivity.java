@@ -140,6 +140,13 @@ public class CreateMemberActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            buttonValidation.setText(getResources().getString(R.string.creationCompte_Tunnel));
+        }
+
         //initialisation des textes d'erreur
         TextView prenomError = findViewById(R.id.error_prenom);
         prenomError.setText("");
@@ -575,8 +582,16 @@ public class CreateMemberActivity extends AppCompatActivity {
         editor.putString("user_phone", u.phone);
         editor.commit();
 
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(is_order.equals("false")){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, MyBankingCardActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void handleError(String s){
