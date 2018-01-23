@@ -77,8 +77,9 @@
                 <Spinner
                     android:id="@+id/bookingCoursesSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_height="53dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/grayColor" />
 
             </LinearLayout>
 

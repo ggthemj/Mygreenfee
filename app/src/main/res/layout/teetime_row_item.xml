@@ -53,6 +53,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:clickable="false"
         android:text="@string/booking_reserver"
         android:textSize="14sp" />
 

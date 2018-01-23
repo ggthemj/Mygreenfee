@@ -171,8 +171,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                 courses.add(new TeeSpinnerDTO("0", course.getName() + " - Tee 1"));
             }
         }
-        ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, android.R.layout.simple_spinner_item, courses);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         coursesSpinner.setAdapter(dataAdapter);
 
     }
