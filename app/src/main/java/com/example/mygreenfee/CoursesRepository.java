@@ -27,6 +27,7 @@ public class CoursesRepository {
 
     //Les paramètres de la requête http
     Map<String, String> mHeaders;
+    Map<String, String> mParams;
 
     private Course[] courses;
     private TeeTime[] teeTimes;
@@ -166,13 +167,22 @@ public class CoursesRepository {
 
     }
 
-    public void book(int clubId, TeeTime teeTime, int nbPlaces, String date) {
+    public void book(int clubId, TeeTime teeTime, int nbPlaces, String date, String user_email) {
+        Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
+
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
-        String url = bookingContext.getResources().getString(R.string.URL_order) + "&data%5Bclub_id%5D=" + clubId
-                + "&data%5Btee_id%5D=" + teeTime.getTee_public_id()
-                + "&data%5Bdate%5D=" + date
-                + "&data%5Btime%5D=" + teeTime.getTime().replace(":", "%3A")
-                + "&data%5Bnb_places%5D=" + nbPlaces ;
+        String url = bookingContext.getResources().getString(R.string.URL_order);
+
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", bookingContext.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", bookingContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mParams = new HashMap<String, String>();
+        mParams.put("data[club_id]", ""+clubId);
+        mParams.put("data[tee_id]", ""+teeTime.getTee_public_id());
+        mParams.put("data[date]", date);
+        mParams.put("data[time]", teeTime.getTime());
+        mParams.put("data[nb_places]", ""+nbPlaces);
+        mParams.put("data[email]", ""+user_email);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -199,6 +209,10 @@ public class CoursesRepository {
             //protected Map<String, String> getParams() {
             //    return mParams;
             //}
+            protected Map<String, String> getParams()
+            {
+                return mParams;
+            }
             public Map<String, String> getHeaders() {
                 return mHeaders;
             }

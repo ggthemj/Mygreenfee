@@ -23,11 +23,20 @@
     <string name="changePassword_Hint3">Confirmer votre nouveau mot de passe</string>
     <string name="changePassword_Error">Veuillez vérifier votre saisie</string>
     <string name="changePassword_Error2">Champ obligatoire</string>
+    <string name="myBanking_Tunnel">Payer avec cette carte</string>
+    <string name="creationCompte_Tunnel">M\'inscrire et poursuivre ma commande</string>
+    <string name="connect_Tunnel">Pour compléter votre commande, veuillez vous connecter ou créer un compte</string>
 
     <string name="mesInfos_Title">Mes infos personnelles</string>
     <string name="mesInfos_changeMdp">Modifier mon mot de passe</string>
     <string name="mesInfos_validerPage">Valider</string>
     <string name="mesInfos_dob">Naissance</string>
+
+    <string name="order_Title">Ma commande</string>
+    <string name="order_Reussite">Votre commande a bien été enregistrée!</string>
+    <string name="order_Fail">Le paiement a échoué, veuillez réessayer</string>
+    <string name="order_Button">Retour à l\'accueil</string>
+    <string name="order_ButtonFail">Retour au paiement</string>
 
     <string name="myBanking_Title">Ma carte bancaire</string>
     <string name="myBanking_Button">Modifier ma carte bancaire</string>

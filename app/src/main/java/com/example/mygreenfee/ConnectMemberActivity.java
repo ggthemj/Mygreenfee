@@ -42,17 +42,6 @@ public class ConnectMemberActivity extends AppCompatActivity {
         }
     }
 
-    // Futur bouton de connexion Facebook, inactif pour l'instant
-    // Sert actuellement à reset le tutoriel !
-    public void facebookConnection(){
-        Toast toast = Toast.makeText(this, "Tutoriel remis à zéro", Toast.LENGTH_LONG);
-        toast.show();
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("has_ended_tutorial", "false");
-        editor.commit();
-    }
-
     // Bouton de login
     // Vérifie si le compte existe
     public void handleCrea(){
@@ -82,11 +71,19 @@ public class ConnectMemberActivity extends AppCompatActivity {
         this.connectMemberRepository = new ConnectMemberRepository(this);
         is_login_ok = false;
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            final TextView titre = findViewById(R.id.textView);
+            titre.setText(getResources().getString(R.string.connect_Tunnel));
+        }
+
         //Mise en place de la custom app bar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
 
         //Code qui permet de gérer le contrôle de surface sur le mail
         EditText login = findViewById(R.id.email);
@@ -145,8 +142,16 @@ public class ConnectMemberActivity extends AppCompatActivity {
         editor.putString("user_phone", u.phone);
         editor.commit();
 
-        Intent intent = new Intent(this, ProfileActivity.class);
-        startActivity(intent);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(is_order.equals("false")){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        }
+        else{
+            Intent intent = new Intent(this, MyBankingCardActivity.class);
+            startActivity(intent);
+        }
     }
 
     // Méthode appelée quand le login est refusé (avec message d'erreur) !
