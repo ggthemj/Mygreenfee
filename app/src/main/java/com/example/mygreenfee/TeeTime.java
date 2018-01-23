@@ -2,16 +2,13 @@ package com.example.mygreenfee;
 
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Date;
 
 public class TeeTime {
 
     public static final String BOOKING_NAME = "Booking";
-    private int tee_public_id;
+    private String tee_public_id;
     private String date;
     private String time;
     private double sale_price;
@@ -26,8 +23,8 @@ public class TeeTime {
     // Constructeur d'un parcours avec toutes les données nécessaires
     public TeeTime(JSONObject json){
         try {
-            if (json.has("tee_public_id")) {
-                this.tee_public_id = json.getInt("tee_public_id");
+            if (json.has("public_id")) {
+                this.tee_public_id = json.getString("public_id");
             }
             else{
                 Log.d("DEBUG","Manque l'ID");
@@ -96,11 +93,11 @@ public class TeeTime {
         Log.d("DEBUG","J'ajoute le teetimes : "+ this.tee_public_id);
     }
 
-    public int getTee_public_id() {
+    public String getTee_public_id() {
         return tee_public_id;
     }
 
-    public void setTee_public_id(int tee_public_id) {
+    public void setTee_public_id(String tee_public_id) {
         this.tee_public_id = tee_public_id;
     }
 

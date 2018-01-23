@@ -120,4 +120,5 @@
     <string name="booking_reserver">Book</string>
     <string name="info_title">Informations terrains</string>
     <string name="title_activity_reservations">ReservationsActivity</string>
+    <string name="order_id">order_id</string>
 </resources>

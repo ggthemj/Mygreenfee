@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -21,8 +25,9 @@ import static android.icu.text.NumberFormat.CURRENCYSTYLE;
  * Created by Julien on 12/01/2018.
  */
 
-public class TeeTimesAdapter extends ArrayAdapter<TeeTime> implements View.OnClickListener {
+public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
+    private CoursesRepository coursesRepo;
     private ArrayList<TeeTime> dataSet;
     Context mContext;
 
@@ -30,10 +35,12 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> implements View.OnCli
         TextView time;
         TextView sale_price;
         TextView slots_free;
+        Button book;
     }
 
     public TeeTimesAdapter(Context applicationContext) {
         super(applicationContext, R.layout.teetime_row_item);
+        this.coursesRepo = new CoursesRepository((BookingActivity) applicationContext);
     }
 
 
@@ -44,29 +51,15 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> implements View.OnCli
 
     }
 
-    @Override
-    public void onClick(View v) {
-
-        int position = (Integer) v.getTag();
-        Object object = getItem(position);
-        TeeTime dataModel = (TeeTime) object;
-
-        switch (v.getId()) {
-            case R.id.booking_button:
-
-                break;
-        }
-    }
-
     private int lastPosition = -1;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         TeeTime dataModel = getItem(position);
 
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
 
         final View result;
 
@@ -78,6 +71,7 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> implements View.OnCli
             viewHolder.slots_free = (TextView) convertView.findViewById(R.id.booking_dispo_view);
             viewHolder.time = (TextView) convertView.findViewById(R.id.booking_time_view);
             viewHolder.sale_price = (TextView) convertView.findViewById(R.id.booking_price_view);
+            viewHolder.book = (Button) convertView.findViewById(R.id.booking_button);
 
             result = convertView;
 
@@ -92,6 +86,23 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> implements View.OnCli
         NumberFormat formatter = NumberFormat.getInstance(Locale.FRANCE);
         String moneyString = formatter.format(dataModel.getSale_price());
         viewHolder.sale_price.setText(moneyString + "€");
+        viewHolder.book.setTag(position);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                ViewHolder i = (ViewHolder) v.getTag();
+                Button b = ((RelativeLayout) v).findViewById(R.id.booking_button);
+                Integer position = (Integer) b.getTag();
+                BookingActivity context = (BookingActivity) getContext();
+                TeeTime teeTime = getItem(position);
+
+                final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                coursesRepo.book(context.getClubId(), teeTime, context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()));
+            }
+        });
 
         //viewHolder.info.setOnClickListener(this);
 

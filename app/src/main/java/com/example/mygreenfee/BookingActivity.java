@@ -2,7 +2,9 @@ package com.example.mygreenfee;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -40,6 +42,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private int clubId;
     private String teeID;
     private String dateSelected;
+    private ClubData club;
+    private Calendar calendarSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +52,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         // Récupération du club séletionné
         Intent intent = getIntent();
-        ClubData club = (ClubData) intent.getParcelableExtra("currentClub");
+        club = (ClubData) intent.getParcelableExtra("currentClub");
 
         showPopUp(club.description);
 
@@ -79,7 +83,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         // TeeTimes
         teeTimesList = (ListView) findViewById(R.id.bookingListView);
-        arrayAdapter = new TeeTimesAdapter(getApplicationContext());
+        arrayAdapter = new TeeTimesAdapter(this);
                 /*new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -103,6 +107,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     }
 
     private void setDateView(final Calendar calendar) {
+        calendarSelected = calendar;
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         String today = "";
         Calendar currentCal = Calendar.getInstance();
@@ -217,6 +222,25 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
+    public void book(String orderId) {
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_logged = sharedPref.getString("user_id", "false");
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.order_id), orderId);
+        editor.commit();
+
+
+
+        if ("false".equals(is_logged)) {
+            Intent intent = new Intent(getApplicationContext(), ConnectMemberActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
+            startActivity(intent);
+        }
+    }
+
     public int getClubId() {
         return clubId;
     }
@@ -239,5 +263,21 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     public void setTeeID(String teeID) {
         this.teeID = teeID;
+    }
+
+    public int getNbPlayers() {
+        return nbPlayers;
+    }
+
+    public void setNbPlayers(int nbPlayers) {
+        this.nbPlayers = nbPlayers;
+    }
+
+    public Calendar getCalendarSelected() {
+        return calendarSelected;
+    }
+
+    public void setCalendarSelected(Calendar calendarSelected) {
+        this.calendarSelected = calendarSelected;
     }
 }

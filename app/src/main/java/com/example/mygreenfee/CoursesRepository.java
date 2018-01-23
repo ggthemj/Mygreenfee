@@ -166,6 +166,56 @@ public class CoursesRepository {
 
     }
 
+    public void book(int clubId, TeeTime teeTime, int nbPlaces, String date) {
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
+        String url = bookingContext.getResources().getString(R.string.URL_order) + "&data%5Bclub_id%5D=" + clubId
+                + "&data%5Btee_id%5D=" + teeTime.getTee_public_id()
+                + "&data%5Bdate%5D=" + date
+                + "&data%5Btime%5D=" + teeTime.getTime().replace(":", "%3A")
+                + "&data%5Bnb_places%5D=" + nbPlaces ;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "response : "+response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            String order_id = json.getString("order_id");
+                            bookingContext.book(order_id);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","That didn't work! " + error.getMessage());
+            }
+        }) {
+            @Override
+            //protected Map<String, String> getParams() {
+            //    return mParams;
+            //}
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
     public Course[] getCourses() {
         return courses;
     }
