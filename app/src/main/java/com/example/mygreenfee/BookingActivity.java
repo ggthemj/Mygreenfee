@@ -3,6 +3,7 @@ package com.example.mygreenfee;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private String dateSelected;
     private ClubData club;
     private Calendar calendarSelected;
+    public String clubSelected;
+    public String priceSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         Intent intent = getIntent();
         club = (ClubData) intent.getParcelableExtra("currentClub");
 
-        showPopUp(club.description);
+        //showPopUp(club.description);
 
         // Récupération des parcours du club
         this.coursesRepo = new CoursesRepository(this);
@@ -63,6 +66,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         // Titre de l'écran
         titleView = (TextView) findViewById(R.id.bookingTitleView);
         titleView.setText(club.name);
+        clubSelected = club.name;
 
         // Calendar
         dateView = (TextView) findViewById(R.id.bookingDateView);
@@ -91,8 +95,13 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         teeTimesList.setAdapter(arrayAdapter);
 
-
-
+        final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
+        buttonInfoTerrain.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                showPopUp(club.description);
+                buttonInfoTerrain.setVisibility(View.GONE);
+            }
+        });
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -188,6 +197,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             arrayAdapter.addAll(teeTimeArray);
             arrayAdapter.notifyDataSetChanged();
         }
+
+        final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
+        buttonInfoTerrain.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -219,15 +231,26 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         tv.setText(text);
 
         builder.setView(customView);*/
-        builder.create();
+        AlertDialog alert = builder.create();
+        alert.getWindow().setLayout(600, 400);
+        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(final DialogInterface arg0) {
+                final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
+                buttonInfoTerrain.setVisibility(View.VISIBLE);
+            }
+        });
         builder.show();
 
     }
 
-    public void book(String orderId) {
+    public void book(String orderId, String orderClub, String orderPrice, String orderDate) {
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.order_id), orderId);
+        editor.putString("order_price", orderPrice);
+        editor.putString("order_club", orderClub);
+        editor.putString("order_date", orderDate);
         editor.commit();
 
 

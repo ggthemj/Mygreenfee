@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,10 +74,22 @@ public class ConnectMemberActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String is_order = sharedPref.getString("order_id", "false");
+        String is_club = sharedPref.getString("order_club", "false");
+        String is_price = sharedPref.getString("order_price", "false");
+        String is_date = sharedPref.getString("order_date", "false");
 
         if(!is_order.equals("false")){
             final TextView titre = findViewById(R.id.textView);
             titre.setText(getResources().getString(R.string.connect_Tunnel));
+
+            final TextView titreCommande = findViewById(R.id.titreCommande);
+            titreCommande.setText("Confirmation commande");
+
+            final TextView detailCommande = findViewById(R.id.detailCommande);
+            detailCommande.setText(is_club+" - "+is_date+" - "+is_price);
+
+            final LinearLayout commandeL = findViewById(R.id.formulaire2);
+            commandeL.setVisibility(View.VISIBLE);
         }
 
         //Mise en place de la custom app bar
@@ -149,9 +162,27 @@ public class ConnectMemberActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(this, MyBankingCardActivity.class);
-            startActivity(intent);
+            int arg1 = sharedPref.getInt("order_arg1", 0);
+            String arg2 = sharedPref.getString("order_arg2", "false");
+            String arg3 = sharedPref.getString("order_arg3", "false");
+            int arg4 = sharedPref.getInt("order_arg4", 0);
+            String arg5 = sharedPref.getString("order_arg5", "false");
+            String arg6 = sharedPref.getString("order_arg6", "false");
+            String arg7 = sharedPref.getString("order_arg7", "false");
+
+            connectMemberRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
         }
+    }
+
+    public void handleBookSuccess(String orderId, String orderClub, String orderPrice, String orderDate) {
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.order_id), orderId);
+        editor.commit();
+
+
+        Intent intent = new Intent(getApplicationContext(), MyBankingCardActivity.class);
+        startActivity(intent);
     }
 
     // Méthode appelée quand le login est refusé (avec message d'erreur) !

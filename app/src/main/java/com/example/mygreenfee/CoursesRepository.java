@@ -167,7 +167,7 @@ public class CoursesRepository {
 
     }
 
-    public void book(int clubId, TeeTime teeTime, int nbPlaces, String date, String user_email) {
+    public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
@@ -178,9 +178,9 @@ public class CoursesRepository {
         mHeaders.put("CONTENT-LANGUAGE", bookingContext.getResources().getString(R.string.CONTENT_LANGUAGE));
         mParams = new HashMap<String, String>();
         mParams.put("data[club_id]", ""+clubId);
-        mParams.put("data[tee_id]", ""+teeTime.getTee_public_id());
+        mParams.put("data[tee_id]", arg1);
         mParams.put("data[date]", date);
-        mParams.put("data[time]", teeTime.getTime());
+        mParams.put("data[time]", arg2);
         mParams.put("data[nb_places]", ""+nbPlaces);
         mParams.put("data[email]", ""+user_email);
 
@@ -194,7 +194,7 @@ public class CoursesRepository {
                             JSONObject json = new JSONObject(response);
 
                             String order_id = json.getString("order_id");
-                            bookingContext.book(order_id);
+                            bookingContext.book(order_id, clubS, priceS, date);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

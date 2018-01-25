@@ -589,14 +589,32 @@ public class CreateMemberActivity extends AppCompatActivity {
             startActivity(intent);
         }
         else{
-            Intent intent = new Intent(this, MyBankingCardActivity.class);
-            startActivity(intent);
+            int arg1 = sharedPref.getInt("order_arg1", 0);
+            String arg2 = sharedPref.getString("order_arg2", "false");
+            String arg3 = sharedPref.getString("order_arg3", "false");
+            int arg4 = sharedPref.getInt("order_arg4", 0);
+            String arg5 = sharedPref.getString("order_arg5", "false");
+            String arg6 = sharedPref.getString("order_arg6", "false");
+            String arg7 = sharedPref.getString("order_arg7", "false");
+
+            createMemberRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
         }
     }
 
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public void handleBookSuccess(String orderId, String orderClub, String orderPrice, String orderDate) {
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.order_id), orderId);
+        editor.commit();
+
+
+        Intent intent = new Intent(getApplicationContext(), MyBankingCardActivity.class);
+        startActivity(intent);
     }
 
     public void handleSuccessRegions(RegionsData r){

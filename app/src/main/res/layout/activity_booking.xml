@@ -145,6 +145,20 @@
             tools:layout_editor_absoluteY="228dp">
 
         </ListView>
+
+        <Button
+            android:id="@+id/buttonInfoTerrain"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="-40dp"
+            android:backgroundTint="@color/greenAlbaColor"
+            android:text="Informations terrain"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textColor="@color/whiteColor"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

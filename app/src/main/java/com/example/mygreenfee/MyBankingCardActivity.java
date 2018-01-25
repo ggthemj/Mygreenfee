@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,27 +53,87 @@ public class MyBankingCardActivity extends AppCompatActivity {
         }
     }
 
-    public void handleSuccess(CardData carddata){
+    public void handleSuccess2(){
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String mail = sharedPref.getString("user_email", "false");
+        bcRepository.confirmorder(is_order, mail);
+    }
+
+    public void handleSuccess3(){
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
 
         final TextView alias = (TextView) findViewById(R.id.alias);
         alias.setVisibility(View.VISIBLE);
-        alias.setText(carddata.alias);
 
         final TextView datetw = (TextView) findViewById(R.id.date);
         datetw.setVisibility(View.VISIBLE);
-        datetw.setText(carddata.expiration_date.substring(0,2)+"/20"+carddata.expiration_date.substring(2,4));
 
         final Button button = (Button) findViewById(R.id.buttonvalidation);
         button.setVisibility(View.VISIBLE);
 
         final ImageView imagev = (ImageView) findViewById(R.id.CB);
         imagev.setVisibility(View.VISIBLE);
+
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            final EditText code = findViewById(R.id.code);
+            code.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void handleSuccess(CardData carddata){
+
+        final TextView alias = (TextView) findViewById(R.id.alias);
+        alias.setText(carddata.alias);
+
+        final TextView datetw = (TextView) findViewById(R.id.date);
+        datetw.setText(carddata.expiration_date.substring(0,2)+"/20"+carddata.expiration_date.substring(2,4));
+
+        final ImageView imagev = (ImageView) findViewById(R.id.CB);
+        imagev.setVisibility(View.VISIBLE);
+
+        final Button button = (Button) findViewById(R.id.buttonvalidation);
+        button.setVisibility(View.VISIBLE);
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String mail = sharedPref.getString("user_email", "false");
+
+        /*
+        if(!is_order.equals("false")){
+            bcRepository.preparepay(is_order, mail);
+        }
+        else{
+            final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+            simpleProgressBar.setVisibility(View.GONE);
+
+            final Button button = (Button) findViewById(R.id.buttonvalidation);
+            button.setVisibility(View.VISIBLE);
+
+            final ImageView imagev = (ImageView) findViewById(R.id.CB);
+            imagev.setVisibility(View.VISIBLE);
+        }
+        */
+
+        if(!is_order.equals("false")){
+            final EditText code = findViewById(R.id.code);
+            code.setVisibility(View.VISIBLE);
+        }
     }
 
     public void handleSuccessPayment(CardData carddata){
-        Intent intent = new Intent(this, OrderActivity.class);
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
+
+        Intent intent = new Intent(this, ReservationsActivity.class);
         startActivity(intent);
     }
 
@@ -84,18 +145,38 @@ public class MyBankingCardActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void handleValidation(){
+    public void handleErrorPay(String s){
+        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_order = sharedPref.getString("order_id", "false");
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
 
-        if(is_order.equals("false")){
-            Intent intent = new Intent(this, AddBankingCardActivity.class);
-            startActivity(intent);
+        Intent intent = new Intent(this, HomeMapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void handleValidation(){
+
+        EditText code = findViewById(R.id.code);
+        if(code.getText().length()>2) {
+
+            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String is_order = sharedPref.getString("order_id", "false");
+            String email = sharedPref.getString("user_email", "false");
+
+            if (is_order.equals("false")) {
+                Intent intent = new Intent(this, AddBankingCardActivity.class);
+                startActivity(intent);
+            } else {
+                bcRepository.pay(is_order, email, code.getText().toString());
+            }
+
         }
         else{
-            Intent intent = new Intent(this, OrderActivity.class);
-            startActivity(intent);
+            Toast toast = Toast.makeText(this, "Veuillez compléter votre code de sécurité", Toast.LENGTH_LONG);
+            toast.show();
         }
     }
 }

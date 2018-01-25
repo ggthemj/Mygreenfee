@@ -74,7 +74,7 @@
                 android:ems="10"
                 android:fontFamily="@font/helveticaneue"
                 android:hint="@string/addCard_Numero"
-                android:inputType="textPersonName"
+                android:inputType="phone"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:textColorHint="@color/grayColor"
@@ -112,7 +112,7 @@
                 android:ems="10"
                 android:fontFamily="@font/helveticaneue"
                 android:hint="@string/addCard_Cvx"
-                android:inputType="textEmailAddress"
+                android:inputType="phone"
                 android:paddingLeft="16dp"
                 android:textColorHint="@color/grayColor"
                 android:textSize="16sp" />

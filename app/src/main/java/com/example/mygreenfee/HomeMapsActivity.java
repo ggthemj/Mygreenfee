@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -56,6 +57,8 @@ public class HomeMapsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("DEBUG", "Je crée home maps");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_maps);
 
@@ -69,6 +72,11 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         String is_connected = sharedPref.getString("home_state", "1");
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
+        editor.commit();
+
         if(is_connected.equals("1")){
             displayMaps();
             bottomNavigationView.setSelectedItemId(R.id.navigation_Golfs);

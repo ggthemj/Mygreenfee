@@ -107,13 +107,25 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
                 if ("false".equals(is_logged)) {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putString("order_id", "true");
+                    editor.putInt("order_arg1", context.getClubId());
+                    editor.putString("order_arg2", teeTime.getTee_public_id());
+                    editor.putString("order_arg3", teeTime.getTime());
+                    editor.putInt("order_arg4", context.getNbPlayers());
+                    editor.putString("order_arg5", dateFormat.format(context.getCalendarSelected().getTime()));
+                    editor.putString("order_arg6", context.clubSelected);
+                    editor.putString("order_arg7", viewHolder.sale_price.getText().toString());
+
+                    editor.putString("order_price", viewHolder.sale_price.getText().toString());
+                    editor.putString("order_club", context.clubSelected);
+                    editor.putString("order_date", dateFormat.format(context.getCalendarSelected().getTime()));
+
                     editor.commit();
 
                     Intent intent = new Intent(context.getApplicationContext(), ConnectMemberActivity.class);
                     context.startActivity(intent);
                 }
                 else {
-                    coursesRepo.book(context.getClubId(), teeTime, context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged);
+                    coursesRepo.book(context.getClubId(), teeTime.getTee_public_id(), teeTime.getTime(), context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged, context.clubSelected, viewHolder.sale_price.getText().toString());
                 }
             }
         });

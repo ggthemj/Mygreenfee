@@ -741,9 +741,6 @@ public class MonCompteActivity extends AppCompatActivity {
         but.setVisibility(View.VISIBLE);
         but = (Button)findViewById(R.id.buttonvalidation2);
         lay.setVisibility(View.VISIBLE);
-
-        Toast toast = Toast.makeText(this, "Informations enregistrées", Toast.LENGTH_LONG);
-        toast.show();
     }
 
     // Méthode appelée quand le login est refusé (avec message d'erreur) !

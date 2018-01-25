@@ -45,10 +45,12 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("DEBUG", "Onboarding");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding);
         modifyCircles(0);
         // Set up the ViewPager with the sections adapter.
+
         mPager = (ViewPager) findViewById(R.id.vp);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -63,6 +65,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
                 modifyCircles(position);
             }
         });
+        Log.d("DEBUG", "Onboarding2");
 
         final Button buttonValidation = findViewById(R.id.button3);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
                 handleValidation();
             }
         });
+        Log.d("DEBUG", "Onboarding3");
     }
 
     public void handleValidation(){
@@ -107,7 +111,7 @@ public class OnboardingActivity extends AppCompatActivity implements OnboardPage
 
         @Override
         public Fragment getItem(int position) {
-            return null;//OnboardPageFragment.newInstance(position);
+            return OnboardPageFragment.newInstance(position);
         }
 
         @Override

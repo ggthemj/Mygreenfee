@@ -41,7 +41,7 @@ public class SpashscreenActivity extends Activity {
                 }
 
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("is_booking", "false");
+                editor.putString("order_id", "false");
                 editor.commit();
 
                 // close this activity

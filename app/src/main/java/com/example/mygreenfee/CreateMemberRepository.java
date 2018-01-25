@@ -221,5 +221,66 @@ public class CreateMemberRepository {
         queue.add(stringRequest);
     }
 
+    public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
+        Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
+        RequestQueue queue = Volley.newRequestQueue(context);
+        String url = context.getResources().getString(R.string.URL_order);
+
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mParams = new HashMap<String, String>();
+        mParams.put("data[club_id]", ""+clubId);
+        mParams.put("data[tee_id]", arg1);
+        mParams.put("data[date]", date);
+        mParams.put("data[time]", arg2);
+        mParams.put("data[nb_places]", ""+nbPlaces);
+        mParams.put("data[email]", ""+user_email);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "response : "+response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            String order_id = json.getString("order_id");
+                            context.handleBookSuccess(order_id, clubS, priceS, date);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","That didn't work! " + error.getMessage());
+            }
+        }) {
+            @Override
+            //protected Map<String, String> getParams() {
+            //    return mParams;
+            //}
+            protected Map<String, String> getParams()
+            {
+                return mParams;
+            }
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+    }
 }

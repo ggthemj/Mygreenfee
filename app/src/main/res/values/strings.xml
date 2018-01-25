@@ -32,7 +32,7 @@
     <string name="mesInfos_validerPage">Valider</string>
     <string name="mesInfos_dob">Naissance</string>
 
-    <string name="order_Title">Ma commande</string>
+    <string name="order_Title">Confirmation de commande</string>
     <string name="order_Reussite">Votre commande a bien été enregistrée!</string>
     <string name="order_Fail">Le paiement a échoué, veuillez réessayer</string>
     <string name="order_Button">Retour à l\'accueil</string>
@@ -46,6 +46,7 @@
     <string name="addCard_Numero">Numéro de carte</string>
     <string name="addCard_Date">Date d\'expiration</string>
     <string name="addCard_Cvx">Code de sécurité</string>
+    <string name="addCard_CodePayment">Entrez votre code à 3 chiffres</string>
 
     <string name="creationCompte_Title">Créer un compte</string>
     <string name="creationCompte_Civilite">Civilité</string>

@@ -92,7 +92,66 @@ public class BankingCardRepository {
     }
 
     //Tentative de login :)
-    public void pay(final String id, final String email){
+    public void pay(final String id, final String email, final String csc){
+
+        Log.d("DEBUG", "Début de la requête "+id+"/"+email);
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.context);
+        String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mParams = new HashMap<String, String>();
+        mParams.put("data[email]", email);
+        mParams.put("data[csc]", csc);
+        mParams.put("data[return_url]", "https://www.mygreenfee.com");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "réponse login : "+response);
+
+                        context.handleSuccessPayment(cardData);
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","Erreur !"+error.getMessage());
+                try {
+                    JSONObject messageErreur = new JSONObject(error.getMessage());
+                    context.handleErrorPay(messageErreur.getString("error_message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                return mParams;
+            }
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    //Tentative de preparation
+    public void preparepay(final String id, final String email){
 
         Log.d("DEBUG", "Début de la requête "+id+"/"+email);
         //Préparation de la requête
@@ -110,14 +169,66 @@ public class BankingCardRepository {
                     @Override
                     public void onResponse(String response) {
                         Log.d("DEBUG", "réponse login : "+response);
-                        try {
-                            JSONObject json = new JSONObject(response);
-                            JSONObject json2 = json.getJSONObject("card");
-                            cardData = new CardData(json2);
-                            context.handleSuccessPayment(cardData);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
+                        context.handleSuccess3();
+
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","Erreur !"+error.getMessage());
+                try {
+                    JSONObject messageErreur = new JSONObject(error.getMessage());
+                    context.handleError(messageErreur.getString("error_message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                return mParams;
+            }
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    //Tentative de confirmation
+    public void confirmorder(final String id, final String email){
+
+        Log.d("DEBUG", "Début de la requête de confirmation "+id+"/"+email);
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.context);
+        String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/confirm";
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mParams = new HashMap<String, String>();
+        mParams.put("data[email]", email);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "réponse login : "+response);
+
+                        context.handleSuccess3();
+
 
                     }
                 }, new Response.ErrorListener() {

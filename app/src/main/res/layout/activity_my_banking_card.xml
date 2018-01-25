@@ -28,7 +28,6 @@
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:layout_marginRight="?attr/actionBarSize"
         android:gravity="center"
         />
     </android.support.v7.widget.Toolbar>
@@ -70,9 +69,50 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="40dp"
                 android:adjustViewBounds="true"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar"
                 app:srcCompat="@drawable/modifiercb_3x" />
+
+            <TextView
+                android:id="@+id/alias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:layout_marginTop="-65dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/helveticaneue"
+                android:text="TextView"
+                android:textAlignment="textEnd"
+                android:textColor="@color/whiteColor"
+                android:textSize="18sp"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/code"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="4dp"
+                android:background="@color/whiteColor"
+                android:ems="10"
+                android:fontFamily="@font/helveticaneue"
+                android:hint="@string/addCard_CodePayment"
+                android:paddingLeft="16dp"
+                android:textColorHint="@color/grayColor"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/buttonvalidation"
@@ -86,32 +126,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/whiteColor"
                 android:textSize="16sp"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
-            <TextView
-                android:id="@+id/alias"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="-165dp"
-                android:fontFamily="@font/helveticaneue"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/whiteColor"
-                android:textSize="18sp"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="60dp"
-                android:fontFamily="@font/helveticaneue"
-                android:text="TextView"
-                android:textAlignment="textEnd"
-                android:textColor="@color/whiteColor"
-                android:textSize="18sp"
-                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
