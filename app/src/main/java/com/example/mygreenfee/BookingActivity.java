@@ -255,11 +255,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         button2.setOnClickListener(this);
 
         tv.setText(text);
-        teeTimesList.post(new Runnable() {
+        /*teeTimesList.post(new Runnable() {
             public void run() {
                 popupWindow.showAtLocation(clubLayout, Gravity.CENTER, 0, 0);
             }
-        });
+        });*/
 
     }
 

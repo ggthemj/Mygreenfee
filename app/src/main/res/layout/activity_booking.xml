@@ -13,12 +13,13 @@
         <LinearLayout
             android:id="@+id/club"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="210dp"
+                android:layout_weight="0"
                 android:orientation="vertical">
 
                 <android.support.v7.widget.Toolbar
@@ -185,6 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
+                android:layout_weight="3"
                 android:addStatesFromChildren="true"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="228dp">
@@ -196,13 +198,14 @@
                 style="@style/Widget.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_gravity="bottom"
                 android:layout_marginTop="-40dp"
                 android:backgroundTint="@color/greenAlbaColor"
                 android:text="Informations terrain"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/whiteColor"
                 android:textSize="16sp"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
         </LinearLayout>
     </RelativeLayout>
