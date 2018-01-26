@@ -6,15 +6,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,7 +35,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class BookingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
+public class BookingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private TextView titleView;
     private TextView dateView;
@@ -38,6 +46,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private TextView playerView;
     private int nbPlayers = 1;
     private ListView teeTimesList;
+    private ConstraintLayout clubLayout;
     private ArrayAdapter<TeeTime> arrayAdapter;
 
     private int clubId;
@@ -45,8 +54,10 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private String dateSelected;
     private ClubData club;
     private Calendar calendarSelected;
-    public String clubSelected;
-    public String priceSelected;
+    private PopupWindow popupWindow;
+    TextView buttonInfoTerrain;
+    ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +68,6 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         Intent intent = getIntent();
         club = (ClubData) intent.getParcelableExtra("currentClub");
 
-        //showPopUp(club.description);
 
         // Récupération des parcours du club
         this.coursesRepo = new CoursesRepository(this);
@@ -66,7 +76,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         // Titre de l'écran
         titleView = (TextView) findViewById(R.id.bookingTitleView);
         titleView.setText(club.name);
-        clubSelected = club.name;
+
+        //Progress bar
+        progressBar = (ProgressBar) findViewById(R.id.progressBarBooking);
 
         // Calendar
         dateView = (TextView) findViewById(R.id.bookingDateView);
@@ -95,14 +107,20 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         teeTimesList.setAdapter(arrayAdapter);
 
-        final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
+        // Ecran principal
+        clubLayout = (ConstraintLayout) findViewById(R.id.constraintLayoutClub);
+        initPopUp(club.description);
+
+        buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
         buttonInfoTerrain.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showPopUp(club.description);
+                popupWindow.showAtLocation(clubLayout, Gravity.CENTER, 0, 0);
                 buttonInfoTerrain.setVisibility(View.GONE);
             }
         });
     }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
@@ -196,10 +214,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             // }
             arrayAdapter.addAll(teeTimeArray);
             arrayAdapter.notifyDataSetChanged();
+            progressBar.setVisibility(View.GONE);
         }
 
-        final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
-        buttonInfoTerrain.setVisibility(View.VISIBLE);
+        /*final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
+        buttonInfoTerrain.setVisibility(View.VISIBLE);*/
     }
 
     @Override
@@ -217,31 +236,36 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     }
 
-    public void showPopUp(String text) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(text)
-                .setCancelable(true)
-                .setTitle(R.string.info_title);
-
-        /*LayoutInflater layoutInflater = getLayoutInflater();
-
+    public void initPopUp(String text) {
+        LayoutInflater layoutInflater = getLayoutInflater();
         View customView = layoutInflater.inflate(R.layout.custom_pop_dialog, null);
+        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, false);
+        //popupWindow = new PopupWindow(this);
 
-        TextView tv = (TextView) customView.findViewById(R.id.text_info);
+        popupWindow.setContentView(customView);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
+
+        TextView tv = (TextView) customView.findViewById(R.id.club_info);
+        Button button = customView.findViewById(R.id.popup_info_close);
+        button.setOnClickListener(this);
+
+        Button button2 = customView.findViewById(R.id.button_accepter);
+        button2.setOnClickListener(this);
+
         tv.setText(text);
-
-        builder.setView(customView);*/
-        AlertDialog alert = builder.create();
-        alert.getWindow().setLayout(600, 400);
-        alert.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(final DialogInterface arg0) {
-                final TextView buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
-                buttonInfoTerrain.setVisibility(View.VISIBLE);
+        teeTimesList.post(new Runnable() {
+            public void run() {
+                popupWindow.showAtLocation(clubLayout, Gravity.CENTER, 0, 0);
             }
         });
-        builder.show();
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        popupWindow.dismiss();
+        buttonInfoTerrain.setVisibility(View.VISIBLE);
     }
 
     public void book(String orderId, String orderClub, String orderPrice, String orderDate) {
@@ -297,4 +321,14 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     public void setCalendarSelected(Calendar calendarSelected) {
         this.calendarSelected = calendarSelected;
     }
+
+    public ClubData getClub() {
+        return club;
+    }
+
+    public void setClub(ClubData club) {
+        this.club = club;
+    }
+
+
 }

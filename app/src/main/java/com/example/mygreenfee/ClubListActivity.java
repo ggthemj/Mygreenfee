@@ -65,7 +65,7 @@ public class ClubListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                arrayAdapter.filter(newText);
+                //arrayAdapter.filter(newText);
                 return false;
             }
         });

@@ -8,13 +8,12 @@
     android:background="@android:color/transparent">
 
     <RelativeLayout
-        android:layout_width="340dp"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/white"
-        android:columnCount="20"
-        android:padding="10dp">
+        android:columnCount="20">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,6 +22,7 @@
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/info_title"
+                style="@style/Base.TextAppearance.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="#0CADB0"

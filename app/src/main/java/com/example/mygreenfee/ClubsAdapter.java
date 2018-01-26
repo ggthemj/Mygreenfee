@@ -113,7 +113,9 @@ public class ClubsAdapter extends ArrayAdapter<ClubData> implements View.OnClick
         charText = charText.toLowerCase(Locale.getDefault());
         clubDataList.clear();
         if (charText.length() == 0) {
-            clubDataList.addAll(dataSet);
+            if (dataSet != null) {
+                clubDataList.addAll(dataSet);
+            }
         } else {
             for (ClubData wp : dataSet) {
                 if (wp.name.toLowerCase(Locale.getDefault()).contains(charText)) {

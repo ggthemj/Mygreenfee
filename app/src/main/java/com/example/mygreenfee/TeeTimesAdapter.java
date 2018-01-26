@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -85,8 +86,8 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
         viewHolder.slots_free.setText(String.valueOf(dataModel.getSlots_free()) + " " + getContext().getResources().getText(R.string.slotsFree));
         viewHolder.time.setText(String.valueOf(dataModel.getTime()));
-        NumberFormat formatter = NumberFormat.getInstance(Locale.FRANCE);
-        String moneyString = formatter.format(dataModel.getSale_price());
+        DecimalFormat df = new DecimalFormat("#.00");
+        String moneyString = df.format(dataModel.getSale_price());
         viewHolder.sale_price.setText(moneyString + "€");
         viewHolder.book.setTag(position);
 
@@ -112,11 +113,11 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
                     editor.putString("order_arg3", teeTime.getTime());
                     editor.putInt("order_arg4", context.getNbPlayers());
                     editor.putString("order_arg5", dateFormat.format(context.getCalendarSelected().getTime()));
-                    editor.putString("order_arg6", context.clubSelected);
+                    editor.putString("order_arg6", context.getClub().getName());
                     editor.putString("order_arg7", viewHolder.sale_price.getText().toString());
 
                     editor.putString("order_price", viewHolder.sale_price.getText().toString());
-                    editor.putString("order_club", context.clubSelected);
+                    editor.putString("order_club", context.getClub().getName());
                     editor.putString("order_date", dateFormat.format(context.getCalendarSelected().getTime()));
 
                     editor.commit();
@@ -125,7 +126,7 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
                     context.startActivity(intent);
                 }
                 else {
-                    coursesRepo.book(context.getClubId(), teeTime.getTee_public_id(), teeTime.getTime(), context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged, context.clubSelected, viewHolder.sale_price.getText().toString());
+                    coursesRepo.book(context.getClubId(), teeTime.getTee_public_id(), teeTime.getTime(), context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged, context.getClub().getName(), viewHolder.sale_price.getText().toString());
                 }
             }
         });

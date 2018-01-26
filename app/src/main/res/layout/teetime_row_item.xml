@@ -48,13 +48,16 @@
 
     <Button
         android:id="@+id/booking_button"
+        style="@style/AppTheme.PlayersButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:background="@drawable/button_reserver"
         android:clickable="false"
         android:text="@string/booking_reserver"
+        android:textColor="#DF521C"
         android:textSize="14sp" />
 
 
