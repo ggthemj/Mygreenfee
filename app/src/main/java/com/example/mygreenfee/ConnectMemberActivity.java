@@ -72,6 +72,7 @@ public class ConnectMemberActivity extends AppCompatActivity {
         this.connectMemberRepository = new ConnectMemberRepository(this);
         is_login_ok = false;
 
+
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String is_order = sharedPref.getString("order_id", "false");
         String is_club = sharedPref.getString("order_club", "false");
@@ -90,6 +91,10 @@ public class ConnectMemberActivity extends AppCompatActivity {
 
             final LinearLayout commandeL = findViewById(R.id.formulaire2);
             commandeL.setVisibility(View.VISIBLE);
+        }
+        else{
+            final LinearLayout commandeL2 = findViewById(R.id.formulaire2);
+            commandeL2.setVisibility(View.GONE);
         }
 
         //Mise en place de la custom app bar

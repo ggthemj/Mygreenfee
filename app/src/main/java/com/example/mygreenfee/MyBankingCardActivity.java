@@ -89,9 +89,11 @@ public class MyBankingCardActivity extends AppCompatActivity {
 
         final TextView alias = (TextView) findViewById(R.id.alias);
         alias.setText(carddata.alias);
+        alias.setVisibility(View.VISIBLE);
 
         final TextView datetw = (TextView) findViewById(R.id.date);
         datetw.setText(carddata.expiration_date.substring(0,2)+"/20"+carddata.expiration_date.substring(2,4));
+        datetw.setVisibility(View.VISIBLE);
 
         final ImageView imagev = (ImageView) findViewById(R.id.CB);
         imagev.setVisibility(View.VISIBLE);
@@ -159,24 +161,23 @@ public class MyBankingCardActivity extends AppCompatActivity {
 
     public void handleValidation(){
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String email = sharedPref.getString("user_email", "false");
+
         EditText code = findViewById(R.id.code);
-        if(code.getText().length()>2) {
-
-            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-            String is_order = sharedPref.getString("order_id", "false");
-            String email = sharedPref.getString("user_email", "false");
-
-            if (is_order.equals("false")) {
-                Intent intent = new Intent(this, AddBankingCardActivity.class);
-                startActivity(intent);
-            } else {
+        if (is_order.equals("false")) {
+            Intent intent = new Intent(this, AddBankingCardActivity.class);
+            startActivity(intent);
+        } else {
+            if(code.getText().length()>2) {
                 bcRepository.pay(is_order, email, code.getText().toString());
             }
+            else{
+                Toast toast = Toast.makeText(this, "Veuillez compléter votre code de sécurité", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
 
-        }
-        else{
-            Toast toast = Toast.makeText(this, "Veuillez compléter votre code de sécurité", Toast.LENGTH_LONG);
-            toast.show();
-        }
     }
 }

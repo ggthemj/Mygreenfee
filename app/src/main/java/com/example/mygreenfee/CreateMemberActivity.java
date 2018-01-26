@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -447,6 +448,28 @@ public class CreateMemberActivity extends AppCompatActivity {
 
             }
         });
+
+        String is_club = sharedPref.getString("order_club", "false");
+        String is_price = sharedPref.getString("order_price", "false");
+        String is_date = sharedPref.getString("order_date", "false");
+
+        if(!is_order.equals("false")){
+            final TextView titre = findViewById(R.id.textView);
+            titre.setText(getResources().getString(R.string.connect_Tunnel));
+
+            final TextView titreCommande = findViewById(R.id.titreCommande);
+            titreCommande.setText("Confirmation commande");
+
+            final TextView detailCommande = findViewById(R.id.detailCommande);
+            detailCommande.setText(is_club+" - "+is_date+" - "+is_price);
+
+            final LinearLayout commandeL = findViewById(R.id.formulaire2);
+            commandeL.setVisibility(View.VISIBLE);
+        }
+        else{
+            final LinearLayout commandeL2 = findViewById(R.id.formulaire2);
+            commandeL2.setVisibility(View.GONE);
+        }
 
         this.dobCalendar = Calendar.getInstance();
 
