@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -46,7 +47,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private TextView playerView;
     private int nbPlayers = 1;
     private ListView teeTimesList;
-    private ConstraintLayout clubLayout;
+    private RelativeLayout clubLayout;
     private ArrayAdapter<TeeTime> arrayAdapter;
 
     private int clubId;
@@ -108,7 +109,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         teeTimesList.setAdapter(arrayAdapter);
 
         // Ecran principal
-        clubLayout = (ConstraintLayout) findViewById(R.id.constraintLayoutClub);
+        clubLayout = (RelativeLayout) findViewById(R.id.constraintLayoutClub);
         initPopUp(club.description);
 
         buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
@@ -244,7 +245,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         popupWindow.setContentView(customView);
         popupWindow.setOutsideTouchable(true);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
+        //popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
 
         TextView tv = (TextView) customView.findViewById(R.id.club_info);
         Button button = customView.findViewById(R.id.popup_info_close);
