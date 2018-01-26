@@ -94,7 +94,13 @@ public class BankingCardRepository {
     //Tentative de login :)
     public void pay(final String id, final String email, final String csc){
 
-        Log.d("DEBUG", "Début de la requête "+id+"/"+email);
+        Log.d("DEBUG", "PAIEMENT URL : "+"https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card");
+
+        Log.d("DEBUG", "Paramètre data[email] : "+email);
+        Log.d("DEBUG", "Paramètre data[csc] : "+csc);
+        Log.d("DEBUG", "Paramètre data[return_url] : "+"http://legreenfee.framework.payment.callback");
+
+
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
         String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
@@ -104,13 +110,14 @@ public class BankingCardRepository {
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", email);
         mParams.put("data[csc]", csc);
-        mParams.put("data[return_url]", "https://www.mygreenfee.com");
+        mParams.put("data[return_url]", "http://legreenfee.framework.payment.callback");
+        Log.d("DEBUG", "Début de la requête "+id+"/"+email);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("DEBUG", "réponse login : "+response);
+                        Log.d("DEBUG", "REPONSE PAIEMENT : "+response);
 
                         context.handleSuccessPayment(cardData);
 
@@ -162,7 +169,7 @@ public class BankingCardRepository {
         mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", email);
-        mParams.put("data[return_url]", "https://www.mygreenfee.com");
+        mParams.put("data[return_url]", "http://legreenfee.framework.payment.callback");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
