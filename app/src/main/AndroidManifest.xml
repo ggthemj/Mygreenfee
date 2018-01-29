@@ -108,6 +108,9 @@
                 android:value=".MonCompteActivity" />
         </activity>
         <activity android:name=".OrderActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5ee21ebed179be66ea672bb8c1e8aeb46459bf40" />
     </application>
 
 </manifest>

@@ -65,6 +65,11 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
+    }
+
+
     public void deconnexion(){
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
