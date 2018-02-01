@@ -29,7 +29,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:src="@drawable/splashscreen" />
+                android:src="@drawable/onboard_logo3x"
+                android:tint="@color/whiteColor" />
 
             <ImageButton
                 android:id="@+id/recherche_button"

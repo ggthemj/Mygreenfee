@@ -84,7 +84,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ReservationsActivity"
+            android:name=".ReservationsFragment"
             android:parentActivityName=".HomeMapsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

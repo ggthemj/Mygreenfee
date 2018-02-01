@@ -90,7 +90,6 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         }
 
         destroyGoogleAPIClient();
-
     }
 
     @Override

@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class ReservationsRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    ReservationsActivity context;
+    ReservationsFragment context;
 
     //les données de l'utilisateur qui seront mises à jour
     public ReservationData[] enCours ;
@@ -28,7 +28,7 @@ public class ReservationsRepository {
     Map<String, String> mHeaders;
     Map<String, String> mParams;
 
-    public ReservationsRepository(ReservationsActivity c){
+    public ReservationsRepository(ReservationsFragment c){
         this.context = c ;
     }
 
@@ -36,7 +36,7 @@ public class ReservationsRepository {
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(context.getContext());
         String url = context.getResources().getString(R.string.URL_getReservations)+"&data[member_id]="+member_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));

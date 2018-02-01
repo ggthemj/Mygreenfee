@@ -135,7 +135,7 @@ public class MyBankingCardActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("order_id", "false");
 
-        Intent intent = new Intent(this, ReservationsActivity.class);
+        Intent intent = new Intent(this, ReservationsFragment.class);
         startActivity(intent);
     }
 

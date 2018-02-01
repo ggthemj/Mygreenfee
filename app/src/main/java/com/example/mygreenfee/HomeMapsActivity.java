@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +14,13 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class HomeMapsActivity extends AppCompatActivity {
 
-    private MapsFragment newFragment;
+    private Fragment newFragment;
 
     protected void displayMaps(){
         newFragment = new MapsFragment();
@@ -37,8 +41,19 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayReservations(){
-        Intent intent = new Intent(this, ReservationsActivity.class);
-        startActivity(intent);
+        newFragment = new ReservationsFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
     }
 
     protected void displayCompte(){
@@ -52,6 +67,70 @@ public class HomeMapsActivity extends AppCompatActivity {
         else{
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
+        }
+    }
+
+    public void handleUpdateResa(ReservationData[] open, ReservationData[] closed, boolean isEnCours, boolean hasSucceeded){
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
+        LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
+        TextView enCours = findViewById(R.id.compteurResa);
+
+        if(isEnCours){
+            if(hasSucceeded){
+                for (int i = 0; i < closed.length; i++) {
+                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
+                    Log.d("DEBUG", "Je remove "+i);
+                }
+            }
+            if(open!=null) {
+                for (int i = 0; i < open.length; i++) {
+                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(open[i]), "someTag"+i).commit();
+                    Log.d("DEBUG", "en cours "+i);
+                }
+                String texteCompteur;
+                if (open.length > 1) {
+                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_enCours) ;
+                } else {
+                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+                }
+                enCours.setText(texteCompteur);
+            }
+            else{
+                String texteCompteur;
+                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+
+                enCours.setText(texteCompteur);
+            }
+        }
+        else{
+            if(hasSucceeded){
+                for (int i = 0; i < open.length; i++) {
+                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
+                }
+            }
+            if(closed!=null) {
+
+                for (int i = 0; i < closed.length; i++) {
+                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(closed[i]), "someTag"+i).commit();
+                    //android.app.Fragment fragment = getFragmentManager().findFragmentByTag("someTag"+i);
+                    Log.d("DEBUG", "closed "+i);
+                }
+                String texteCompteur;
+                if (closed.length > 1) {
+                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_status) + "s";
+                } else {
+                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status);
+                }
+                enCours.setText(texteCompteur);
+            }
+            else{
+                String texteCompteur;
+                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
+
+                enCours.setText(texteCompteur);
+            }
         }
     }
 
@@ -115,9 +194,10 @@ public class HomeMapsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ClubListActivity.class);
-                if (newFragment.getMyPosition() != null) {
-                    intent.putExtra("latitude", newFragment.getMyPosition().latitude);
-                    intent.putExtra("longitude", newFragment.getMyPosition().longitude);
+                MapsFragment maps = (MapsFragment)newFragment;
+                if (maps.getMyPosition() != null) {
+                    intent.putExtra("latitude", maps.getMyPosition().latitude);
+                    intent.putExtra("longitude", maps.getMyPosition().longitude);
                 }
                 startActivity(intent);
             }
