@@ -13,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,6 +40,15 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         // Commit the transaction
         transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setVisibility(View.GONE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.VISIBLE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.VISIBLE);
     }
 
     protected void displayReservations(){
@@ -54,6 +65,16 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         // Commit the transaction
         transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText("Mes réservations");
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
     }
 
     protected void displayCompte(){
@@ -145,6 +166,9 @@ public class HomeMapsActivity extends AppCompatActivity {
         bottomNavigationView.setItemTextColor(bottomNavigationView.getItemTextColor());
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.recherche_button);
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setVisibility(View.GONE);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);

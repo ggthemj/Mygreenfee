@@ -32,6 +32,17 @@
                 android:src="@drawable/onboard_logo3x"
                 android:tint="@color/whiteColor" />
 
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="@font/helveticaneue"
+                android:gravity="center_vertical|center"
+                android:text="TextView"
+                android:textColor="@color/whiteColor"
+                android:textSize="20sp" />
+
             <ImageButton
                 android:id="@+id/recherche_button"
                 android:layout_width="wrap_content"
