@@ -110,7 +110,7 @@
         <activity android:name=".OrderActivity"></activity>
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="5ee21ebed179be66ea672bb8c1e8aeb46459bf40" />
+            android:value="226de2b28cfdbe509ccd7f689f11bbb55693bd8b" />
     </application>
 
 </manifest>

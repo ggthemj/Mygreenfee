@@ -206,14 +206,6 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray" />
 
-            <Button
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="Force Crash!"
-                android:onClick="forceCrash"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true" />
-
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>
