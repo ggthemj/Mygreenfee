@@ -1,14 +1,9 @@
 package com.example.mygreenfee;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -19,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
@@ -31,7 +25,6 @@ import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -58,6 +51,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private PopupWindow popupWindow;
     TextView buttonInfoTerrain;
     ProgressBar progressBar;
+    private TextView tv;
+    private boolean popHasTobeCreated = true;
 
 
     @Override
@@ -110,7 +105,6 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         // Ecran principal
         clubLayout = (RelativeLayout) findViewById(R.id.constraintLayoutClub);
-        initPopUp(club.description);
 
         buttonInfoTerrain = findViewById(R.id.buttonInfoTerrain);
         buttonInfoTerrain.setOnClickListener(new View.OnClickListener() {
@@ -147,8 +141,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         dateSelected = dateFormat.format(calendar.getTime());
         final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        coursesRepo.updateTeeTimes(new Course(), clubId, dateFormat2.format(calendar.getTime()), teeID);
-        updateTeeTimes();
+        coursesRepo.updateTeeTimes(clubId, dateFormat2.format(calendar.getTime()), teeID);
     }
 
     public void addPlayer(View view)
@@ -187,21 +180,27 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         List<TeeSpinnerDTO> courses = new ArrayList<TeeSpinnerDTO>();
 
+        int i = 0;
         for (Course course : coursesRepo.getCourses()) {
             if (course.getTees() != null) {
+                if (i == 0) {
+                    coursesRepo.updateAd(String.valueOf(course.getPublic_id()), getClubId());
+                    i = 1;
+                }
                 for (Tee tee : course.getTees()) {
                     String fmt = getResources().getText(R.string.holes).toString();
 
-                    courses.add(new TeeSpinnerDTO(tee.getPublic_id(), course.getName() + " " + MessageFormat.format(fmt, course.getLength()) + " - " + tee.getName()));
+                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName() + " " + MessageFormat.format(fmt, course.getLength()) + " - " + tee.getName()));
                 }
             }
             else {
-                courses.add(new TeeSpinnerDTO("0", course.getName() + " - Tee 1"));
+                courses.add(new TeeSpinnerDTO(course.getPublic_id(), "0", course.getName() + " - Tee 1"));
             }
         }
         ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
         dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         coursesSpinner.setAdapter(dataAdapter);
+
 
     }
 
@@ -222,14 +221,36 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         buttonInfoTerrain.setVisibility(View.VISIBLE);*/
     }
 
+    public void updateAd(String ad) {
+
+        if (!"".equals(ad)) {
+            if (popHasTobeCreated) {
+                initPopUp(ad);
+                popHasTobeCreated = false;
+            } else {
+                tv.setText(ad);
+                popupWindow.showAtLocation(clubLayout, Gravity.CENTER, 0, 0);
+                buttonInfoTerrain.setVisibility(View.GONE);
+            }
+        }
+        else {
+            if (!popHasTobeCreated) {
+                popupWindow.dismiss();
+                buttonInfoTerrain.setVisibility(View.GONE);
+            }
+        }
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
         //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
         teeID = item.getId();
+        String courseId = item.getCourseId();
         final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        coursesRepo.updateTeeTimes(new Course(), getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
+        coursesRepo.updateTeeTimes(getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
+        coursesRepo.updateAd(courseId, getClubId());
     }
 
     @Override
@@ -247,7 +268,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         popupWindow.setOutsideTouchable(true);
         //popupWindow.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
 
-        TextView tv = (TextView) customView.findViewById(R.id.club_info);
+        tv = (TextView) customView.findViewById(R.id.club_info);
         Button button = customView.findViewById(R.id.popup_info_close);
         button.setOnClickListener(this);
 
@@ -255,11 +276,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         button2.setOnClickListener(this);
 
         tv.setText(text);
-        /*teeTimesList.post(new Runnable() {
+        teeTimesList.post(new Runnable() {
             public void run() {
                 popupWindow.showAtLocation(clubLayout, Gravity.CENTER, 0, 0);
             }
-        });*/
+        });
 
     }
 
@@ -330,6 +351,5 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     public void setClub(ClubData club) {
         this.club = club;
     }
-
 
 }
