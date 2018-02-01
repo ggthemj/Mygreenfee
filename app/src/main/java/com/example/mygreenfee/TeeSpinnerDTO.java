@@ -10,9 +10,12 @@ public class TeeSpinnerDTO {
 
     private String name;
 
-    public TeeSpinnerDTO(String i, String s) {
-        this.id = i;
-        this.name = s;
+    private String courseId;
+
+    public TeeSpinnerDTO(int courseId, String teeId, String message) {
+        this.id = teeId;
+        this.name = message;
+        this.courseId = String.valueOf(courseId);
     }
 
     public String getId() {
@@ -29,6 +32,14 @@ public class TeeSpinnerDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 
     @Override

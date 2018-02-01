@@ -205,7 +205,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 android:textColor="@color/whiteColor"
                 android:textSize="16sp"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
     </RelativeLayout>

@@ -22,7 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ReservationsActivity extends AppCompatActivity {
+public class ReservationsFragment extends Fragment {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     public boolean hasSucceeded;
@@ -33,30 +33,36 @@ public class ReservationsActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private boolean isEnCours;
     private ReservationsRepository reservationsRepository;
+    private HomeMapsActivity homeMapsActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reservations);
         this.hasSucceeded = false;
         isEnCours = true;
 
-        //Mise en place de la custom app bar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String user_id = ""+sharedPref.getInt("user_id", 1);
 
         reservationsRepository = new ReservationsRepository(this);
         reservationsRepository.getReservations(user_id);
+    }
 
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+    public void setHomeMaps(HomeMapsActivity homeMaps){
+        this.homeMapsActivity = homeMaps;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d("DEBUG", "Je créée la vue");
+
+        // Créé la vue et retourne une carte vide
+        View view = inflater.inflate(R.layout.activity_reservations, container, false);
+
+        final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabby);
+        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabby);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -83,90 +89,28 @@ public class ReservationsActivity extends AppCompatActivity {
 
             }
         });
+
+        return view;
     }
 
     public void handleError(String s){
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
 
-        TextView enCours = findViewById(R.id.compteurResa);
+        TextView enCours = getView().findViewById(R.id.compteurResa);
         if(isEnCours) {
             enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours));
         }
         else{
             enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status));
         }
-        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
         toast.show();
     }
 
     public void handleSuccess(ReservationData[] open, ReservationData[] closed){
-
-        Log.d("DEBUG", "SUCCESS "+isEnCours);
-        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
-        simpleProgressBar.setVisibility(View.GONE);
-
-        LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
-        TextView enCours = findViewById(R.id.compteurResa);
-
-
-        if(isEnCours){
-            if(hasSucceeded){
-                for (int i = 0; i < closed.length; i++) {
-                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
-                    Log.d("DEBUG", "Je remove "+i);
-                }
-            }
-            if(open!=null) {
-                for (int i = 0; i < open.length; i++) {
-                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(open[i]), "someTag"+i).commit();
-                    Log.d("DEBUG", "en cours "+i);
-                }
-                String texteCompteur;
-                if (open.length > 1) {
-                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_enCours) ;
-                } else {
-                    texteCompteur = open.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
-                }
-                enCours.setText(texteCompteur);
-            }
-            else{
-                String texteCompteur;
-                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
-
-                enCours.setText(texteCompteur);
-            }
-        }
-        else{
-            if(hasSucceeded){
-                for (int i = 0; i < open.length; i++) {
-                    getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("someTag" + i)).commit();
-                }
-            }
-            if(closed!=null) {
-
-                for (int i = 0; i < closed.length; i++) {
-                    getSupportFragmentManager().beginTransaction().add(fragContainer.getId(), ReservationFragment.newInstance(closed[i]), "someTag"+i).commit();
-                    //android.app.Fragment fragment = getFragmentManager().findFragmentByTag("someTag"+i);
-                    Log.d("DEBUG", "closed "+i);
-                }
-                String texteCompteur;
-                if (closed.length > 1) {
-                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + "s " + getResources().getString(R.string.mesResas_status) + "s";
-                } else {
-                    texteCompteur = closed.length + " " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status);
-                }
-                enCours.setText(texteCompteur);
-            }
-            else{
-                String texteCompteur;
-                texteCompteur =  "0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours);
-
-                enCours.setText(texteCompteur);
-            }
-        }
+        this.homeMapsActivity.handleUpdateResa(open, closed, isEnCours, hasSucceeded);
         this.hasSucceeded = true;
-
     }
 
     public static class PlaceholderFragment extends Fragment {

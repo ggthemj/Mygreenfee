@@ -1,5 +1,6 @@
 package com.example.mygreenfee;
 
+import android.text.Html;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -72,7 +73,7 @@ public class CoursesRepository {
                                     rightNow.add(Calendar.DATE, 1);
                                 }
                                 Date today = rightNow.getTime();
-                                updateTeeTimes(getCourses()[0], club.public_id, df.format(today), "0");
+                                updateTeeTimes(club.public_id, df.format(today), "0");
                                 bookingContext.setClubId(club.public_id);
                             }
                             bookingContext.updateCourses();
@@ -107,8 +108,8 @@ public class CoursesRepository {
         queue.add(stringRequest);
     }
 
-    public void updateTeeTimes(final Course course, int clubId, String date, String teeId){
-        Log.d("DEBUG", "Debut de la requete de création de parcours");
+    public void updateTeeTimes(int clubId, String date, String teeId){
+        Log.d("DEBUG", "Debut de la requete de récupération des tee times");
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
@@ -134,6 +135,62 @@ public class CoursesRepository {
                                 Log.d("DEBUG","TeeTime " + getTeeTimes()[i].getTee_public_id() + " ajouté");
                             }
                             bookingContext.updateTeeTimes();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                setTeeTimes(new TeeTime[0]);
+                Log.d("DEBUG","That didn't work! " + error.getMessage());
+            }
+        }) {
+            @Override
+            //protected Map<String, String> getParams() {
+            //    return mParams;
+            //}
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+
+    }
+
+    public void updateAd(final String courseId, int clubId) {
+        Log.d("DEBUG", "Debut de la requete de récupération des ads");
+
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
+        String stringParams = "/" + clubId + "/ad";
+        stringParams += "&data%5Bcourse_id%5D=" + courseId;
+
+
+        String url = bookingContext.getResources().getString(R.string.URL_advertisement) + stringParams;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "response : "+response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            String ad = json.getString("ad");
+
+                            bookingContext.updateAd(Html.fromHtml(ad).toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
