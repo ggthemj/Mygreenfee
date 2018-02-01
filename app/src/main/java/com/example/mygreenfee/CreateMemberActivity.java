@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -608,7 +607,7 @@ public class CreateMemberActivity extends AppCompatActivity {
         String is_order = sharedPref.getString("order_id", "false");
 
         if(is_order.equals("false")){
-            Intent intent = new Intent(this, ProfileActivity.class);
+            Intent intent = new Intent(this, ProfileFragment.class);
             startActivity(intent);
         }
         else{

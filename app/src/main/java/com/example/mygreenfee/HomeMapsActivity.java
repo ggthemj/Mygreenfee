@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +24,7 @@ public class HomeMapsActivity extends AppCompatActivity {
     private Fragment newFragment;
 
     protected void displayMaps(){
+        Log.d("DEBUG", "J'affiche maps");
         newFragment = new MapsFragment();
         Bundle args = new Bundle();
         args.putInt("1", 1);
@@ -78,17 +78,107 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayCompte(){
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_connected = sharedPref.getString("is_connected", "false");
+        newFragment = new ProfileFragment();
+        Bundle args = new Bundle();
 
-        if(is_connected.equals("false")) {
-            Intent intent = new Intent(this, ConnectMemberActivity.class);
-            startActivity(intent);
-        }
-        else{
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-        }
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.profile_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
+    protected void displayLogin(){
+        newFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.connect_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
+    protected void displayMonProfil(){
+        newFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.mesInfos_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
+    protected void displayMaCarte(){
+        newFragment = new ProfileFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.myBanking_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
     }
 
     public void handleUpdateResa(ReservationData[] open, ReservationData[] closed, boolean isEnCours, boolean hasSucceeded){
@@ -199,7 +289,7 @@ public class HomeMapsActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_Golfs:
-                            //displayMaps();
+                            displayMaps();
                             return true;
                         case R.id.navigation_MesResa:
                             displayReservations();

@@ -98,18 +98,12 @@ public class ReservationsFragment extends Fragment {
         simpleProgressBar.setVisibility(View.GONE);
 
         TextView enCours = getView().findViewById(R.id.compteurResa);
-        if(isEnCours) {
-            enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_enCours));
-        }
-        else{
-            enCours.setText("0 " + getResources().getString(R.string.mesResas_commande) + " " + getResources().getString(R.string.mesResas_status));
-        }
-        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
-        toast.show();
+        enCours.setText(getContext().getResources().getString(R.string.mesResas_nonConnecte));
     }
 
     public void handleSuccess(ReservationData[] open, ReservationData[] closed){
-        this.homeMapsActivity.handleUpdateResa(open, closed, isEnCours, hasSucceeded);
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.handleUpdateResa(open, closed, isEnCours, hasSucceeded);
         this.hasSucceeded = true;
     }
 

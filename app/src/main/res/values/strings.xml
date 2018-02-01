@@ -16,6 +16,7 @@
     <string name="mesResas_status">passée</string>
     <string name="mesResas_enCours">en cours</string>
     <string name="mesResas_personne">personne</string>
+    <string name="mesResas_nonConnecte">Connectez-vous pour voir vos réservations</string>
 
     <string name="changePassword_Title">Changer de mot de passe</string>
     <string name="changePassword_Hint1">Mot de passe actuel</string>

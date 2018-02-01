@@ -36,10 +36,10 @@
             android:label="@string/title_activity_home_maps" />
         <activity
             android:name=".MonCompteActivity"
-            android:parentActivityName=".ProfileActivity">
+            android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileActivity" />
+                android:value=".ProfileFragment" />
         </activity>
         <activity
             android:name=".CreateMemberActivity"
@@ -57,20 +57,20 @@
         </activity>
         <activity
             android:name=".MyBankingCardActivity"
-            android:parentActivityName=".ProfileActivity">
+            android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileActivity" />
+                android:value=".ProfileFragment" />
         </activity>
         <activity
             android:name=".AddBankingCardActivity"
-            android:parentActivityName=".ProfileActivity">
+            android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileActivity" />
+                android:value=".ProfileFragment" />
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".ProfileFragment"
             android:parentActivityName=".HomeMapsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

@@ -14,44 +14,62 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/greenAlbaColor"
         android:elevation="4dp"
-        app:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:paddingLeft="0dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
+        app:theme="@style/AppTheme">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
             tools:layout_editor_absoluteX="16dp">
 
-            <ImageView
-                android:id="@+id/maps_title"
-                android:layout_width="150dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:src="@drawable/onboard_logo3x"
-                android:tint="@color/whiteColor" />
-
             <TextView
                 android:id="@+id/textViewTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:fontFamily="@font/helveticaneue"
                 android:gravity="center_vertical|center"
                 android:text="TextView"
                 android:textColor="@color/whiteColor"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/recherche_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="32dp"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:background="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTitle"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitle"
                 app:srcCompat="@android:drawable/ic_menu_search" />
-        </LinearLayout>
+
+            <ImageView
+                android:id="@+id/maps_title"
+                android:layout_width="150dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:src="@drawable/onboard_logo3x"
+                android:tint="@color/whiteColor"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewTitle"
+                app:layout_constraintEnd_toEndOf="@+id/textViewTitle"
+                app:layout_constraintStart_toStartOf="@+id/textViewTitle"
+                app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.Toolbar>
 
     <android.support.constraint.ConstraintLayout
