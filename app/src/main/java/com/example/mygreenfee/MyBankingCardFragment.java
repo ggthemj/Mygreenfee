@@ -1,0 +1,186 @@
+package com.example.mygreenfee;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class MyBankingCardFragment extends Fragment {
+
+    BankingCardRepository bcRepository ;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d("DEBUG", "Je créée la vue profile");
+
+        // Créé la vue et retourne une carte vide
+        final View view = inflater.inflate(R.layout.activity_my_banking_card, container, false);
+
+        if(getContext() instanceof HomeMapsActivity){
+            HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+            hm.status=3;
+            hm.chooseMenuItem(3);
+        }
+
+        bcRepository = new BankingCardRepository(this);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String user_mail = sharedPref.getString("user_email", "false");
+        String user_currency = "EUR";
+        bcRepository.checkCard(user_mail, user_currency);
+
+        final ProgressBar simpleProgressBar = (ProgressBar) view.findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.VISIBLE);
+
+        //Bind des buttons avec les méthodes correspondantes
+        final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
+        buttonValidation.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                handleValidation();
+            }
+        });
+
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            buttonValidation.setText(getResources().getString(R.string.myBanking_Tunnel));
+        }
+
+        return view;
+    }
+
+    public void handleSuccess3(){
+        final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
+        final TextView alias = (TextView) getView().findViewById(R.id.alias);
+        alias.setVisibility(View.VISIBLE);
+
+        final TextView datetw = (TextView) getView().findViewById(R.id.date);
+        datetw.setVisibility(View.VISIBLE);
+
+        final Button button = (Button) getView().findViewById(R.id.buttonvalidation);
+        button.setVisibility(View.VISIBLE);
+
+        final ImageView imagev = (ImageView) getView().findViewById(R.id.CB);
+        imagev.setVisibility(View.VISIBLE);
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+
+        if(!is_order.equals("false")){
+            final EditText code = getView().findViewById(R.id.code);
+            code.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void handleSuccess(CardData carddata){
+
+        final TextView alias = (TextView) getView().findViewById(R.id.alias);
+        alias.setText(carddata.alias);
+        alias.setVisibility(View.VISIBLE);
+
+        final TextView datetw = (TextView) getView().findViewById(R.id.date);
+        datetw.setText(carddata.expiration_date.substring(0,2)+"/20"+carddata.expiration_date.substring(2,4));
+        datetw.setVisibility(View.VISIBLE);
+
+        final ImageView imagev = (ImageView) getView().findViewById(R.id.CB);
+        imagev.setVisibility(View.VISIBLE);
+
+        final Button button = (Button) getView().findViewById(R.id.buttonvalidation);
+        button.setVisibility(View.VISIBLE);
+
+        final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String mail = sharedPref.getString("user_email", "false");
+
+        if(!is_order.equals("false")){
+            final EditText code = getView().findViewById(R.id.code);
+            code.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void handleSuccessPayment(CardData carddata){
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
+
+        if(getContext() instanceof HomeMapsActivity){
+
+        }
+        else{
+
+        }
+
+    }
+
+    public void handleError(String s){
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
+        toast.show();
+
+        if(getContext() instanceof HomeMapsActivity){
+            HomeMapsActivity hom = (HomeMapsActivity)getContext();
+            hom.displayAddPaymentCard();
+        }
+        else{
+
+        }
+    }
+
+    public void handleErrorPay(String s){
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
+        toast.show();
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
+
+        Intent intent = new Intent(getContext(), HomeMapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void handleValidation(){
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String email = sharedPref.getString("user_email", "false");
+
+        EditText code = getView().findViewById(R.id.code);
+        if (is_order.equals("false")) {
+            if(getContext() instanceof HomeMapsActivity){
+                HomeMapsActivity hom = (HomeMapsActivity)getContext();
+                hom.displayAddPaymentCard();
+            }
+            else{
+
+            }
+        } else {
+            if(code.getText().length()>2) {
+                bcRepository.pay(is_order, email, code.getText().toString());
+            }
+            else{
+                Toast toast = Toast.makeText(getContext(), "Veuillez compléter votre code de sécurité", Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
+
+    }
+}

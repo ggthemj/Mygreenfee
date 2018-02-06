@@ -1,49 +1,48 @@
 package com.example.mygreenfee;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.NumberPicker;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
-public class AddBankingCardActivity extends AppCompatActivity {
+public class AddBankingCardFragment extends Fragment {
 
     AddBankingCardRepository addBankingCardRepository ;
     private Calendar dobCalendar;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_banking_card);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        Log.d("DEBUG", "Je créée la vue profile");
+
+        // Créé la vue et retourne une carte vide
+        final View view = inflater.inflate(R.layout.activity_add_banking_card, container, false);
+
+        if(getContext() instanceof HomeMapsActivity){
+            HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+            hm.status=3;
+            hm.chooseMenuItem(3);
+        }
 
         addBankingCardRepository = new AddBankingCardRepository(this);
-        //Mise en place de la custom app bar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //Bind des buttons avec les méthodes correspondantes
-        final Button buttonValidation = findViewById(R.id.buttonvalidation);
+        final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleValidation();
@@ -52,7 +51,7 @@ public class AddBankingCardActivity extends AppCompatActivity {
 
         this.dobCalendar = Calendar.getInstance();
 
-        final EditText edittext = findViewById(R.id.dateexpiration);
+        final EditText edittext = view.findViewById(R.id.dateexpiration);
 
         final MonthYearPickerDialog pd = new MonthYearPickerDialog();
         pd.setListener(new DatePickerDialog.OnDateSetListener() {
@@ -72,34 +71,45 @@ public class AddBankingCardActivity extends AppCompatActivity {
         edittext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stud
-               pd.show(getFragmentManager(), "MonthYearPickerDialog");
+                pd.show(getFragmentManager(), "MonthYearPickerDialog");
             }
         });
+
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     public void handleSuccess(CardData carddata){
-        Intent intent = new Intent(this, MyBankingCardActivity.class);
-        startActivity(intent);
+        if(getContext() instanceof HomeMapsActivity){
+            HomeMapsActivity hom = (HomeMapsActivity)getContext();
+            hom.displayMaCarte();
+        }
+        else{
+
+        }
     }
 
     public void handleError(String s){
-        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
         toast.show();
     }
 
     public void handleValidation(){
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String user_mail = sharedPref.getString("user_email", "false");
         String user_currency = "EUR";
 
-        EditText editText = findViewById(R.id.numerocarte);
+        EditText editText = getView().findViewById(R.id.numerocarte);
         String num = editText.getText().toString();
 
-        editText = findViewById(R.id.dateexpiration);
+        editText = getView().findViewById(R.id.dateexpiration);
         String dat = editText.getText().toString();
 
-        editText = findViewById(R.id.code);
+        editText = getView().findViewById(R.id.code);
         String cod = editText.getText().toString();
 
         addBankingCardRepository.addCard(user_mail, dat, num, cod, user_currency);

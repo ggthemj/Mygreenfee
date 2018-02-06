@@ -56,14 +56,14 @@
                 android:value=".HomeMapsActivity" />
         </activity>
         <activity
-            android:name=".MyBankingCardActivity"
+            android:name=".MyBankingCardFragment"
             android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileFragment" />
         </activity>
         <activity
-            android:name=".AddBankingCardActivity"
+            android:name=".AddBankingCardFragment"
             android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

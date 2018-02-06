@@ -131,7 +131,12 @@ public class CreateMemberFragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_create_member, container, false);
         this.createMemberRepository = new CreateMemberRepository(this);
 
-        final Button buttonValidation = getView().findViewById(R.id.buttonvalidation);
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=3;
+        hm.chooseMenuItem(3);
+
+
+        final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleValidation();
@@ -613,7 +618,7 @@ public class CreateMemberFragment extends Fragment {
 
         if(is_order.equals("false")){
             HomeMapsActivity hom = (HomeMapsActivity)getContext();
-            hom.displayMonProfil();
+            hom.displayCompte();
         }
         else{
             int arg1 = sharedPref.getInt("order_arg1", 0);

@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class AddBankingCardRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    AddBankingCardActivity context;
+    AddBankingCardFragment context;
     CardData cardData ;
 
     //Les paramètres de la requête http
@@ -25,7 +25,7 @@ public class AddBankingCardRepository {
     Map<String, String> mParams;
 
     //Constructeur
-    public AddBankingCardRepository(AddBankingCardActivity c){
+    public AddBankingCardRepository(AddBankingCardFragment c){
         this.context = c ;
     }
 

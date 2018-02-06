@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class BankingCardRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    MyBankingCardActivity context;
+    MyBankingCardFragment context;
     CardData cardData ;
 
     //Les paramètres de la requête http
@@ -25,7 +25,7 @@ public class BankingCardRepository {
     Map<String, String> mParams;
 
     //Constructeur
-    public BankingCardRepository(MyBankingCardActivity c){
+    public BankingCardRepository(MyBankingCardFragment c){
         this.context = c ;
     }
 
@@ -33,7 +33,7 @@ public class BankingCardRepository {
     public void checkCard(final String mail, final String currency){
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_checkCard)+"&data[email]="+mail+"&data[currency]="+currency;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -102,7 +102,7 @@ public class BankingCardRepository {
 
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -162,7 +162,7 @@ public class BankingCardRepository {
 
         Log.d("DEBUG", "Début de la requête "+id+"/"+email);
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/payment";
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -220,7 +220,7 @@ public class BankingCardRepository {
 
         Log.d("DEBUG", "Début de la requête de confirmation "+id+"/"+email);
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/confirm";
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));

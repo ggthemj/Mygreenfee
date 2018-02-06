@@ -300,7 +300,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         editor.commit();
 
 
-        Intent intent = new Intent(getApplicationContext(), MyBankingCardActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MyBankingCardFragment.class);
         startActivity(intent);
     }
 

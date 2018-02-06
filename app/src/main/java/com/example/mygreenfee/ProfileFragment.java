@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
         String toDisplay = userdata.fname+" "+userdata.lname;
         myAwesomeTextView.setText(toDisplay);
 
-        final LinearLayout lay = (LinearLayout)getView().findViewById(R.id.simpleProgressBar);
+        final LinearLayout lay = (LinearLayout)getView().findViewById(R.id.formulaire2);
         lay.setVisibility(View.VISIBLE);
 
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
@@ -47,7 +47,11 @@ public class ProfileFragment extends Fragment {
         Log.d("DEBUG", "Je créée la vue profile");
 
         // Créé la vue et retourne une carte vide
+
         View view = inflater.inflate(R.layout.activity_profile, container, false);
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=3;
+        hm.chooseMenuItem(3);
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String mail = sharedPref.getString("user_email", "false");
 

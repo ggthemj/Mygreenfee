@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class HomeMapsActivity extends AppCompatActivity {
 
     private Fragment newFragment;
+    int status;
 
     protected void displayMaps(){
         Log.d("DEBUG", "J'affiche maps");
@@ -68,6 +69,32 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
         textViewTitle.setText("Mes réservations");
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
+    protected void displayAddPaymentCard(){
+        newFragment = new AddBankingCardFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.addCard_Title));
         textViewTitle.setVisibility(View.VISIBLE);
 
         final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
@@ -306,6 +333,7 @@ public class HomeMapsActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
         bottomNavigationView.setItemTextColor(bottomNavigationView.getItemTextColor());
+        this.chooseMenuItem(1);
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.recherche_button);
 
@@ -341,14 +369,23 @@ public class HomeMapsActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_Golfs:
-                            displayMaps();
+                            if(status!=1) {
+                                status=1;
+                                displayMaps();
+                            }
                             return true;
                         case R.id.navigation_MesResa:
-                            displayReservations();
+                            if(status!=2) {
+                                status = 2;
+                                displayReservations();
+                            }
                             //mTextMessage.setText(R.string.title_dashboard);
                             return true;
                         case R.id.navigation_MonCompte:
-                            displayCompte();
+                            if(status!=3) {
+                                status = 3;
+                                displayCompte();
+                            }
                             return true;
                     }
                     return false;
@@ -368,6 +405,24 @@ public class HomeMapsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void chooseMenuItem(int i){
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.navigation);
+        bottomNavigationView.setItemTextColor(bottomNavigationView.getItemTextColor());
+
+
+        if(i==1){
+            bottomNavigationView.setSelectedItemId(R.id.navigation_Golfs);
+        }
+        else if(i==2){
+            bottomNavigationView.setSelectedItemId(R.id.navigation_MesResa);
+        }
+        else if(i==3){
+            bottomNavigationView.setSelectedItemId(R.id.navigation_MonCompte);
+        }
+
+
     }
 
     /**

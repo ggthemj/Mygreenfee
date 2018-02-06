@@ -59,14 +59,19 @@ public class ChangePasswordFragment extends Fragment {
         Log.d("DEBUG", "Je créée la vue profile");
 
         // Créé la vue et retourne une carte vide
-        View view = inflater.inflate(R.layout.activity_change_password, container, false);
+        final View view = inflater.inflate(R.layout.activity_change_password, container, false);
         this.changePasswordRepository = new ChangePasswordRepository(this);
         is_mdp_ok = false;
         is_mdpc1_ok = false;
         is_mdpc2_ok = false;
 
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=3;
+        hm.chooseMenuItem(3);
+
+
         //Code qui permet de gérer le contrôle de surface sur le mail
-        EditText login = getView().findViewById(R.id.mdp);
+        EditText login = view.findViewById(R.id.mdp);
         login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -74,16 +79,16 @@ public class ChangePasswordFragment extends Fragment {
                     updateMdpStatus();
                 }
                 else{
-                    TextView loginError = getView().findViewById(R.id.error_mdp);
+                    TextView loginError = view.findViewById(R.id.error_mdp);
                     loginError.setText("");
                 }
             }
         });
-        TextView loginError = getView().findViewById(R.id.error_mdp);
+        TextView loginError = view.findViewById(R.id.error_mdp);
         loginError.setText("");
 
         //Code qui permet de gérer le contrôle de surface sur le mail
-        EditText mdp = getView().findViewById(R.id.conf1);
+        EditText mdp = view.findViewById(R.id.conf1);
         mdp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -91,16 +96,16 @@ public class ChangePasswordFragment extends Fragment {
                     updateMdpStatus();
                 }
                 else{
-                    TextView loginError = getView().findViewById(R.id.error_conf1);
+                    TextView loginError = view.findViewById(R.id.error_conf1);
                     loginError.setText("");
                 }
             }
         });
-        TextView  conf1Error= getView().findViewById(R.id.error_conf1);
+        TextView  conf1Error= view.findViewById(R.id.error_conf1);
         conf1Error.setText("");
 
         //Code qui permet de gérer le contrôle de surface sur le mail
-        EditText mdp2 = getView().findViewById(R.id.conf2);
+        EditText mdp2 = view.findViewById(R.id.conf2);
         mdp2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -108,16 +113,16 @@ public class ChangePasswordFragment extends Fragment {
                     updateMdpStatus();
                 }
                 else{
-                    TextView loginError = getView().findViewById(R.id.error_conf2);
+                    TextView loginError = view.findViewById(R.id.error_conf2);
                     loginError.setText("");
                 }
             }
         });
-        TextView conf2Error = getView().findViewById(R.id.error_conf2);
+        TextView conf2Error = view.findViewById(R.id.error_conf2);
         conf2Error.setText("");
 
         //Bind des buttons avec les méthodes correspondantes
-        final Button buttonValidation = getView().findViewById(R.id.buttonvalidation);
+        final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleValidation();

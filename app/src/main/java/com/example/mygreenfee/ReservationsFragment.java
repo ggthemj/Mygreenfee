@@ -46,10 +46,16 @@ public class ReservationsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("DEBUG", "Je créée la vue");
+        Log.d("DEBUG", "Je créée la vue resa");
 
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.activity_reservations, container, false);
+
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        Log.d("DEBUG", "status = "+hm.status);
+
+        hm.status=2;
+        hm.chooseMenuItem(2);
 
         final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
@@ -95,6 +101,7 @@ public class ReservationsFragment extends Fragment {
     }
 
     public void handleError(String s){
+        Log.d("DEBUG", "ERREUR");
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
 
@@ -103,6 +110,7 @@ public class ReservationsFragment extends Fragment {
     }
 
     public void handleSuccess(ReservationData[] open, ReservationData[] closed){
+        Log.d("DEBUG", "SUCCESS");
         HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
         hm.handleUpdateResa(open, closed, isEnCours, hasSucceeded);
         this.hasSucceeded = true;

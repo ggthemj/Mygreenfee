@@ -79,6 +79,11 @@ public class ConnectMemberFragment extends Fragment {
 
         // Créé la vue et retourne une carte vide
         final View view = inflater.inflate(R.layout.activity_connect_member, container, false);
+
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=3;
+        hm.chooseMenuItem(3);
+
         is_login_ok = false;
         //Code qui permet de gérer le contrôle de surface sur le mail
         EditText login = view.findViewById(R.id.email);
@@ -119,6 +124,8 @@ public class ConnectMemberFragment extends Fragment {
             }
         });
 
+        this.connectMemberRepository = new ConnectMemberRepository(this);
+
         return view;
     }
 
@@ -126,7 +133,6 @@ public class ConnectMemberFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         //Attribution du layout et instanciation du repo.
         super.onCreate(savedInstanceState);
-        this.connectMemberRepository = new ConnectMemberRepository(this);
     }
 
     // Méthode appelée quand le login est réussi !

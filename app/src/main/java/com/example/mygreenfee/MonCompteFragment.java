@@ -43,6 +43,11 @@ public class MonCompteFragment extends Fragment {
 
         // Créé la vue et retourne une carte vide
         final View view = inflater.inflate(R.layout.activity_mon_compte, container, false);
+
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=3;
+        hm.chooseMenuItem(3);
+
         updateMemberRepository = new UpdateMemberRepository(this);
 
         final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
@@ -712,6 +717,15 @@ public class MonCompteFragment extends Fragment {
     // Méthode appelée quand le login est réussi !
     public void handleSuccessUpdate(UserData u){
         //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
+        HomeMapsActivity hom = (HomeMapsActivity)getContext();
+        hom.displayCompte();
+
+    }
+
+    // Méthode appelée quand le login est refusé (avec message d'erreur) !
+    public void handleError(String s){
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
+        toast.show();
 
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
@@ -736,15 +750,6 @@ public class MonCompteFragment extends Fragment {
         Button but = (Button)getView().findViewById(R.id.buttonvalidation);
         but.setVisibility(View.VISIBLE);
         but = (Button)getView().findViewById(R.id.buttonvalidation2);
-        lay.setVisibility(View.VISIBLE);
-    }
-
-    // Méthode appelée quand le login est refusé (avec message d'erreur) !
-    public void handleError(String s){
-        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
-        toast.show();
-
-        final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
-        simpleProgressBar.setVisibility(View.GONE);
+        but.setVisibility(View.VISIBLE);
     }
 }
