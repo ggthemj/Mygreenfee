@@ -459,12 +459,6 @@ public class CreateMemberFragment extends Fragment {
             final TextView titre = view.findViewById(R.id.textView);
             titre.setText(getResources().getString(R.string.connect_Tunnel));
 
-            final TextView titreCommande = view.findViewById(R.id.titreCommande);
-            titreCommande.setText("Confirmation commande");
-
-            final TextView detailCommande = view.findViewById(R.id.detailCommande);
-            detailCommande.setText(is_club+" - "+is_date+" - "+is_price);
-
             final LinearLayout commandeL = view.findViewById(R.id.formulaire2);
             commandeL.setVisibility(View.VISIBLE);
         }
@@ -645,7 +639,7 @@ public class CreateMemberFragment extends Fragment {
         editor.commit();
 
         OrderActivity ord = (OrderActivity) getContext();
-        //ord.displayMyBanking();
+        ord.displayMyBanking();
     }
 
     public void handleSuccessRegions(RegionsData r){

@@ -34,7 +34,7 @@ public class AddBankingCardRepository {
 
         Log.d("DEBUG", "Début de la requête "+card_number+"/"+expiration_date);
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_addCard);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));

@@ -52,8 +52,6 @@ public class ReservationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_reservations, container, false);
 
         HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        Log.d("DEBUG", "status = "+hm.status);
-
         hm.status=2;
         hm.chooseMenuItem(2);
 

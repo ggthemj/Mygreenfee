@@ -99,29 +99,25 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
                 SharedPreferences sharedPref = context.getSharedPreferences("appData", Context.MODE_PRIVATE);
                 String is_logged = sharedPref.getString("user_email", "false");
 
-                if ("false".equals(is_logged)) {
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString("order_id", "true");
-                    editor.putInt("order_arg1", context.getClubId());
-                    editor.putString("order_arg2", teeTime.getTee_public_id());
-                    editor.putString("order_arg3", teeTime.getTime());
-                    editor.putInt("order_arg4", context.getNbPlayers());
-                    editor.putString("order_arg5", dateFormat.format(context.getCalendarSelected().getTime()));
-                    editor.putString("order_arg6", context.getClub().getName());
-                    editor.putString("order_arg7", viewHolder.sale_price.getText().toString());
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("order_id", "true");
+                editor.putInt("order_arg1", context.getClubId());
+                editor.putString("order_arg2", teeTime.getTee_public_id());
+                editor.putString("order_arg3", teeTime.getTime());
+                editor.putInt("order_arg4", context.getNbPlayers());
+                editor.putString("order_arg5", dateFormat.format(context.getCalendarSelected().getTime()));
+                editor.putString("order_arg6", context.getClub().getName());
+                editor.putString("order_arg7", viewHolder.sale_price.getText().toString());
 
-                    editor.putString("order_price", viewHolder.sale_price.getText().toString());
-                    editor.putString("order_club", context.getClub().getName());
-                    editor.putString("order_date", dateFormat.format(context.getCalendarSelected().getTime()));
+                editor.putString("order_price", viewHolder.sale_price.getText().toString());
+                editor.putString("order_club", context.getClub().getName());
+                editor.putString("order_date", dateFormat.format(context.getCalendarSelected().getTime()));
 
-                    editor.commit();
+                editor.commit();
 
-                    Intent intent = new Intent(context.getApplicationContext(), ConnectMemberFragment.class);
-                    context.startActivity(intent);
-                }
-                else {
-                    coursesRepo.book(context.getClubId(), teeTime.getTee_public_id(), teeTime.getTime(), context.getNbPlayers(), dateFormat.format(context.getCalendarSelected().getTime()), is_logged, context.getClub().getName(), viewHolder.sale_price.getText().toString());
-                }
+                Intent intent = new Intent(context.getApplicationContext(), OrderActivity.class);
+                context.startActivity(intent);
+
             }
         });
 

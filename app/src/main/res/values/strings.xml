@@ -38,6 +38,8 @@
     <string name="order_Fail">Le paiement a échoué, veuillez réessayer</string>
     <string name="order_Button">Retour à l\'accueil</string>
     <string name="order_ButtonFail">Retour au paiement</string>
+    <string name="order_ButtonPaiement">Procéder au paiement</string>
+    <string name="order_csc">Veuillez entrer ci-dessous votre cryptogramme (ce dernier figure au dos de votre carte bancaire)</string>
 
     <string name="myBanking_Title">Ma carte bancaire</string>
     <string name="myBanking_Button">Modifier ma carte bancaire</string>

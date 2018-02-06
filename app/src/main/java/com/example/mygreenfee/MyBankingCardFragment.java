@@ -47,6 +47,9 @@ public class MyBankingCardFragment extends Fragment {
         final ProgressBar simpleProgressBar = (ProgressBar) view.findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
 
+        final Button bv = (Button) view.findViewById(R.id.buttonvalidation);
+        bv.setVisibility(View.GONE);
+
         //Bind des buttons avec les méthodes correspondantes
         final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
@@ -55,11 +58,6 @@ public class MyBankingCardFragment extends Fragment {
             }
         });
 
-        String is_order = sharedPref.getString("order_id", "false");
-
-        if(!is_order.equals("false")){
-            buttonValidation.setText(getResources().getString(R.string.myBanking_Tunnel));
-        }
 
         return view;
     }
@@ -75,18 +73,15 @@ public class MyBankingCardFragment extends Fragment {
         datetw.setVisibility(View.VISIBLE);
 
         final Button button = (Button) getView().findViewById(R.id.buttonvalidation);
-        button.setVisibility(View.VISIBLE);
+        if(getContext() instanceof HomeMapsActivity) {
+            button.setVisibility(View.VISIBLE);
+        }
 
         final ImageView imagev = (ImageView) getView().findViewById(R.id.CB);
         imagev.setVisibility(View.VISIBLE);
 
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String is_order = sharedPref.getString("order_id", "false");
-
-        if(!is_order.equals("false")){
-            final EditText code = getView().findViewById(R.id.code);
-            code.setVisibility(View.VISIBLE);
-        }
     }
 
     public void handleSuccess(CardData carddata){
@@ -103,7 +98,9 @@ public class MyBankingCardFragment extends Fragment {
         imagev.setVisibility(View.VISIBLE);
 
         final Button button = (Button) getView().findViewById(R.id.buttonvalidation);
-        button.setVisibility(View.VISIBLE);
+        if(getContext() instanceof HomeMapsActivity) {
+            button.setVisibility(View.VISIBLE);
+        }
 
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
@@ -111,11 +108,6 @@ public class MyBankingCardFragment extends Fragment {
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String is_order = sharedPref.getString("order_id", "false");
         String mail = sharedPref.getString("user_email", "false");
-
-        if(!is_order.equals("false")){
-            final EditText code = getView().findViewById(R.id.code);
-            code.setVisibility(View.VISIBLE);
-        }
     }
 
     public void handleSuccessPayment(CardData carddata){

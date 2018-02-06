@@ -80,9 +80,11 @@ public class ConnectMemberFragment extends Fragment {
         // Créé la vue et retourne une carte vide
         final View view = inflater.inflate(R.layout.activity_connect_member, container, false);
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=3;
-        hm.chooseMenuItem(3);
+        if(getContext() instanceof HomeMapsActivity) {
+            HomeMapsActivity hm = (HomeMapsActivity) this.getContext();
+            hm.status = 3;
+            hm.chooseMenuItem(3);
+        }
 
         is_login_ok = false;
         //Code qui permet de gérer le contrôle de surface sur le mail
@@ -177,8 +179,11 @@ public class ConnectMemberFragment extends Fragment {
         editor.putString(getString(R.string.order_id), orderId);
         editor.commit();
 
-        OrderActivity ord = (OrderActivity) getContext();
-        //ord.displayMyBanking();
+        if(getContext() instanceof OrderActivity) {
+            OrderActivity ord = (OrderActivity) getContext();
+            ord.displayMyBanking();
+        }
+
     }
 
     public void handleError(String s){

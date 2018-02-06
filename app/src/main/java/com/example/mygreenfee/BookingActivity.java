@@ -297,10 +297,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         editor.putString("order_price", orderPrice);
         editor.putString("order_club", orderClub);
         editor.putString("order_date", orderDate);
+        editor.putString("order_parcours", "Parcours");
         editor.commit();
 
 
-        Intent intent = new Intent(getApplicationContext(), MyBankingCardFragment.class);
+        Intent intent = new Intent(getApplicationContext(), OrderActivity.class);
         startActivity(intent);
     }
 

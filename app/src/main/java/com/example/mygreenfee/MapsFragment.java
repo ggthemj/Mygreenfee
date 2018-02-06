@@ -106,6 +106,9 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
+        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
+        hm.status=1;
+        hm.chooseMenuItem(1);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);

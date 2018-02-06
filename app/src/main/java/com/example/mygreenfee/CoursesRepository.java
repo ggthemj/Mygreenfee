@@ -221,10 +221,9 @@ public class CoursesRepository {
             }
         };
         queue.add(stringRequest);
-
     }
 
-    public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
+    public void book2(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);

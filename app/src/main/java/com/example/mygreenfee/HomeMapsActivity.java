@@ -13,11 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class HomeMapsActivity extends AppCompatActivity {
 
@@ -235,7 +239,7 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayMaCarte(){
-        newFragment = new ProfileFragment();
+        newFragment = new MyBankingCardFragment();
         Bundle args = new Bundle();
 
         // Create fragment and give it an argument specifying the article it should show
