@@ -77,6 +77,58 @@ public class HomeMapsActivity extends AppCompatActivity {
         tt.setVisibility(View.GONE);
     }
 
+    protected void displayOubli(){
+        newFragment = new ChangePasswordFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.changePassword_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
+    protected void displayCrea(){
+        newFragment = new CreateMemberFragment();
+        Bundle args = new Bundle();
+
+        // Create fragment and give it an argument specifying the article it should show
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.constraintLayout2, newFragment);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+
+        final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
+        textViewTitle.setText(getResources().getString(R.string.creationCompte_Title));
+        textViewTitle.setVisibility(View.VISIBLE);
+
+        final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
+        rb.setVisibility(View.GONE);
+
+        final ImageView tt = (ImageView) findViewById(R.id.maps_title);
+        tt.setVisibility(View.GONE);
+    }
+
     protected void displayCompte(){
         newFragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -104,7 +156,7 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayLogin(){
-        newFragment = new ProfileFragment();
+        newFragment = new ConnectMemberFragment();
         Bundle args = new Bundle();
 
         // Create fragment and give it an argument specifying the article it should show
@@ -130,7 +182,7 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayMonProfil(){
-        newFragment = new ProfileFragment();
+        newFragment = new MonCompteFragment();
         Bundle args = new Bundle();
 
         // Create fragment and give it an argument specifying the article it should show

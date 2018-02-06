@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class UpdateMemberRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    MonCompteActivity context;
+    MonCompteFragment context;
 
     //les données de l'utilisateur qui seront mises à jour
     UserData userData ;
@@ -28,7 +28,7 @@ public class UpdateMemberRepository {
     Map<String, String> mParams;
 
     //Constructeur
-    public UpdateMemberRepository(MonCompteActivity c){
+    public UpdateMemberRepository(MonCompteFragment c){
         this.context = c ;
     }
 
@@ -36,7 +36,7 @@ public class UpdateMemberRepository {
         Log.d("DEBUG", "Debut de la requete de modification de compte");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_updateMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -102,8 +102,8 @@ public class UpdateMemberRepository {
     public void update(final String email, final String pwd){
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+email+"/"+pwd);
 
-        //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        //Préparation de la requête;
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -163,7 +163,7 @@ public class UpdateMemberRepository {
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_getRegions)+"&data[country]="+country_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));

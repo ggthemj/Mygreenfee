@@ -1,7 +1,5 @@
 package com.example.mygreenfee;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,7 +14,7 @@ import java.util.Map;
 
 public class ConnectMemberRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    ConnectMemberActivity context;
+    ConnectMemberFragment context;
 
     UserData userData ;
 
@@ -25,7 +23,7 @@ public class ConnectMemberRepository {
     Map<String, String> mParams;
 
     //Constructeur
-    public ConnectMemberRepository(ConnectMemberActivity c){
+    public ConnectMemberRepository(ConnectMemberFragment c){
         this.context = c ;
     }
 
@@ -34,7 +32,7 @@ public class ConnectMemberRepository {
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+email+"/"+pwd);
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(context.getContext());
         String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -94,7 +92,7 @@ public class ConnectMemberRepository {
         Log.d("DEBUG", "Debut de la requete de récupération du mot de passe");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_oubliMdp)+"&data[email]="+ema;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -142,10 +140,11 @@ public class ConnectMemberRepository {
         queue.add(stringRequest);
     }
 
+
     public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
-        RequestQueue queue = Volley.newRequestQueue(context);
+        RequestQueue queue = Volley.newRequestQueue(context.getContext());
         String url = context.getResources().getString(R.string.URL_order);
 
         mHeaders = new HashMap<String, String>();

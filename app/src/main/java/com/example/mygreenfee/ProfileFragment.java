@@ -73,10 +73,13 @@ public class ProfileFragment extends Fragment {
         });
 
         if(mail.equals("false")) {
+            Log.d("DEBUG", "MAIL NON CONFIGURE");
+
             HomeMapsActivity hom = (HomeMapsActivity)getContext();
             hom.displayLogin();
         }
         else{
+            Log.d("DEBUG", "MAIL CONFIGURE");
             final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBar);
             simpleProgressBar.setVisibility(View.VISIBLE);
             String password = sharedPref.getString("user_password", "false");
@@ -111,6 +114,7 @@ public class ProfileFragment extends Fragment {
         editor.remove("user_country");
         editor.remove("user_region");
         editor.remove("user_phone");
+        editor.remove("user_password");
         editor.commit();
 
         HomeMapsActivity hom = (HomeMapsActivity)getContext();

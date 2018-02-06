@@ -33,7 +33,7 @@ public class ReservationsRepository {
     }
 
     public void getReservations(final String member_id){
-        Log.d("DEBUG", "Debut de la requete de récupération des régions");
+        Log.d("DEBUG", "Debut de la requete de récupération des réservations");
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(context.getContext());

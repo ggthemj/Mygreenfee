@@ -55,7 +55,6 @@
                 android:fontFamily="@font/helveticaneue"
                 android:gravity="center"
                 android:paddingLeft="16dp"
-                android:text="@string/creationCompte_Title"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp"

@@ -17,14 +17,14 @@ import java.util.Map;
 
 public class ChangePasswordRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    ChangePasswordActivity context;
+    ChangePasswordFragment context;
 
     //Les paramètres de la requête http
     Map<String, String> mHeaders;
     Map<String, String> mParams;
 
     //Constructeur
-    public ChangePasswordRepository(ChangePasswordActivity c){
+    public ChangePasswordRepository(ChangePasswordFragment c){
         this.context = c ;
     }
 
@@ -33,7 +33,7 @@ public class ChangePasswordRepository {
         Log.d("DEBUG", "Début de la requête changepassword avec les identifiants "+oldmdp+"/"+newmdp);
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_changePassword);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));

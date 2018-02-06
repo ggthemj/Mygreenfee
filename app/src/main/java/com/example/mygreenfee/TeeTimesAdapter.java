@@ -3,14 +3,11 @@ package com.example.mygreenfee;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.icu.text.NumberFormat;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
@@ -20,9 +17,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
-
-import static android.icu.text.NumberFormat.CURRENCYSTYLE;
 
 /**
  * Created by Julien on 12/01/2018.
@@ -122,7 +116,7 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
                     editor.commit();
 
-                    Intent intent = new Intent(context.getApplicationContext(), ConnectMemberActivity.class);
+                    Intent intent = new Intent(context.getApplicationContext(), ConnectMemberFragment.class);
                     context.startActivity(intent);
                 }
                 else {

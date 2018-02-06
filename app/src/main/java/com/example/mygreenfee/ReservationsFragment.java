@@ -38,14 +38,6 @@ public class ReservationsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.hasSucceeded = false;
-        isEnCours = true;
-
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String user_id = ""+sharedPref.getInt("user_id", 1);
-
-        reservationsRepository = new ReservationsRepository(this);
-        reservationsRepository.getReservations(user_id);
     }
 
     public void setHomeMaps(HomeMapsActivity homeMaps){
@@ -89,6 +81,15 @@ public class ReservationsFragment extends Fragment {
 
             }
         });
+
+        this.hasSucceeded = false;
+        isEnCours = true;
+
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String user_id = ""+sharedPref.getInt("user_id", 1);
+
+        reservationsRepository = new ReservationsRepository(this);
+        reservationsRepository.getReservations(user_id);
 
         return view;
     }

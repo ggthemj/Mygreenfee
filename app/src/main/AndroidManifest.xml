@@ -35,21 +35,21 @@
             android:name=".HomeMapsActivity"
             android:label="@string/title_activity_home_maps" />
         <activity
-            android:name=".MonCompteActivity"
+            android:name=".MonCompteFragment"
             android:parentActivityName=".ProfileFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ProfileFragment" />
         </activity>
         <activity
-            android:name=".CreateMemberActivity"
-            android:parentActivityName=".ConnectMemberActivity">
+            android:name=".CreateMemberFragment"
+            android:parentActivityName=".ConnectMemberFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ConnectMemberActivity" />
+                android:value=".ConnectMemberFragment" />
         </activity>
         <activity
-            android:name=".ConnectMemberActivity"
+            android:name=".ConnectMemberFragment"
             android:parentActivityName=".HomeMapsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -101,11 +101,11 @@
         <activity android:name=".ClubActivity" />
         <activity android:name=".ClubListActivity" />
         <activity
-            android:name=".ChangePasswordActivity"
-            android:parentActivityName=".MonCompteActivity">
+            android:name=".ChangePasswordFragment"
+            android:parentActivityName=".MonCompteFragment">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MonCompteActivity" />
+                android:value=".MonCompteFragment" />
         </activity>
         <activity android:name=".OrderActivity"></activity>
         <meta-data

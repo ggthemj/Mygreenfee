@@ -1,6 +1,5 @@
 package com.example.mygreenfee;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -10,7 +9,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,7 +17,7 @@ import java.util.Map;
 
 public class CreateMemberRepository {
     //L'activité parente, appelée pour déclencher certaines méthodes selon les retours des WS
-    CreateMemberActivity context;
+    CreateMemberFragment context;
 
     //les données de l'utilisateur qui seront mises à jour
     UserData userData ;
@@ -29,7 +27,7 @@ public class CreateMemberRepository {
     Map<String, String> mHeaders;
     Map<String, String> mParams;
 
-    public CreateMemberRepository(CreateMemberActivity c){
+    public CreateMemberRepository(CreateMemberFragment c){
         this.context = c ;
     }
 
@@ -37,7 +35,7 @@ public class CreateMemberRepository {
         Log.d("DEBUG", "Debut de la requete de création de compte");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_createMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -104,7 +102,7 @@ public class CreateMemberRepository {
         Log.d("DEBUG", "Debut de la requete de création de compte");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_createMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -167,7 +165,7 @@ public class CreateMemberRepository {
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context);
+        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_getRegions)+"&data[country]="+country_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -224,7 +222,7 @@ public class CreateMemberRepository {
     public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
-        RequestQueue queue = Volley.newRequestQueue(context);
+        RequestQueue queue = Volley.newRequestQueue(context.getContext());
         String url = context.getResources().getString(R.string.URL_order);
 
         mHeaders = new HashMap<String, String>();

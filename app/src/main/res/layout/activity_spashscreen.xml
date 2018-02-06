@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/greenAlbaColor"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    tools:context="com.example.mygreenfee.ChangePasswordActivity">
+    tools:context="com.example.mygreenfee.ChangePasswordFragment">
 
     <ImageView
         android:id="@+id/imageView4"

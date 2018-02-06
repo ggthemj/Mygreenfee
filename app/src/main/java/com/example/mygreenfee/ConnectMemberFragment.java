@@ -3,17 +3,21 @@ package com.example.mygreenfee;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ConnectMemberActivity extends AppCompatActivity {
+public class ConnectMemberFragment extends Fragment {
     private ConnectMemberRepository connectMemberRepository ;
     private boolean is_login_ok;
 
@@ -22,13 +26,13 @@ public class ConnectMemberActivity extends AppCompatActivity {
     public void handleValidation(){
         updateLoginStatus();
         if(is_login_ok) {
-            EditText editText = (EditText) findViewById(R.id.email);
+            EditText editText = (EditText) getView().findViewById(R.id.email);
             String email = editText.getText().toString();
 
-            editText = (EditText) findViewById(R.id.password);
+            editText = (EditText) getView().findViewById(R.id.password);
             String password = editText.getText().toString();
 
-            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
 
             editor.putString("user_password", password);
@@ -37,25 +41,21 @@ public class ConnectMemberActivity extends AppCompatActivity {
             connectMemberRepository.update(email, password);
         }
         else{
-            Toast toast = Toast.makeText(this, R.string.connect_validateError, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(), R.string.connect_validateError, Toast.LENGTH_LONG);
             toast.show();
         }
     }
 
-    // Bouton de login
-    // Vérifie si le compte existe
     public void handleCrea(){
-        Intent intent = new Intent(this, CreateMemberActivity.class);
-        startActivity(intent);
+        HomeMapsActivity hom = (HomeMapsActivity)getContext();
+        hom.displayCrea();
     }
 
-    // Bouton de login
-    // Vérifie si le compte existe
     public void handleOubli(){
-        EditText editText = (EditText) findViewById(R.id.email);
+       EditText editText = (EditText) getView().findViewById(R.id.email);
         String email = editText.getText().toString();
         if(email.length()<2) {
-            Toast toast = Toast.makeText(this, R.string.connect_errorMailMdp, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(), R.string.connect_errorMailMdp, Toast.LENGTH_LONG);
             toast.show();
         }
         else {
@@ -63,47 +63,25 @@ public class ConnectMemberActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        //Attribution du layout et instanciation du repo.
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect_member);
-        this.connectMemberRepository = new ConnectMemberRepository(this);
+    public void handleErrorMdp(String s){
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    // Méthode appelée quand le login est refusé (avec message d'erreur) !
+    public void handleSuccessMdp(){
+        Toast toast = Toast.makeText(getContext(), R.string.connect_successMdp, Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Créé la vue et retourne une carte vide
+        final View view = inflater.inflate(R.layout.activity_connect_member, container, false);
         is_login_ok = false;
-
-
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_order = sharedPref.getString("order_id", "false");
-        String is_club = sharedPref.getString("order_club", "false");
-        String is_price = sharedPref.getString("order_price", "false");
-        String is_date = sharedPref.getString("order_date", "false");
-
-        if(!is_order.equals("false")){
-            final TextView titre = findViewById(R.id.textView);
-            titre.setText(getResources().getString(R.string.connect_Tunnel));
-
-            final TextView titreCommande = findViewById(R.id.titreCommande);
-            titreCommande.setText("Confirmation commande");
-
-            final TextView detailCommande = findViewById(R.id.detailCommande);
-            detailCommande.setText(is_club+" - "+is_date+" - "+is_price);
-
-            final LinearLayout commandeL = findViewById(R.id.formulaire2);
-            commandeL.setVisibility(View.VISIBLE);
-        }
-        else{
-            final LinearLayout commandeL2 = findViewById(R.id.formulaire2);
-            commandeL2.setVisibility(View.GONE);
-        }
-
-        //Mise en place de la custom app bar
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-
         //Code qui permet de gérer le contrôle de surface sur le mail
-        EditText login = findViewById(R.id.email);
+        EditText login = view.findViewById(R.id.email);
         login.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -111,41 +89,50 @@ public class ConnectMemberActivity extends AppCompatActivity {
                     updateLoginStatus();
                 }
                 else{
-                    TextView loginError = findViewById(R.id.error_email);
+                    TextView loginError = view.findViewById(R.id.error_email);
                     loginError.setText("");
                 }
             }
         });
-        TextView loginError = findViewById(R.id.error_email);
+        TextView loginError = view.findViewById(R.id.error_email);
         loginError.setText("");
 
         //Bind des buttons avec les méthodes correspondantes
-        final Button buttonValidation = findViewById(R.id.buttonvalidation);
+        final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleValidation();
             }
         });
 
-        final TextView buttonCreaCompte = findViewById(R.id.creaCompte);
+        final TextView buttonCreaCompte = view.findViewById(R.id.creaCompte);
         buttonCreaCompte.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleCrea();
             }
         });
 
-        final TextView mdpOubli = findViewById(R.id.mdpoubli);
+        final TextView mdpOubli = view.findViewById(R.id.mdpoubli);
         mdpOubli.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleOubli();
             }
         });
+
+        return view;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        //Attribution du layout et instanciation du repo.
+        super.onCreate(savedInstanceState);
+        this.connectMemberRepository = new ConnectMemberRepository(this);
     }
 
     // Méthode appelée quand le login est réussi !
     public void handleSuccess(UserData u){
         //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("is_connected", "true");
         editor.putInt("user_id", u.public_id);
@@ -162,8 +149,8 @@ public class ConnectMemberActivity extends AppCompatActivity {
         String is_order = sharedPref.getString("order_id", "false");
 
         if(is_order.equals("false")){
-            Intent intent = new Intent(this, ProfileFragment.class);
-            startActivity(intent);
+            HomeMapsActivity hom = (HomeMapsActivity)getContext();
+            hom.displayMonProfil();
         }
         else{
             int arg1 = sharedPref.getInt("order_arg1", 0);
@@ -179,40 +166,26 @@ public class ConnectMemberActivity extends AppCompatActivity {
     }
 
     public void handleBookSuccess(String orderId, String orderClub, String orderPrice, String orderDate) {
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.order_id), orderId);
         editor.commit();
 
-
-        Intent intent = new Intent(getApplicationContext(), MyBankingCardActivity.class);
-        startActivity(intent);
+        OrderActivity ord = (OrderActivity) getContext();
+        //ord.displayMyBanking();
     }
 
-    // Méthode appelée quand le login est refusé (avec message d'erreur) !
     public void handleError(String s){
-        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    // Méthode appelée quand le login est refusé (avec message d'erreur) !
-    public void handleErrorMdp(String s){
-        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    // Méthode appelée quand le login est refusé (avec message d'erreur) !
-    public void handleSuccessMdp(){
-        Toast toast = Toast.makeText(this, R.string.connect_successMdp, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
         toast.show();
     }
 
     public void updateLoginStatus(){
-        EditText editText = (EditText) findViewById(R.id.email);
+        EditText editText = (EditText) getView().findViewById(R.id.email);
         String email = editText.getText().toString();
         is_login_ok = email.contains("@") && email.contains(".");
         if(!is_login_ok){
-            TextView loginError = (TextView) findViewById(R.id.error_email);
+            TextView loginError = (TextView) getView().findViewById(R.id.error_email);
             loginError.setText(R.string.connect_errorLogin);
         }
     }
