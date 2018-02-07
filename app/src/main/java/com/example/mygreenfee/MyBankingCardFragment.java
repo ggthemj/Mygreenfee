@@ -101,6 +101,10 @@ public class MyBankingCardFragment extends Fragment {
         if(getContext() instanceof HomeMapsActivity) {
             button.setVisibility(View.VISIBLE);
         }
+        else{
+            OrderActivity ord = (OrderActivity) getContext();
+            ord.displayPaymentButton();
+        }
 
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
@@ -150,29 +154,9 @@ public class MyBankingCardFragment extends Fragment {
     }
 
     public void handleValidation(){
-
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_order = sharedPref.getString("order_id", "false");
-        String email = sharedPref.getString("user_email", "false");
-
-        EditText code = getView().findViewById(R.id.code);
-        if (is_order.equals("false")) {
-            if(getContext() instanceof HomeMapsActivity){
-                HomeMapsActivity hom = (HomeMapsActivity)getContext();
-                hom.displayAddPaymentCard();
-            }
-            else{
-
-            }
-        } else {
-            if(code.getText().length()>2) {
-                bcRepository.pay(is_order, email, code.getText().toString());
-            }
-            else{
-                Toast toast = Toast.makeText(getContext(), "Veuillez compléter votre code de sécurité", Toast.LENGTH_LONG);
-                toast.show();
-            }
+        if(getContext() instanceof HomeMapsActivity){
+            HomeMapsActivity hom = (HomeMapsActivity)getContext();
+            hom.displayAddPaymentCard();
         }
-
     }
 }

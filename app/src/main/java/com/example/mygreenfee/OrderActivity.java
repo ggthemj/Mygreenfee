@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +52,7 @@ public class OrderActivity extends AppCompatActivity {
 
         //Bind des buttons avec les méthodes correspondantes
         final Button buttonpaiement = findViewById(R.id.buttonpaiement);
-        buttonValidation.setOnClickListener(new View.OnClickListener() {
+        buttonpaiement.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handlePaiement();
             }
@@ -129,14 +130,45 @@ public class OrderActivity extends AppCompatActivity {
 
     public void handlePaiement(){
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String is_order = sharedPref.getString("order_id", "false");
+        String email = sharedPref.getString("user_email", "false");
+
+        EditText code = findViewById(R.id.code);
+        orderRepository.pay(is_order,email,code.getText().toString());
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.VISIBLE);
+
+        final Button button = (Button) findViewById(R.id.buttonpaiement);
+        button.setVisibility(View.GONE);
     }
 
     public void handleSuccessLogin(UserData u){
-        this.displayMyBanking();
+        Log.d("DEBUG", "SUCCESS LOGIN ");
+
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        int arg1 = sharedPref.getInt("order_arg1", 0);
+        String arg2 = sharedPref.getString("order_arg2", "false");
+        String arg3 = sharedPref.getString("order_arg3", "false");
+        int arg4 = sharedPref.getInt("order_arg4", 0);
+        String arg5 = sharedPref.getString("order_arg5", "false");
+        String arg6 = sharedPref.getString("order_arg6", "false");
+        String arg7 = sharedPref.getString("order_arg7", "false");
+
+        orderRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
     }
 
     public void handleErrorLogin(){
         this.displayMonCompte();
+    }
+
+    public void handleBookSuccess(String orderId){
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.order_id), orderId);
+        editor.commit();
+        this.displayMyBanking();
     }
 
     public void handleConfirm(){
@@ -150,6 +182,11 @@ public class OrderActivity extends AppCompatActivity {
         button.setVisibility(View.VISIBLE);
     }
 
+    public void displayPaymentButton(){
+        final LinearLayout lay = (LinearLayout) findViewById(R.id.paiement);
+        lay.setVisibility(View.VISIBLE);
+    }
+
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
@@ -158,6 +195,9 @@ public class OrderActivity extends AppCompatActivity {
     public void handleErrorPayment(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
+
+        final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        simpleProgressBar.setVisibility(View.GONE);
     }
 
     public void handleSuccessPayment(){

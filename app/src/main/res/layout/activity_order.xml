@@ -34,6 +34,13 @@
     </android.support.v7.widget.Toolbar>
 
 
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintHorizontal_bias="0.5">
+
     <LinearLayout
         android:id="@+id/formulaire"
         android:layout_width="match_parent"
@@ -185,6 +192,15 @@
             android:layout_height="1dp"
             android:background="@android:color/darker_gray" />
 
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/formulaire2"></android.support.constraint.ConstraintLayout>
+
         <LinearLayout
             android:id="@+id/paiement"
             android:layout_width="match_parent"
@@ -260,15 +276,6 @@
 
         </LinearLayout>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/navigation"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/formulaire2"></android.support.constraint.ConstraintLayout>
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
@@ -295,5 +302,7 @@
             android:visibility="gone" />
 
     </LinearLayout>
+
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
