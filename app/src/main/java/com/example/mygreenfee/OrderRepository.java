@@ -2,6 +2,7 @@ package com.example.mygreenfee;
 
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -156,6 +157,7 @@ public class OrderRepository {
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
+
         String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
@@ -204,6 +206,11 @@ public class OrderRepository {
                 return volleyError;
             }
         };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                5000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }
 
