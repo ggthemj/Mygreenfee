@@ -33,25 +33,25 @@ public class MapsFragmentRepository {
         this.clubListContext = clubListActivity;
     }
 
-    public void updateFromSearch(){
+    public void updateFromSearch(final String lan){
         RequestQueue queue = Volley.newRequestQueue(clubListContext);
         //Récupération des clubs de golf
         Log.d("DEBUG", "UPDATE REPO CLUBS");
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", clubListContext.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", clubListContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
 
         String url = clubListContext.getResources().getString(R.string.URL_getAllClubs);
         StringRequest stringRequest = updateClubs(url);
         queue.add(stringRequest);
     }
 
-    public void updateFromMaps(){
+    public void updateFromMaps(final String lan){
         //Récupération des clubs de golf
         Log.d("DEBUG", "UPDATE REPO CLUBS");
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", activityContext.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", activityContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         RequestQueue queue = Volley.newRequestQueue(activityContext);
         String url = activityContext.getResources().getString(R.string.URL_getAllClubs);
         StringRequest stringRequest = updateClubs(url);

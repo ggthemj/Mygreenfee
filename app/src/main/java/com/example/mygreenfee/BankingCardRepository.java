@@ -30,14 +30,14 @@ public class BankingCardRepository {
     }
 
     //Tentative de login :)
-    public void checkCard(final String mail, final String currency){
+    public void checkCard(final String lan, final String mail, final String currency){
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_checkCard)+"&data[email]="+mail+"&data[currency]="+currency;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", mail);
         mParams.put("data[currency]", currency);
@@ -64,72 +64,6 @@ public class BankingCardRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams()
-            {
-                return mParams;
-            }
-            public Map<String, String> getHeaders() {
-                return mHeaders;
-            }
-
-            @Override
-            protected VolleyError parseNetworkError(VolleyError volleyError){
-                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
-                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
-                    volleyError = error;
-                }
-
-                return volleyError;
-            }
-        };
-        queue.add(stringRequest);
-    }
-
-    //Tentative de login :)
-    public void pay(final String id, final String email, final String csc){
-
-        Log.d("DEBUG", "PAIEMENT URL : "+"https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card");
-
-        Log.d("DEBUG", "Paramètre data[email] : "+email);
-        Log.d("DEBUG", "Paramètre data[csc] : "+csc);
-        Log.d("DEBUG", "Paramètre data[return_url] : "+"http://legreenfee.framework.payment.callback");
-
-
-        //Préparation de la requête
-        RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
-        String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
-        mHeaders = new HashMap<String, String>();
-        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
-        mParams = new HashMap<String, String>();
-        mParams.put("data[email]", email);
-        mParams.put("data[csc]", csc);
-        mParams.put("data[return_url]", "http://legreenfee.framework.payment.callback");
-        Log.d("DEBUG", "Début de la requête "+id+"/"+email);
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("DEBUG", "REPONSE PAIEMENT : "+response);
-
-                        context.handleSuccessPayment(cardData);
-
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("DEBUG","Erreur !"+error.getMessage());
-                try {
-                    JSONObject messageErreur = new JSONObject(error.getMessage());
-                    context.handleErrorPay(messageErreur.getString("error_message"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

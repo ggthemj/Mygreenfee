@@ -45,7 +45,7 @@ public class CoursesRepository {
         clubListContext = clubListActivity;
     }
 
-    public void update(final ClubData club){
+    public void update(final String lan,final ClubData club){
         Log.d("DEBUG", "Debut de la requete de création de parcours");
 
         //Préparation de la requête
@@ -73,7 +73,7 @@ public class CoursesRepository {
                                     rightNow.add(Calendar.DATE, 1);
                                 }
                                 Date today = rightNow.getTime();
-                                updateTeeTimes(club.public_id, df.format(today), "0");
+                                updateTeeTimes(lan, club.public_id, df.format(today), "0");
                                 bookingContext.setClubId(club.public_id);
                             }
                             bookingContext.updateCourses();
@@ -108,7 +108,7 @@ public class CoursesRepository {
         queue.add(stringRequest);
     }
 
-    public void updateTeeTimes(int clubId, String date, String teeId){
+    public void updateTeeTimes(final String lan, int clubId, String date, String teeId){
         Log.d("DEBUG", "Debut de la requete de récupération des tee times");
 
         //Préparation de la requête
@@ -168,7 +168,7 @@ public class CoursesRepository {
 
     }
 
-    public void updateAd(final String courseId, int clubId) {
+    public void updateAd(final String lan, final String courseId, int clubId) {
         Log.d("DEBUG", "Debut de la requete de récupération des ads");
 
         //Préparation de la requête
@@ -223,7 +223,7 @@ public class CoursesRepository {
         queue.add(stringRequest);
     }
 
-    public void book2(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
+    public void book2(final String lan, int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
@@ -231,7 +231,7 @@ public class CoursesRepository {
 
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", bookingContext.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", bookingContext.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[club_id]", ""+clubId);
         mParams.put("data[tee_id]", arg1);

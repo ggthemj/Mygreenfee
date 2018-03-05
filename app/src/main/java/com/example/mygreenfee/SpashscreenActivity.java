@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import com.crashlytics.android.Crashlytics;
+
+import java.util.Locale;
+
 import io.fabric.sdk.android.Fabric;
 
 public class SpashscreenActivity extends Activity {
@@ -43,8 +46,22 @@ public class SpashscreenActivity extends Activity {
                     startActivity(intent);
                 }
 
+                String isoL = Locale.getDefault().getISO3Language();
+                String language ;
+                if(isoL.equals("deu")){
+                    language = "DE";
+                }
+                else if(isoL.equals("fra")){
+                    language = "FR";
+                }
+                else {
+                    language = "EN";
+                }
+
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("order_id", "false");
+                editor.putString("home_state", "0");
+                editor.putString("language", language);
                 editor.commit();
 
                 // close this activity

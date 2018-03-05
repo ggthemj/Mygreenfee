@@ -1,6 +1,8 @@
 package com.example.mygreenfee;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,7 +45,11 @@ public class ClubListActivity extends AppCompatActivity {
         arrayAdapter = new ClubsAdapter(getApplicationContext());
         arrayAdapter = new ClubsAdapter(getApplicationContext());
         clubsRepo = new MapsFragmentRepository(this);
-        clubsRepo.updateFromSearch();
+
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
+        clubsRepo.updateFromSearch(lang);
 
         clubsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -44,9 +44,12 @@ public class MonCompteFragment extends Fragment {
         // Créé la vue et retourne une carte vide
         final View view = inflater.inflate(R.layout.activity_mon_compte, container, false);
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=3;
-        hm.chooseMenuItem(3);
+        if(getContext() instanceof HomeMapsActivity){
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "4");
+            editor.commit();
+        }
 
         updateMemberRepository = new UpdateMemberRepository(this);
 
@@ -283,7 +286,10 @@ public class MonCompteFragment extends Fragment {
                     else if(position==5) {
                         paysISO = "CH" ;
                     }
-                    updateMemberRepository.updateRegions(paysISO);
+                    SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+                    String lang = sharedPref.getString("language", "EN");
+
+                    updateMemberRepository.updateRegions(lang, paysISO);
                 }
             }
 
@@ -399,12 +405,14 @@ public class MonCompteFragment extends Fragment {
 
 
         sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         String mailenr = sharedPref.getString("user_email", "false");
         String mdp = sharedPref.getString("user_password", "false");
 
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+mailenr+"/"+mdp);
 
-        updateMemberRepository.update(mailenr, mdp);
+        updateMemberRepository.update(lang, mailenr, mdp);
 
         return view;
     }
@@ -430,10 +438,12 @@ public class MonCompteFragment extends Fragment {
 
     private void updateRegions() {
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         String pays = sharedPref.getString("user_country", "");
 
         if(pays.length()==2){
-            updateMemberRepository.updateRegions(pays);
+            updateMemberRepository.updateRegions(lang, pays);
         }
     }
 
@@ -495,6 +505,8 @@ public class MonCompteFragment extends Fragment {
             }
 
             SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String lang = sharedPref.getString("language", "EN");
+
             int id = sharedPref.getInt("user_id", 12);
             String sid = ""+id;
 
@@ -532,7 +544,7 @@ public class MonCompteFragment extends Fragment {
             but = (Button)getView().findViewById(R.id.buttonvalidation2);
             but.setVisibility(View.GONE);
 
-            updateMemberRepository.updateMember(sid, civ, nom, pre, ema, dob, pay, ""+region_id, pho);
+            updateMemberRepository.updateMember(lang, sid, civ, nom, pre, ema, dob, pay, ""+region_id, pho);
         } else {
             Toast toast = Toast.makeText(getContext(), R.string.creationCompte_ErreurValidation, Toast.LENGTH_LONG);
             toast.show();

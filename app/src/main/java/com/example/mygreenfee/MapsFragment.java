@@ -3,8 +3,10 @@ package com.example.mygreenfee;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -76,8 +78,11 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mLocationPermissionGranted = false;
 
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         this.clubsRepo = new MapsFragmentRepository((HomeMapsActivity) getActivity(), this);
-        this.clubsRepo.updateFromMaps();
+        this.clubsRepo.updateFromMaps(lang);
     }
 
     @Override
@@ -106,9 +111,12 @@ public class MapsFragment extends Fragment implements GoogleApiClient.OnConnecti
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.fragment_maps, container, false);
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=1;
-        hm.chooseMenuItem(1);
+        if(getContext() instanceof HomeMapsActivity){
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "1");
+            editor.commit();
+        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);

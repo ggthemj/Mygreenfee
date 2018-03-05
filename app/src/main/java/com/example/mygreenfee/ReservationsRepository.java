@@ -32,7 +32,7 @@ public class ReservationsRepository {
         this.context = c ;
     }
 
-    public void getReservations(final String member_id){
+    public void getReservations(final String lan, final String member_id){
         Log.d("DEBUG", "Debut de la requete de récupération des réservations");
 
         //Préparation de la requête
@@ -40,7 +40,7 @@ public class ReservationsRepository {
         String url = context.getResources().getString(R.string.URL_getReservations)+"&data[member_id]="+member_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

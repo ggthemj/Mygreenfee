@@ -27,6 +27,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void handleSuccess(UserData userdata){
+        Log.d("DEBUG", "SUCCESS UPDATE");
         TextView myAwesomeTextView = (TextView)getView().findViewById(R.id.title1);
         String toDisplay = userdata.fname+" "+userdata.lname;
         myAwesomeTextView.setText(toDisplay);
@@ -49,10 +50,17 @@ public class ProfileFragment extends Fragment {
         // Créé la vue et retourne une carte vide
 
         View view = inflater.inflate(R.layout.activity_profile, container, false);
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=3;
-        hm.chooseMenuItem(3);
+
+        if(getContext() instanceof HomeMapsActivity) {
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "3");
+            editor.commit();
+        }
+
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         String mail = sharedPref.getString("user_email", "false");
 
         final ConstraintLayout constraintL1 = view.findViewById(R.id.element1);
@@ -89,7 +97,7 @@ public class ProfileFragment extends Fragment {
             String password = sharedPref.getString("user_password", "false");
 
             profileRepository = new ProfileRepository(this);
-            profileRepository.update(mail, password);
+            profileRepository.update(lang, mail, password);
         }
 
         return view;

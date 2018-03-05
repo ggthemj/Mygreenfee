@@ -33,12 +33,14 @@ public class ConnectMemberFragment extends Fragment {
             String password = editText.getText().toString();
 
             SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String lang = sharedPref.getString("language", "EN");
+
             SharedPreferences.Editor editor = sharedPref.edit();
 
             editor.putString("user_password", password);
             editor.commit();
 
-            connectMemberRepository.update(email, password);
+            connectMemberRepository.update(lang, email, password);
         }
         else{
             Toast toast = Toast.makeText(getContext(), R.string.connect_validateError, Toast.LENGTH_LONG);
@@ -52,14 +54,17 @@ public class ConnectMemberFragment extends Fragment {
     }
 
     public void handleOubli(){
-       EditText editText = (EditText) getView().findViewById(R.id.email);
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
+        EditText editText = (EditText) getView().findViewById(R.id.email);
         String email = editText.getText().toString();
         if(email.length()<2) {
             Toast toast = Toast.makeText(getContext(), R.string.connect_errorMailMdp, Toast.LENGTH_LONG);
             toast.show();
         }
         else {
-            connectMemberRepository.updateMdpOubli(email);
+            connectMemberRepository.updateMdpOubli(lang, email);
         }
     }
 
@@ -81,9 +86,10 @@ public class ConnectMemberFragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_connect_member, container, false);
 
         if(getContext() instanceof HomeMapsActivity) {
-            HomeMapsActivity hm = (HomeMapsActivity) this.getContext();
-            hm.status = 3;
-            hm.chooseMenuItem(3);
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "3");
+            editor.commit();
         }
 
         is_login_ok = false;
@@ -141,6 +147,8 @@ public class ConnectMemberFragment extends Fragment {
     public void handleSuccess(UserData u){
         //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("is_connected", "true");
         editor.putInt("user_id", u.public_id);
@@ -169,7 +177,7 @@ public class ConnectMemberFragment extends Fragment {
             String arg6 = sharedPref.getString("order_arg6", "false");
             String arg7 = sharedPref.getString("order_arg7", "false");
 
-            connectMemberRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
+            connectMemberRepository.book(lang, arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
         }
     }
 

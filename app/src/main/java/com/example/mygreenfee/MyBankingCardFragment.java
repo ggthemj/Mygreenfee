@@ -33,16 +33,19 @@ public class MyBankingCardFragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_my_banking_card, container, false);
 
         if(getContext() instanceof HomeMapsActivity){
-            HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-            hm.status=3;
-            hm.chooseMenuItem(3);
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "4");
+            editor.commit();
         }
 
         bcRepository = new BankingCardRepository(this);
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+       String lang = sharedPref.getString("language", "EN");
+
         String user_mail = sharedPref.getString("user_email", "false");
         String user_currency = "EUR";
-        bcRepository.checkCard(user_mail, user_currency);
+        bcRepository.checkCard(lang, user_mail, user_currency);
 
         final ProgressBar simpleProgressBar = (ProgressBar) view.findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
@@ -113,11 +114,13 @@ public class CreateMemberFragment extends Fragment {
             }
 
             SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String lang = sharedPref.getString("language", "EN");
+
             SharedPreferences.Editor editor = sharedPref.edit();
 
             editor.putString("user_password", pwd);
             editor.commit();
-            createMemberRepository.update(civ, nom, pre, ema, dob, pwd, pay, region_id, pho);
+            createMemberRepository.update(lang, civ, nom, pre, ema, dob, pwd, pay, region_id, pho);
         }
         else{
             Toast toast = Toast.makeText(getContext(), R.string.creationCompte_ErreurValidation, Toast.LENGTH_LONG);
@@ -131,15 +134,31 @@ public class CreateMemberFragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_create_member, container, false);
         this.createMemberRepository = new CreateMemberRepository(this);
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=3;
-        hm.chooseMenuItem(3);
-
-
         final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
         buttonValidation.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 handleValidation();
+            }
+        });
+
+        if(getContext() instanceof HomeMapsActivity) {
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "4");
+            editor.commit();
+        }
+
+        final TextView tw2 = view.findViewById(R.id.cgr);
+        tw2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                displayCGV();
+            }
+        });
+
+        final TextView tw = view.findViewById(R.id.mentionslegales);
+        tw.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                displayML();
             }
         });
 
@@ -374,7 +393,10 @@ public class CreateMemberFragment extends Fragment {
                     else if(position==5) {
                         paysISO = "CH" ;
                     }
-                    createMemberRepository.updateRegions(paysISO);
+                    SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+                    String lang = sharedPref.getString("language", "EN");
+
+                    createMemberRepository.updateRegions(lang, paysISO);
                 }
             }
 
@@ -455,18 +477,6 @@ public class CreateMemberFragment extends Fragment {
         String is_price = sharedPref.getString("order_price", "false");
         String is_date = sharedPref.getString("order_date", "false");
 
-        if(!is_order.equals("false")){
-            final TextView titre = view.findViewById(R.id.textView);
-            titre.setText(getResources().getString(R.string.connect_Tunnel));
-
-            final LinearLayout commandeL = view.findViewById(R.id.formulaire2);
-            commandeL.setVisibility(View.VISIBLE);
-        }
-        else{
-            final LinearLayout commandeL2 = view.findViewById(R.id.formulaire2);
-            commandeL2.setVisibility(View.GONE);
-        }
-
         this.dobCalendar = Calendar.getInstance();
 
         final EditText edittext = view.findViewById(R.id.bithday);
@@ -511,6 +521,18 @@ public class CreateMemberFragment extends Fragment {
         EditText edittext = getView().findViewById(R.id.bithday);
         edittext.setText(sdf.format(dobCalendar.getTime()));
     }
+
+    public void displayCGV(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mygreenfee.com/m/#/info/terms_of_use"));
+        startActivity(browserIntent);
+    }
+
+    public void displayML(){
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://mygreenfee.com/m/#/info/legal_info"));
+        startActivity(browserIntent);
+    }
+
+
 
     //Met à jour le statut du champ prénom, et affiche éventuellement les erreurs s'il y en a
     public void updateFnameStatus(){
@@ -595,6 +617,8 @@ public class CreateMemberFragment extends Fragment {
 
         //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("is_connected", "true");
         editor.putInt("user_id", u.public_id);
@@ -623,7 +647,7 @@ public class CreateMemberFragment extends Fragment {
             String arg6 = sharedPref.getString("order_arg6", "false");
             String arg7 = sharedPref.getString("order_arg7", "false");
 
-            createMemberRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
+            createMemberRepository.book(lang, arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
         }
     }
 

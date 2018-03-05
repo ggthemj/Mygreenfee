@@ -29,7 +29,7 @@ public class ChangePasswordRepository {
     }
 
     //Tentative de login :)
-    public void update(final String oldmdp, final String newmdp, final String user_id){
+    public void update(final String lan, final String oldmdp, final String newmdp, final String user_id){
         Log.d("DEBUG", "Début de la requête changepassword avec les identifiants "+oldmdp+"/"+newmdp);
 
         //Préparation de la requête
@@ -37,7 +37,7 @@ public class ChangePasswordRepository {
         String url = context.getResources().getString(R.string.URL_changePassword);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[member_id]", user_id);
         mParams.put("data[old_pwd]", oldmdp);

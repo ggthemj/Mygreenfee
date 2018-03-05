@@ -38,6 +38,8 @@ public class ChangePasswordFragment extends Fragment {
             String conf1 = editText.getText().toString();
 
             SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String lang = sharedPref.getString("language", "EN");
+
             SharedPreferences.Editor editor = sharedPref.edit();
 
             editor.putString("user_password", conf1);
@@ -46,7 +48,7 @@ public class ChangePasswordFragment extends Fragment {
             int id = sharedPref.getInt("user_id", 12);
             String sid = ""+id;
 
-            changePasswordRepository.update(oldmdp, conf1, sid);
+            changePasswordRepository.update(lang, oldmdp, conf1, sid);
         }
         else{
             Toast toast = Toast.makeText(getContext(), R.string.changePassword_Error, Toast.LENGTH_LONG);
@@ -65,10 +67,12 @@ public class ChangePasswordFragment extends Fragment {
         is_mdpc1_ok = false;
         is_mdpc2_ok = false;
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=3;
-        hm.chooseMenuItem(3);
-
+        if(getContext() instanceof HomeMapsActivity){
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "4");
+            editor.commit();
+        }
 
         //Code qui permet de gérer le contrôle de surface sur le mail
         EditText login = view.findViewById(R.id.mdp);

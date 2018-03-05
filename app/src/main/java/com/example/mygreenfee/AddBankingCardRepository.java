@@ -1,5 +1,7 @@
 package com.example.mygreenfee;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -30,15 +32,16 @@ public class AddBankingCardRepository {
     }
 
     //Tentative de login :)
-    public void addCard(final String mail, final String expiration_date, final String card_number, final String cvx, final String currency){
+    public void addCard(final String lan, final String mail, final String expiration_date, final String card_number, final String cvx, final String currency){
 
         Log.d("DEBUG", "Début de la requête "+card_number+"/"+expiration_date);
+
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
         String url = context.getResources().getString(R.string.URL_addCard);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", mail);
         mParams.put("data[expiration_date]", expiration_date);

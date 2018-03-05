@@ -1,138 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <resources>
+
     <string name="app_name">Mygreenfee</string>
-    <string name="title_activity_home_maps">HomeMaps</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_menu1">GOLFS</string>
-    <string name="title_menu2">MES RESA.</string>
-    <string name="title_menu3">MON COMPTE</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Annuler</string>
 
-    <string name="mesResas_name">Réservation au nom de : </string>
-    <string name="mesResas_titre1">en cours</string>
-    <string name="mesResas_titre2">passées</string>
-    <string name="mesResas_title">Mes réservations</string>
-    <string name="mesResas_commande">commande</string>
-    <string name="mesResas_status">passée</string>
-    <string name="mesResas_enCours">en cours</string>
-    <string name="mesResas_personne">personne</string>
-    <string name="mesResas_nonConnecte">Connectez-vous pour voir vos réservations</string>
+<string name="title_activity_home">HomeActivity</string>
+<string name="title_menu1">GOLFS</string>
+<string name="title_menu2">MY BOOKINGS</string>
+<string name="title_menu3">MY ACCOUNT </string>
+<string name="ok">OK</string>
+<string name="cancel">Cancel</string>
 
-    <string name="changePassword_Title">Changer de mot de passe</string>
-    <string name="changePassword_Hint1">Mot de passe actuel</string>
-    <string name="changePassword_Hint2">Nouveau mot de passe</string>
-    <string name="changePassword_Hint3">Confirmer votre nouveau mot de passe</string>
-    <string name="changePassword_Error">Veuillez vérifier votre saisie</string>
-    <string name="changePassword_Error2">Champ obligatoire</string>
-    <string name="myBanking_Tunnel">Payer avec cette carte</string>
-    <string name="creationCompte_Tunnel">M\'inscrire et poursuivre ma commande</string>
-    <string name="connect_Tunnel">Pour compléter votre commande, veuillez vous connecter ou créer un compte</string>
+<string name="mesResas_name">Booking name : </string>
+<string name="mesResas_titre1">in progress</string>
+<string name="mesResas_titre2">past bookings</string>
+<string name="mesResas_title">My bookings</string>
+<string name="mesResas_commande">order</string>
+<string name="mesResas_status">past</string>
+<string name="mesResas_enCours">in progress</string>
+<string name="mesResas_personne">player</string>
+<string name="mesResas_nonConnecte">Connect to see your reservations</string>
 
-    <string name="mesInfos_Title">Mes infos personnelles</string>
-    <string name="mesInfos_changeMdp">Modifier mon mot de passe</string>
-    <string name="mesInfos_validerPage">Valider</string>
-    <string name="mesInfos_dob">Naissance</string>
+<string name="changePassword_Title">Change your password</string>
+<string name="changePassword_Hint1">Existing password</string>
+<string name="changePassword_Hint2">New password</string>
+<string name="changePassword_Hint3">Confirm your new password</string>
+<string name="changePassword_Error">Check your entry</string>
+<string name="changePassword_Error2">Mandatory field</string>
+<string name="myBanking_Tunnel">Pay with this card</string>
+<string name="creationCompte_Tunnel">Register and follow my order</string>
+<string name="connect_Tunnel">To proceed with your order, connect into your account or create an account</string>
 
-    <string name="order_Title">Confirmation de commande</string>
-    <string name="order_Reussite">Votre commande a bien été enregistrée!</string>
-    <string name="order_Fail">Le paiement a échoué, veuillez réessayer</string>
-    <string name="order_Button">Retour à l\'accueil</string>
-    <string name="order_ButtonFail">Retour au paiement</string>
-    <string name="order_ButtonPaiement">Procéder au paiement</string>
-    <string name="order_csc">Veuillez entrer ci-dessous votre cryptogramme (ce dernier figure au dos de votre carte bancaire)</string>
+<string name="mesInfos_Title">My personal info.</string>
+<string name="mesInfos_changeMdp">Modify my password</string>
+<string name="mesInfos_validerPage">Validate</string>
+<string name="mesInfos_dob">Birthdate</string>
 
-    <string name="myBanking_Title">Ma carte bancaire</string>
-    <string name="myBanking_Button">Modifier ma carte bancaire</string>
+<string name="order_Title">Order confirmation</string>
+<string name="order_Reussite">Your order has been registered!</string>
+<string name="order_Fail">Payment failed, try again</string>
+<string name="order_Button">Back to homepage</string>
+<string name="order_ButtonFail">Back to payment</string>
+<string name="order_ButtonPaiement">Proceed with payment</string>
+<string name="order_csc">Enter below your cryptogram (you will find it at the back of your credit card)</string>
 
-    <string name="addCard_Title">Enregistrer ma carte bancaire</string>
-    <string name="addCard_Button">Enregistrer les informations</string>
-    <string name="addCard_Numero">Numéro de carte</string>
-    <string name="addCard_Date">Date d\'expiration</string>
-    <string name="addCard_Cvx">Code de sécurité</string>
-    <string name="addCard_CodePayment">Entrez votre code à 3 chiffres</string>
+<string name="myBanking_Title">My credit card </string>
+<string name="myBanking_Button">Modify my credit card</string>
 
-    <string name="creationCompte_Title">Créer un compte</string>
-    <string name="creationCompte_Civilite">Civilité</string>
-    <string name="creationCompte_Nom">Nom</string>
-    <string name="creationCompte_Prenom">Prénom</string>
-    <string name="creationCompte_Telephone">N° de tél.</string>
-    <string name="creationCompte_Email">Email</string>
-    <string name="creationCompte_Mdp">Mot de passe</string>
-    <string name="creationCompte_Confirmationmdp">Confirmation (mot de passe)</string>
-    <string name="creationCompte_Pays">Pays</string>
-    <string name="creationCompte_Region">Region</string>
-    <string name="creationCompte_Birthday">Date de naissance</string>
-    <string name="creationCompte_Boutonvalider">Valider les informations</string>
-    <string name="creationCompte_Mentions">Mentions légales</string>
-    <string name="creationCompte_ErreurPrenom">Veuillez remplir votre prénom</string>
-    <string name="creationCompte_ErreurNom">Veuillez remplir votre nom</string>
-    <string name="creationCompte_ErreurMail">Veuillez remplir votre adresse mail</string>
-    <string name="creationCompte_ErreurPhone">Veuillez saisir un numéro au bon format</string>
-    <string name="creationCompte_ErreurMdp">Veuillez saisir un mot de passe valide</string>
-    <string name="creationCompte_ErreurBday">Veuillez choisir une date de naissance</string>
-    <string name="creationCompte_InscriptionReussie">Inscription réussie ! Veuillez consultez vos mails</string>
-    <string name="creationCompte_ErreurMdpc">Saisie non conforme au champ précédent</string>
-    <string name="creationCompte_ErreurValidation">Des informations sont manquantes ou erronées sur le formulaire d\'enregistrement</string>
+<string name="addCard_Title">Register my credit card</string>
+<string name="addCard_Button">Register information</string>
+<string name="addCard_Numero">Card number</string>
+<string name="addCard_Date">Expiration date</string>
+<string name="addCard_Cvx">Security code</string>
+<string name="addCard_CodePayment">Enter your 3 digits code</string>
+
+<string name="creationCompte_Title">Create an account</string>
+<string name="creationCompte_Civilite">Civility</string>
+<string name="creationCompte_Nom">Last name</string>
+<string name="creationCompte_Prenom">First name</string>
+<string name="creationCompte_Telephone">Tel. number</string>
+<string name="creationCompte_Email">Email</string>
+<string name="creationCompte_Mdp">Password</string>
+<string name="creationCompte_Confirmationmdp">Confirmation (password)</string>
+<string name="creationCompte_Pays">Country</string>
+<string name="creationCompte_Region">Region</string>
+<string name="creationCompte_Birthday">Birth date</string>
+<string name="creationCompte_Boutonvalider">Validate information</string>
+<string name="creationCompte_Mentions">Legal notices</string>
+<string name="creationCompte_ErreurPrenom">Enter your first name</string>
+<string name="creationCompte_ErreurNom">Enter your last name</string>
+<string name="creationCompte_ErreurMail">Enter your email address</string>
+<string name="creationCompte_ErreurPhone">Enter your phone number with the good format</string>
+<string name="creationCompte_ErreurMdp">Enter a valid password</string>
+<string name="creationCompte_ErreurBday">Enter a birth date</string>
+<string name="creationCompte_InscriptionReussie">Successful registration! Please check your mails</string>
+<string name="creationCompte_ErreurMdpc">Entry not corresponding to previous field </string>
+<string name="creationCompte_ErreurValidation">Information missing or wrong information on the registration form</string>
 
 
-    <string name="cgr">Conditions générales de réservation</string>
-    <string name="connect_FacebookButton">Me connecter avec Facebook</string>
-    <string name="connect_Title">Me connecter</string>
-    <string name="connect_Subtitle">Me connecter</string>
-    <string name="connect_errorLogin">Le mail n\'est pas au bon format</string>
-    <string name="connect_successMdp">Un mail a été envoyé sur votre messagerie avec votre nouveau mot de passe</string>
-    <string name="connect_errorMailMdp">Veuillez saisir votre adresse mail</string>
-    <string name="connect_Email">Email</string>
-    <string name="connect_validateError">Veuillez remplir mail et mot de passe</string>
-    <string name="connect_Password">Mot de passe</string>
-    <string name="connect_BoutonValidation">Me connecter</string>
-    <string name="connect_Mdpoubli">Mot de passe oublié</string>
-    <string name="connect_Creacompte">Créer un compte</string>
-    <string name="onboarding_Texte1">Je réserve mon départ sur les meilleurs golfs aux meilleurs prix&#8230; en 3 clics</string>
-    <string name="onboarding_Texte2">Plus de 250 golfs disponibles en France et bien d\'autres avec l\'étranger</string>
-    <string name="onboarding_Texte3">Un paiement simple, rapide, 100% sécurisé</string>
-    <string name="onboarding_Soustitre">MON GREEN FEE EN 3 CLICS</string>
-    <string name="onboarding_Skipbutton">Démarrer</string>
-    <string name="profile_titleCartes">Ma carte de paiement</string>
-    <string name="profile_parametres">Se déconnecter</string>
-    <string name="profile_Title">Mon compte</string>
-    <string-array name="civiliteArray">
-        <item>Civilité</item>
-        <item>Ms</item>
-        <item>Mrs</item>
-        <item>Mr</item>
-    </string-array>
-    <string-array name="regionsArray">
-        <item>Région</item>
-    </string-array>
-    <string-array name="countries_array">
-        <item>Pays</item>
-        <item>Afrique du Sud</item>
-        <item>Allemagne</item>
-        <item>Autriche</item>
-        <item>France</item>
-        <item>Suisse</item>
-    </string-array>
+<string name="cgr">Conditions and terms on reservation</string>
+<string name="connect_FacebookButton">Connect with Facebook</string>
+<string name="connect_Title">Log in</string>
+<string name="connect_Subtitle">Log in</string>
+<string name="connect_errorLogin">The email is not respecting the right format</string>
+<string name="connect_successMdp">An email has been sent to your email account with a new password</string>
+<string name="connect_errorMailMdp">Please enter your email address</string>
+<string name="connect_Email">Email</string>
+<string name="connect_validateError">Enter your email and password</string>
+<string name="connect_Password">Password</string>
+<string name="connect_BoutonValidation">Log in</string>
+<string name="connect_Mdpoubli">Forgot your password</string>
+<string name="connect_Creacompte">Create an account </string>
+<string name="onboarding_Texte1">I book my teetimes on the best golf courses at the best rates; in 3 clics</string>
+<string name="onboarding_Texte2">More than 250 golf courses available in France and more golf courses abroad</string>
+<string name="onboarding_Texte3">A simple payment system, fast, 100% secured</string>
+<string name="onboarding_Soustitre">MY GREEN FEE IN 3 CLICS</string>
+<string name="onboarding_Skipbutton">Start</string>
+<string name="profile_titleCartes">My credit card</string>
+<string name="profile_parametres">Log out</string>
+<string name="profile_Title">My account</string>
+<string name="order_ValidationText">Registred reservation!</string>
+<string-array name="civiliteArray">
+<item>Civilité</item>
+<item>Ms</item>
+<item>Mrs</item>
+<item>Mr</item>
+</string-array>
+<string-array name="regionsArray">
+<item>Région</item>
+</string-array>
+<string-array name="countries_array">
+<item>Country</item>
+<item>South Africa</item>
+<item>Germany</item>
+<item>Austria</item>
+<item>France</item>
+<item>Switzerland</item>
+</string-array>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_connect_member">ConnectMemberActivity</string>
-    <string name="title_activity_onboarding">OnboardingActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_booking">BookingActivity</string>
-    <string name="calendar_booking">Calendar</string>
-    <string name="today">Aujourd\'hui</string>
-    <string name="onePlayer">1 joueur</string>
-    <string name="holes">{0,choice,0#|1#(1 trou)|1&lt;({0} trous)}</string>
-    <string name="emptyTeeTimes">Pas de place disponible</string>
-    <string name="slotsFree">dispo.</string>
-    <string name="booking_time">09:00</string>
-    <string name="booking_dipo">0 dispo.</string>
-    <string name="booking_price">0 €</string>
-    <string name="booking_reserver">Réserver</string>
-    <string name="info_title">Informations terrains</string>
-    <string name="title_activity_reservations">ReservationsActivity</string>
-    <string name="order_id">order_id</string>
-    <string name="URL_advertisement">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
-</resources>
+<string name="hello_blank_fragment">Hello blank fragment</string>
+<string name="title_activity_connect_member">ConnectMemberActivity</string>
+<string name="title_activity_onboarding">OnboardingActivity</string>
+<string name="action_settings">Settings</string>
+<string name="section_format">Hello World from section: %1$d</string>
+<string name="title_activity_booking">BookingActivity</string>
+<string name="calendar_booking">Calendar</string>
+<string name="today">today</string>
+<string name="onePlayer">1 player</string>
+<string name="holes">{0,choice,0#|1#(1 hole)|1&lt;({0} holes)}</string>
+<string name="emptyTeeTimes">no availability</string>
+<string name="slotsFree">availability</string>
+<string name="booking_time">09:00</string>
+<string name="booking_dipo">0 availibility</string>
+<string name="booking_price">0 €</string>
+<string name="booking_reserver">Book</string>
+<string name="info_title">Course information</string>
+<string name="title_activity_reservations">ReservationsActivity</string>
+<string name="order_id">order_id</string>
+<string name="URL_advertisement">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
+    </resources>

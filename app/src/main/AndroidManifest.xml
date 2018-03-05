@@ -33,81 +33,36 @@
 
         <activity
             android:name=".HomeMapsActivity"
-            android:label="@string/title_activity_home_maps" />
-        <activity
-            android:name=".MonCompteFragment"
-            android:parentActivityName=".ProfileFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileFragment" />
-        </activity>
-        <activity
-            android:name=".CreateMemberFragment"
-            android:parentActivityName=".ConnectMemberFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ConnectMemberFragment" />
-        </activity>
-        <activity
-            android:name=".ConnectMemberFragment"
-            android:parentActivityName=".HomeMapsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeMapsActivity" />
-        </activity>
-        <activity
-            android:name=".MyBankingCardFragment"
-            android:parentActivityName=".ProfileFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileFragment" />
-        </activity>
-        <activity
-            android:name=".AddBankingCardFragment"
-            android:parentActivityName=".ProfileFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ProfileFragment" />
-        </activity>
-        <activity
-            android:name=".ProfileFragment"
-            android:parentActivityName=".HomeMapsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeMapsActivity" />
-        </activity>
-        <activity android:name=".SpashscreenActivity">
+            android:label="@string/title_activity_home"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".SpashscreenActivity"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ReservationsFragment"
-            android:parentActivityName=".HomeMapsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeMapsActivity" />
-        </activity>
+
         <activity
             android:name=".OnboardingActivity"
             android:label="@string/title_activity_onboarding"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".BookingActivity"
             android:label="@string/title_activity_booking"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".ClubActivity" />
-        <activity android:name=".ClubListActivity" />
-        <activity
-            android:name=".ChangePasswordFragment"
-            android:parentActivityName=".MonCompteFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MonCompteFragment" />
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ClubActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ClubListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".OrderActivity"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".OrderActivity"></activity>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="226de2b28cfdbe509ccd7f689f11bbb55693bd8b" />

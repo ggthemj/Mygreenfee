@@ -79,8 +79,10 @@ public class OrderActivity extends AppCompatActivity {
         String is_order = sharedPref.getString("order_id", "false");
         String email = sharedPref.getString("user_email", "false");
         String password = sharedPref.getString("user_password", "false");
+        String lang = sharedPref.getString("language", "EN");
 
-        orderRepository.login(email,password);
+
+        orderRepository.login(lang, email,password);
     }
 
     protected void displayMyBanking(){
@@ -131,11 +133,13 @@ public class OrderActivity extends AppCompatActivity {
     public void handlePaiement(){
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         String is_order = sharedPref.getString("order_id", "false");
         String email = sharedPref.getString("user_email", "false");
 
         EditText code = findViewById(R.id.code);
-        orderRepository.pay(is_order,email,code.getText().toString());
+        orderRepository.pay(lang, is_order,email,code.getText().toString());
 
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
@@ -148,6 +152,8 @@ public class OrderActivity extends AppCompatActivity {
         Log.d("DEBUG", "SUCCESS LOGIN ");
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         int arg1 = sharedPref.getInt("order_arg1", 0);
         String arg2 = sharedPref.getString("order_arg2", "false");
         String arg3 = sharedPref.getString("order_arg3", "false");
@@ -156,7 +162,7 @@ public class OrderActivity extends AppCompatActivity {
         String arg6 = sharedPref.getString("order_arg6", "false");
         String arg7 = sharedPref.getString("order_arg7", "false");
 
-        orderRepository.book(arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
+        orderRepository.book(lang, arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
     }
 
     public void handleErrorLogin(){
@@ -201,13 +207,15 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     public void handleSuccessPayment(){
-        final LinearLayout lay = (LinearLayout) findViewById(R.id.formulaire2);
-        lay.setVisibility(View.GONE);
+        Toast toast = Toast.makeText(this, "Réservation enregistrée!", Toast.LENGTH_LONG);
+        toast.show();
 
-        final TextView tv = (TextView) findViewById(R.id.textView);
-        tv.setVisibility(View.VISIBLE);
+        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("home_state", "2");
+        editor.commit();
 
-        final Button buttonback = (Button) findViewById(R.id.buttonvalidation);
-        buttonback.setVisibility(View.VISIBLE);
+        Intent intent = new Intent(this, HomeMapsActivity.class);
+        startActivity(intent);
     }
 }

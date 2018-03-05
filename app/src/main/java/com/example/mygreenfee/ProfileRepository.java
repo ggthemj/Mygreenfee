@@ -31,7 +31,7 @@ public class ProfileRepository {
     }
 
     //Tentative de login :)
-    public void update(final String email, final String pwd){
+    public void update(final String lan, final String email, final String pwd){
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+email+"/"+pwd);
 
         //Préparation de la requête
@@ -39,7 +39,7 @@ public class ProfileRepository {
         String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", email);
         mParams.put("data[pwd]", pwd);

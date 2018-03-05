@@ -36,9 +36,10 @@ public class AddBankingCardFragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_add_banking_card, container, false);
 
         if(getContext() instanceof HomeMapsActivity){
-            HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-            hm.status=3;
-            hm.chooseMenuItem(3);
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "4");
+            editor.commit();
         }
 
         addBankingCardRepository = new AddBankingCardRepository(this);
@@ -102,6 +103,7 @@ public class AddBankingCardFragment extends Fragment {
 
     public void handleValidation(){
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
         String user_mail = sharedPref.getString("user_email", "false");
         String user_currency = "EUR";
 
@@ -114,6 +116,6 @@ public class AddBankingCardFragment extends Fragment {
         editText = getView().findViewById(R.id.code);
         String cod = editText.getText().toString();
 
-        addBankingCardRepository.addCard(user_mail, dat, num, cod, user_currency);
+        addBankingCardRepository.addCard(lang, user_mail, dat, num, cod, user_currency);
     }
 }

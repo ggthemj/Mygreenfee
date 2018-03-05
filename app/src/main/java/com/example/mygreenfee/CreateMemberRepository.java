@@ -31,7 +31,7 @@ public class CreateMemberRepository {
         this.context = c ;
     }
 
-    public void update(final String civilite, final String nom, final String prenom, final String email, final String dob, final String mdp, final String country, final String region_id, final String phone){
+    public void update(final String lan,final String civilite, final String nom, final String prenom, final String email, final String dob, final String mdp, final String country, final String region_id, final String phone){
         Log.d("DEBUG", "Debut de la requete de création de compte");
 
         //Préparation de la requête
@@ -39,7 +39,7 @@ public class CreateMemberRepository {
         String url = context.getResources().getString(R.string.URL_createMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[title]", civilite);
         mParams.put("data[fname]", prenom);
@@ -98,7 +98,7 @@ public class CreateMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void updateInfos(final int id, final String civilite, final String nom, final String prenom, final String email, final String dob, final String country, final int region_id, final String phone){
+    public void updateInfos(final String lan, final int id, final String civilite, final String nom, final String prenom, final String email, final String dob, final String country, final int region_id, final String phone){
         Log.d("DEBUG", "Debut de la requete de création de compte");
 
         //Préparation de la requête
@@ -106,7 +106,7 @@ public class CreateMemberRepository {
         String url = context.getResources().getString(R.string.URL_createMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[member_id]", ""+id);
         mParams.put("data[title]", civilite);
@@ -161,7 +161,7 @@ public class CreateMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void updateRegions(final String country_id){
+    public void updateRegions(final String lan, final String country_id){
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
@@ -169,7 +169,7 @@ public class CreateMemberRepository {
         String url = context.getResources().getString(R.string.URL_getRegions)+"&data[country]="+country_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[country]", country_id);
 
@@ -219,7 +219,7 @@ public class CreateMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
+    public void book(final String lan, int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
         RequestQueue queue = Volley.newRequestQueue(context.getContext());
@@ -227,7 +227,7 @@ public class CreateMemberRepository {
 
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[club_id]", ""+clubId);
         mParams.put("data[tee_id]", arg1);

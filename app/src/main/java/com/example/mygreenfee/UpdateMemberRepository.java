@@ -32,7 +32,7 @@ public class UpdateMemberRepository {
         this.context = c ;
     }
 
-    public void updateMember(final String mid, final String civilite, final String nom, final String prenom, final String email, final String dob, final String country, final String region_id, final String phone){
+    public void updateMember(final String lan, final String mid, final String civilite, final String nom, final String prenom, final String email, final String dob, final String country, final String region_id, final String phone){
         Log.d("DEBUG", "Debut de la requete de modification de compte");
 
         //Préparation de la requête
@@ -40,7 +40,7 @@ public class UpdateMemberRepository {
         String url = context.getResources().getString(R.string.URL_updateMember);
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[member_id]", mid);
         mParams.put("data[title]", civilite);
@@ -99,7 +99,7 @@ public class UpdateMemberRepository {
     }
 
     //Tentative de login :)
-    public void update(final String email, final String pwd){
+    public void update(final String lan, final String email, final String pwd){
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+email+"/"+pwd);
 
         //Préparation de la requête;
@@ -107,7 +107,7 @@ public class UpdateMemberRepository {
         String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         //mParams.put("data[email]", email);
         //mParams.put("data[pwd]", pwd);
@@ -159,7 +159,7 @@ public class UpdateMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void updateRegions(final String country_id){
+    public void updateRegions(final String lan, final String country_id){
         Log.d("DEBUG", "Debut de la requete de récupération des régions");
 
         //Préparation de la requête
@@ -167,7 +167,7 @@ public class UpdateMemberRepository {
         String url = context.getResources().getString(R.string.URL_getRegions)+"&data[country]="+country_id;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[country]", country_id);
 

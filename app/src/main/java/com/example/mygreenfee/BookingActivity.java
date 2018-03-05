@@ -60,6 +60,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         // Récupération du club séletionné
         Intent intent = getIntent();
         club = (ClubData) intent.getParcelableExtra("currentClub");
@@ -67,7 +70,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
         // Récupération des parcours du club
         this.coursesRepo = new CoursesRepository(this);
-        coursesRepo.update(club);
+        coursesRepo.update(lang, club);
 
         // Titre de l'écran
         titleView = (TextView) findViewById(R.id.bookingTitleView);
@@ -141,7 +144,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         dateSelected = dateFormat.format(calendar.getTime());
         final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        coursesRepo.updateTeeTimes(clubId, dateFormat2.format(calendar.getTime()), teeID);
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
+
+        coursesRepo.updateTeeTimes(lang, clubId, dateFormat2.format(calendar.getTime()), teeID);
     }
 
     public void addPlayer(View view)
@@ -179,12 +186,15 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     public void updateCourses() {
 
         List<TeeSpinnerDTO> courses = new ArrayList<TeeSpinnerDTO>();
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
 
         int i = 0;
         for (Course course : coursesRepo.getCourses()) {
             if (course.getTees() != null) {
                 if (i == 0) {
-                    coursesRepo.updateAd(String.valueOf(course.getPublic_id()), getClubId());
+                    coursesRepo.updateAd(lang, String.valueOf(course.getPublic_id()), getClubId());
                     i = 1;
                 }
                 for (Tee tee : course.getTees()) {
@@ -249,8 +259,12 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         String courseId = item.getCourseId();
         final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
-        coursesRepo.updateTeeTimes(getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
-        coursesRepo.updateAd(courseId, getClubId());
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
+
+        coursesRepo.updateTeeTimes(lang, getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
+        coursesRepo.updateAd(lang, courseId, getClubId());
     }
 
     @Override

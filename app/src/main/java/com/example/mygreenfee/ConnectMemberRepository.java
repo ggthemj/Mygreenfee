@@ -28,7 +28,7 @@ public class ConnectMemberRepository {
     }
 
     //Tentative de login :)
-    public void update(final String email, final String pwd){
+    public void update(final String lan, final String email, final String pwd){
         Log.d("DEBUG", "Début de la requête login avec les identifiants "+email+"/"+pwd);
 
         //Préparation de la requête
@@ -36,7 +36,7 @@ public class ConnectMemberRepository {
         String url = context.getResources().getString(R.string.URL_validateMember)+"&data[email]="+email+"&data[pwd]="+pwd;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[email]", email);
         mParams.put("data[pwd]", pwd);
@@ -88,7 +88,7 @@ public class ConnectMemberRepository {
         queue.add(stringRequest);
     }
 
-    public void updateMdpOubli(final String ema){
+    public void updateMdpOubli(final String lan, final String ema){
         Log.d("DEBUG", "Debut de la requete de récupération du mot de passe");
 
         //Préparation de la requête
@@ -96,7 +96,7 @@ public class ConnectMemberRepository {
         String url = context.getResources().getString(R.string.URL_oubliMdp)+"&data[email]="+ema;
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[country]", ema);
 
@@ -141,7 +141,7 @@ public class ConnectMemberRepository {
     }
 
 
-    public void book(int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
+    public void book(final String lan, int clubId, String arg1, String arg2, int nbPlaces, final String date, String user_email, final String clubS, final String priceS) {
         Log.d("DEBUG", "Début de la requête book avec les identifiants "+clubId);
 
         RequestQueue queue = Volley.newRequestQueue(context.getContext());
@@ -149,7 +149,7 @@ public class ConnectMemberRepository {
 
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
-        mHeaders.put("CONTENT-LANGUAGE", context.getResources().getString(R.string.CONTENT_LANGUAGE));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
         mParams = new HashMap<String, String>();
         mParams.put("data[club_id]", ""+clubId);
         mParams.put("data[tee_id]", arg1);

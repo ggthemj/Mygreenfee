@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="API_KEY">4B6A56C4-F9B3-444A-883F-F276594614D4</string>
+    <string name="API_KEY2">4B6A56C4-F9B3-444A-883F-F276594614D4</string>
+    <string name="API_KEY">81823397-4CEE-4403-8692-787B7F5BC9FA</string>
     <string name="URL_getAllClubs">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
-    <string name="URL_createMember">https://dev.mygreenfee.fr/api.php?sid=member/create</string>
-    <string name="URL_validateMember">https://dev.mygreenfee.fr/api.php?sid=member/validate</string>
-    <string name="URL_updateMember">https://dev.mygreenfee.fr/api.php?sid=member/detailsChange</string>
-    <string name="URL_changePassword">https://dev.mygreenfee.fr/api.php?sid=member/passwordChange</string>
-    <string name="URL_courses">https://dev.mygreenfee.fr/api.php?sid=courses</string>
-    <string name="URL_teetimes">https://dev.mygreenfee.fr/api.php?sid=teetimes</string>
-    <string name="URL_getRegions">https://dev.mygreenfee.fr/api.php?sid=regions</string>
-    <string name="URL_oubliMdp">https://dev.mygreenfee.fr/api.php?sid=member/passwordForgotten</string>
-    <string name="URL_checkCard">https://dev.mygreenfee.fr/api.php?sid=paymentcard/check</string>
-    <string name="URL_addCard">https://dev.mygreenfee.fr/api.php?sid=paymentcard/create</string>
-    <string name="URL_getReservations">https://dev.mygreenfee.fr/api.php?sid=member/reservations</string>
-    <string name="URL_order">https://dev.mygreenfee.fr/api.php?sid=orders</string>
+    <string name="URL_createMember" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/create</string>
+    <string name="URL_validateMember" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/validate</string>
+    <string name="URL_updateMember" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/detailsChange</string>
+    <string name="URL_changePassword" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/passwordChange</string>
+    <string name="URL_courses" translatable="false">https://dev.mygreenfee.fr/api.php?sid=courses</string>
+    <string name="URL_teetimes" translatable="false">https://dev.mygreenfee.fr/api.php?sid=teetimes</string>
+    <string name="URL_getRegions" translatable="false">https://dev.mygreenfee.fr/api.php?sid=regions</string>
+    <string name="URL_oubliMdp" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/passwordForgotten</string>
+    <string name="URL_checkCard" translatable="false">https://dev.mygreenfee.fr/api.php?sid=paymentcard/check</string>
+    <string name="URL_addCard" translatable="false">https://dev.mygreenfee.fr/api.php?sid=paymentcard/create</string>
+    <string name="URL_getReservations" translatable="false">https://dev.mygreenfee.fr/api.php?sid=member/reservations</string>
+    <string name="URL_order" translatable="false">https://dev.mygreenfee.fr/api.php?sid=orders</string>
     <string name="CONTENT_LANGUAGE">FR</string>
 </resources>

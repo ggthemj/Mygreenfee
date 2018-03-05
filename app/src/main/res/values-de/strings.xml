@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Mygreenfee</string>
+
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_menu1">GOLF.</string>
+    <string name="title_menu2">RESER.</string>
+    <string name="title_menu3">KONTO</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="mesResas_name">Spieler-Name</string>
+    <string name="mesResas_titre1">In Bearbeitung</string>
+    <string name="mesResas_titre2">Frühere Buchungen</string>
+    <string name="mesResas_title">Meine Buchungen</string>
+    <string name="mesResas_commande">buchung</string>
+    <string name="mesResas_status">vergangen</string>
+    <string name="mesResas_enCours">In Bearbeitung</string>
+    <string name="mesResas_personne">Spieler</string>
+    <string name="mesResas_nonConnecte">Bitte Einloggen um zur Reservierungsübersicht zu gelangen</string>
+
+    <string name="changePassword_Title">Mein Passwort ändern</string>
+    <string name="changePassword_Hint1">Altes Passwort</string>
+    <string name="changePassword_Hint2">Neues Passwort</string>
+    <string name="changePassword_Hint3">Passwort Bestätigung</string>
+    <string name="changePassword_Error">Eingabe bitte überprüfen</string>
+    <string name="changePassword_Error2">Erforderliches Feld</string>
+    <string name="myBanking_Tunnel">Mit dieser Kreditkarte bezahlen</string>
+    <string name="creationCompte_Tunnel">Register and follow my order</string>
+    <string name="connect_Tunnel">Bitte einloggen oder neuen Account erstellen, um mit Deiner Buchung fortzufahren</string>
+    <string name="mesInfos_Title">Meine persönlichen Informationen</string>
+    <string name="mesInfos_changeMdp">Mein Passwort ändern</string>
+    <string name="mesInfos_validerPage">Bestätigen</string>
+    <string name="mesInfos_dob">Geburtsdatum</string>
+    <string name="order_Title">Buchungsbestätigung</string>
+    <string name="order_Reussite">Deine Buchung ist eingegangen</string>
+    <string name="order_Fail">Zahlung fehlgeschlagen, bitte versuche es erneut</string>
+    <string name="order_Button">Zurück zu Home</string>
+    <string name="order_ButtonFail">Zurück zu Zahlung</string>
+    <string name="order_ButtonPaiement">Weiter zu Zahlung</string>
+    <string name="order_csc">Bitte unten den Sicherheitscode eingeben. (Dieser befindet sich auf der Rückseite Deiner Kreditkarte.)</string>
+    <string name="myBanking_Title">Meine Kreditkarten</string>
+    <string name="myBanking_Button">Kreditkartendaten ändern</string>
+    <string name="addCard_Title">Meine Kreditkarte registrieren</string>
+    <string name="addCard_Button">Name des Karteninhabers ??? Not clear without context</string>
+    <string name="addCard_Numero">Kreditkartennummer</string>
+    <string name="addCard_Date">Gültig bis</string>
+    <string name="addCard_Cvx">Sicherheitscode</string>
+    <string name="addCard_CodePayment">Bitte den 3-stelligen Sicherheitscode eingeben</string>
+    <string name="creationCompte_Title">Neuen Account erstellen</string>
+    <string name="creationCompte_Civilite">Anrede</string>
+    <string name="creationCompte_Nom">Nachname</string>
+    <string name="creationCompte_Prenom">Vorname</string>
+    <string name="creationCompte_Telephone">Telefon</string>
+    <string name="creationCompte_Email">E-Mail</string>
+    <string name="creationCompte_Mdp">Passwort</string>
+    <string name="creationCompte_Confirmationmdp">Passwortbestätigung</string>
+    <string name="creationCompte_Pays">Land</string>
+    <string name="creationCompte_Region">Region</string>
+    <string name="creationCompte_Birthday">Geburtsdatum</string>
+    <string name="creationCompte_Boutonvalider">Info verifizieren</string>
+    <string name="creationCompte_Mentions">Rechtliche Hinweise</string>
+    <string name="creationCompte_ErreurPrenom">Bitte Vornamen eingeben</string>
+    <string name="creationCompte_ErreurNom">Bitte Nachnamen eingeben</string>
+    <string name="creationCompte_ErreurMail">Bitte E-Mail Adresse eingeben</string>
+    <string name="creationCompte_ErreurPhone">Bitte Telefonnummer im richtigen Format eingeben</string>
+    <string name="creationCompte_ErreurMdp">Bitte ein gültiges Passwort eingeben</string>
+    <string name="creationCompte_ErreurBday">Bitte Geburtsdatum eingeben</string>
+    <string name="creationCompte_InscriptionReussie">Die Registrierung war erfolgreich. Bitte checke Deine E-Mails.</string>
+    <string name="creationCompte_ErreurMdpc">Eingabe stimmt nicht mit vorherigem Feld überein</string>
+    <string name="creationCompte_ErreurValidation">Die eingegebene Information ist nicht vollständig oder nicht korrekt</string>
+    <string name="cgr">Allgemeine Geschäftsbedingungen</string>
+    <string name="connect_FacebookButton">Mit Facebook verbinden</string>
+    <string name="connect_Title">Login</string>
+    <string name="connect_Subtitle">Login</string>
+    <string name="connect_errorLogin">Die E-Mail Adresse nicht korrekt</string>
+    <string name="connect_successMdp">Eine E-Mail mit neuem Passwort wurde an Dich gesendet</string>
+    <string name="connect_errorMailMdp">Bitte gib Deine E-Mail Adresse ein</string>
+    <string name="connect_Email">E-Mail</string>
+    <string name="connect_validateError">Bitte gib Deine E-Mail Adresse und Dein Passwort ein</string>
+    <string name="connect_Password">Passwort</string>
+    <string name="connect_BoutonValidation">Login</string>
+    <string name="connect_Mdpoubli">Passwort vergessen</string>
+    <string name="connect_Creacompte">Neuen Account erstellen</string>
+    <string name="onboarding_Texte1">Jetzt Teetimes reservieren bei den schönsten Golfanlagen zu den besten Preisen…mit nur 3 Klicks!</string>
+    <string name="onboarding_Texte2">Europaweit stehen über 300 Golfplätze zur Auswahl.</string>
+    <string name="onboarding_Texte3">Einfache und schnelle Bezahlung - 100 % Sicherheit!</string>
+    <string name="onboarding_Soustitre">Mein Greenfee - mit nur 3 Klicks</string>
+    <string name="onboarding_Skipbutton">Los geht’s</string>
+    <string name="profile_titleCartes">Meine Kreditkarten</string>
+    <string name="profile_parametres">Logout</string>
+    <string name="profile_Title">Mein Konto</string>
+    <string name="order_ValidationText">Getätigte Buchungen ??? Not clear without context</string>
+    <string-array name="civiliteArray"> Anrede Feld
+        <item>Anrede</item>
+        <item> </item>
+        <item>Frau</item>
+        <item>Herr</item>
+    </string-array>
+    <string-array name="regionsArray">
+        <item>Region</item>
+    </string-array>
+    <string-array name="countries_array">
+        <item>Land</item> Land
+        <item>Südafrika</item>
+        <item>Deutschland</item>
+        <item>Österreich</item>
+        <item>Frankreich</item>
+        <item>Schweiz</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_connect_member">ConnectMemberActivity</string>
+    <string name="title_activity_onboarding">OnboardingActivity</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_booking">BookingActivity</string>
+    <string name="calendar_booking">Kalender</string>
+    <string name="today">Heute</string>
+    <string name="onePlayer">1 Spieler</string>
+    <string name="holes">{0,choice,0#|1#(1 hole)|1&lt;({0} holes)}</string>
+    <string name="emptyTeeTimes">Keine Teetime verfügbar</string>
+    <string name="slotsFree">Verfügbarkeit</string>
+    <string name="booking_time">09:00</string>
+    <string name="booking_dipo">Verfügbarkeit</string>
+    <string name="booking_price">0 €</string>
+    <string name="booking_reserver">Buchen</string>
+    <string name="info_title">Platzinformation</string>
+    <string name="title_activity_reservations">Reservierungsübersicht</string>
+    <string name="order_id">Buchungsnummer</string>
+    <string name="URL_advertisement">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
+</resources>

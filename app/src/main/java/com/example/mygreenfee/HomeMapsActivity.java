@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
 public class HomeMapsActivity extends AppCompatActivity {
 
     private Fragment newFragment;
-    int status;
+    String is_connected;
 
     protected void displayMaps(){
         Log.d("DEBUG", "J'affiche maps");
@@ -136,6 +136,7 @@ public class HomeMapsActivity extends AppCompatActivity {
 
     protected void displayCrea(){
         newFragment = new CreateMemberFragment();
+        Log.d("DEBUG", "Je passe à CREA");
         Bundle args = new Bundle();
 
         // Create fragment and give it an argument specifying the article it should show
@@ -161,6 +162,7 @@ public class HomeMapsActivity extends AppCompatActivity {
     }
 
     protected void displayCompte(){
+        Log.d("DEBUG", "Je DISPLAYCOMPTE");
         newFragment = new ProfileFragment();
         Bundle args = new Bundle();
 
@@ -348,7 +350,7 @@ public class HomeMapsActivity extends AppCompatActivity {
         setSupportActionBar(myToolbar);
 
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        String is_connected = sharedPref.getString("home_state", "1");
+        this.is_connected = sharedPref.getString("home_state", "0");
 
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("order_id", "false");
@@ -363,31 +365,51 @@ public class HomeMapsActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.navigation_MesResa);
         }
         else if(is_connected.equals("3")){
+            Log.d("DEBUG", "A CREATION COMPTE");
             displayCompte();
             bottomNavigationView.setSelectedItemId(R.id.navigation_MonCompte);
         }
+
+        editor.putString("home_state", "1");
+        editor.commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Log.d("DEBUG", "SWITCH "+is_connected);
                     switch (item.getItemId()) {
                         case R.id.navigation_Golfs:
-                            if(status!=1) {
-                                status=1;
+
+                            if(!is_connected.equals("1")) {
+
+                                SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("home_state", "1");
+                                editor.commit();
+                                is_connected = "1";
+
                                 displayMaps();
                             }
                             return true;
                         case R.id.navigation_MesResa:
-                            if(status!=2) {
-                                status = 2;
+                            if(!is_connected.equals("2")) {
+                                SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("home_state", "2");
+                                editor.commit();
+                                is_connected = "2";
                                 displayReservations();
                             }
                             //mTextMessage.setText(R.string.title_dashboard);
                             return true;
                         case R.id.navigation_MonCompte:
-                            if(status!=3) {
-                                status = 3;
+                            if(!is_connected.equals("3")) {
+                                SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("home_state", "3");
+                                editor.commit();
+                                is_connected = "4";
                                 displayCompte();
                             }
                             return true;

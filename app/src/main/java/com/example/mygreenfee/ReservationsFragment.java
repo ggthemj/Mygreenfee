@@ -51,9 +51,12 @@ public class ReservationsFragment extends Fragment {
         // Créé la vue et retourne une carte vide
         View view = inflater.inflate(R.layout.activity_reservations, container, false);
 
-        HomeMapsActivity hm = (HomeMapsActivity)this.getContext();
-        hm.status=2;
-        hm.chooseMenuItem(2);
+        if(getContext() instanceof HomeMapsActivity){
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("home_state", "2");
+            editor.commit();
+        }
 
         final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.VISIBLE);
@@ -90,10 +93,12 @@ public class ReservationsFragment extends Fragment {
         isEnCours = true;
 
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         String user_id = ""+sharedPref.getInt("user_id", 1);
 
         reservationsRepository = new ReservationsRepository(this);
-        reservationsRepository.getReservations(user_id);
+        reservationsRepository.getReservations(lang, user_id);
 
         return view;
     }
