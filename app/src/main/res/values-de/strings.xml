@@ -69,6 +69,8 @@
     <string name="creationCompte_InscriptionReussie">Die Registrierung war erfolgreich. Bitte checke Deine E-Mails.</string>
     <string name="creationCompte_ErreurMdpc">Eingabe stimmt nicht mit vorherigem Feld überein</string>
     <string name="creationCompte_ErreurValidation">Die eingegebene Information ist nicht vollständig oder nicht korrekt</string>
+    <string name="maps_button1">Information</string>
+    <string name="maps_button2">Book</string>
     <string name="cgr">Allgemeine Geschäftsbedingungen</string>
     <string name="connect_FacebookButton">Mit Facebook verbinden</string>
     <string name="connect_Title">Login</string>

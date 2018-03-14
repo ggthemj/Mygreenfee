@@ -77,6 +77,8 @@
 <string name="creationCompte_ErreurMdpc">Entry not corresponding to previous field </string>
 <string name="creationCompte_ErreurValidation">Information missing or wrong information on the registration form</string>
 
+<string name="maps_button1">Information</string>
+<string name="maps_button2">Book</string>
 
 <string name="cgr">Conditions and terms on reservation</string>
 <string name="connect_FacebookButton">Connect with Facebook</string>

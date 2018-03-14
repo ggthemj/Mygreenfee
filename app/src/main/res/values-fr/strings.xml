@@ -75,7 +75,8 @@
     <string name="creationCompte_InscriptionReussie">Inscription réussie ! Veuillez consultez vos mails</string>
     <string name="creationCompte_ErreurMdpc">Saisie non conforme au champ précédent</string>
     <string name="creationCompte_ErreurValidation">Des informations sont manquantes ou erronées sur le formulaire d\'enregistrement</string>
-
+    <string name="maps_button1">Information</string>
+    <string name="maps_button2">Réserver</string>
 
     <string name="cgr">Conditions générales de réservation</string>
     <string name="connect_FacebookButton">Me connecter avec Facebook</string>

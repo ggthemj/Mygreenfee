@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mygreenfee">
+    package="com.legreenfee">
 
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -32,11 +32,11 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".HomeMapsActivity"
+            android:name="com.legreenfee.HomeMapsActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".SpashscreenActivity"
+        <activity android:name="com.legreenfee.SpashscreenActivity"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,21 +46,21 @@
         </activity>
 
         <activity
-            android:name=".OnboardingActivity"
+            android:name="com.legreenfee.OnboardingActivity"
             android:label="@string/title_activity_onboarding"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BookingActivity"
+            android:name="com.legreenfee.BookingActivity"
             android:label="@string/title_activity_booking"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait" />
-        <activity android:name=".ClubActivity"
+        <activity android:name="com.legreenfee.ClubActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ClubListActivity"
+        <activity android:name="com.legreenfee.ClubListActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".OrderActivity"
+        <activity android:name="com.legreenfee.OrderActivity"
             android:screenOrientation="portrait" >
         </activity>
         <meta-data

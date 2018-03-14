@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/whiteColor"
     android:fitsSystemWindows="true"
-    tools:context="com.example.mygreenfee.OnboardingActivity">
+    tools:context="com.legreenfee.OnboardingActivity">
 
     <ImageView
         android:id="@+id/Logo"

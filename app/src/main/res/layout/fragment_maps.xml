@@ -17,7 +17,7 @@
         map:layout_constraintLeft_toLeftOf="parent"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent"
-        tools:context="com.example.mygreenfee.MapsFragment" />
+        tools:context="com.legreenfee.MapsFragment" />
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/maps_club_items"
@@ -81,7 +81,7 @@
                 android:layout_marginEnd="13dp"
                 android:layout_marginRight="13dp"
                 android:elevation="16dp"
-                android:text="Information"
+                android:text="@string/maps_button1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/red_maps"
                 android:textSize="16sp" />
@@ -107,7 +107,7 @@
                 android:layout_marginEnd="13dp"
                 android:layout_marginRight="13dp"
                 android:elevation="16dp"
-                android:text="Réserver"
+                android:text="@string/maps_button2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/red_maps"
                 android:textSize="16sp" />

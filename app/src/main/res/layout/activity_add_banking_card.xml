@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGrayColor"
-    tools:context="com.example.mygreenfee.AddBankingCardFragment">
+    tools:context="com.legreenfee.AddBankingCardFragment">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollv"

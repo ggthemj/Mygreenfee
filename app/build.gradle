@@ -18,11 +18,11 @@ repositories {
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.example.mygreenfee"
+        applicationId "com.legreenfee"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 7
+        versionName "2.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
