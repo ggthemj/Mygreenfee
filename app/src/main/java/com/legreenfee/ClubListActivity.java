@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class ClubListActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class ClubListActivity extends AppCompatActivity {
     private ListView clubsList;
     private SearchView searchView;
     private LatLng myPosition;
+    private List<ClubData> listClub;
 
 
     @Override
@@ -42,7 +44,7 @@ public class ClubListActivity extends AppCompatActivity {
         searchView = findViewById(R.id.club_list_search);
 
         arrayAdapter = new ClubsAdapter(getApplicationContext());
-        arrayAdapter = new ClubsAdapter(getApplicationContext());
+
         clubsRepo = new MapsFragmentRepository(this);
 
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
@@ -70,8 +72,21 @@ public class ClubListActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //arrayAdapter.filter(newText);
-                return false;
+                if (newText.length() == 0) {
+                    arrayAdapter.clear();
+                    arrayAdapter.addAll(listClub);
+                } else {
+                    List<ClubData> newlist = new ArrayList<ClubData>();
+                    for (ClubData clubData : listClub) {
+                        if (clubData.name.toLowerCase(Locale.getDefault()).contains(newText)) {
+                            newlist.add(clubData);
+                        }
+                    }
+                    arrayAdapter.clear();
+                    arrayAdapter.addAll(newlist);
+                }
+                arrayAdapter.notifyDataSetChanged();
+                return true;
             }
         });
 
@@ -79,7 +94,7 @@ public class ClubListActivity extends AppCompatActivity {
 
     public void updateclubs() {
         ClubData clubData[] = clubsRepo.clubsData.clubsdata;
-        List<ClubData> listClub = Arrays.asList(clubData);
+        listClub = Arrays.asList(clubData);
         if (arrayAdapter != null) {
             arrayAdapter.clear();
             final Location myLocation = new Location("my location");

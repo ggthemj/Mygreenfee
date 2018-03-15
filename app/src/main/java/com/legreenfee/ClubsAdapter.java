@@ -19,7 +19,7 @@ import java.util.Locale;
 
 public class ClubsAdapter extends ArrayAdapter<ClubData> implements View.OnClickListener {
 
-    private ArrayList<ClubData> dataSet;
+    private ArrayList<ClubData> dataSet = new ArrayList<ClubData>();;
     private List<ClubData> clubDataList = new ArrayList<ClubData>();
     Context mContext;
 
@@ -104,23 +104,6 @@ public class ClubsAdapter extends ArrayAdapter<ClubData> implements View.OnClick
         //viewHolder.info.setOnClickListener(this);
 
         return convertView;
-    }
-
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        clubDataList.clear();
-        if (charText.length() == 0) {
-            if (dataSet != null) {
-                clubDataList.addAll(dataSet);
-            }
-        } else {
-            for (ClubData wp : dataSet) {
-                if (wp.name.toLowerCase(Locale.getDefault()).contains(charText)) {
-                    clubDataList.add(wp);
-                }
-            }
-        }
-        notifyDataSetChanged();
     }
 
 }
