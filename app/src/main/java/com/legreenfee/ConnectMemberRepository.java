@@ -49,7 +49,7 @@ public class ConnectMemberRepository {
                     try {
                         userData = new UserData(new JSONObject(response));
                         context.handleSuccess(userData);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -58,11 +58,13 @@ public class ConnectMemberRepository {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("DEBUG","Erreur !"+error.getMessage());
-                try {
-                    JSONObject messageErreur = new JSONObject(error.getMessage());
-                    context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(error!=null) {
+                    try {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleError(messageErreur.getString("error_message"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }) {
@@ -113,7 +115,7 @@ public class ConnectMemberRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleErrorMdp(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -169,7 +171,7 @@ public class ConnectMemberRepository {
 
                             String order_id = json.getString("order_id");
                             context.handleBookSuccess(order_id, clubS, priceS, date);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

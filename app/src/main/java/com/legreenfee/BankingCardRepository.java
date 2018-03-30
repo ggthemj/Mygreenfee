@@ -52,7 +52,7 @@ public class BankingCardRepository {
                         JSONObject json2 = json.getJSONObject("card");
                         cardData = new CardData(json2);
                         context.handleSuccess(cardData);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -64,7 +64,7 @@ public class BankingCardRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -125,7 +125,7 @@ public class BankingCardRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -182,7 +182,7 @@ public class BankingCardRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

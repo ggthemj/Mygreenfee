@@ -30,13 +30,13 @@ public class ProfileFragment extends Fragment {
 
             final LinearLayout lay = (LinearLayout) getView().findViewById(R.id.formulaire2);
             lay.setVisibility(View.VISIBLE);
+
+            final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBarProfile);
+            simpleProgressBar.setVisibility(View.GONE);
         }
         catch (Exception e){
             Log.d("Exception", "exception");
         }
-
-        final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
-        simpleProgressBar.setVisibility(View.GONE);
     }
 
     public void handleError(String s){
@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         }
         else{
             Log.d("DEBUG", "MAIL CONFIGURE");
-            final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBar);
+            final ProgressBar simpleProgressBar = view.findViewById(R.id.simpleProgressBarProfile);
             simpleProgressBar.setVisibility(View.VISIBLE);
             String password = sharedPref.getString("user_password", "false");
 

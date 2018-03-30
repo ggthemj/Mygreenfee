@@ -52,7 +52,7 @@ public class ProfileRepository {
                     try {
                         userData = new UserData(new JSONObject(response));
                         context.handleSuccess(userData);
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -63,7 +63,7 @@ public class ProfileRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
