@@ -163,9 +163,7 @@ public class ConnectMemberFragment extends Fragment {
         editor.putString("user_phone", u.phone);
         editor.commit();
 
-        String is_order = sharedPref.getString("order_id", "false");
-
-        if(is_order.equals("false")){
+        if(getContext() instanceof HomeMapsActivity) {
             HomeMapsActivity hom = (HomeMapsActivity)getContext();
             hom.displayCompte();
         }
@@ -183,12 +181,12 @@ public class ConnectMemberFragment extends Fragment {
     }
 
     public void handleBookSuccess(String orderId, String orderClub, String orderPrice, String orderDate) {
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.order_id), orderId);
-        editor.commit();
-
         if(getContext() instanceof OrderActivity) {
+            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString(getString(R.string.order_id), orderId);
+            editor.commit();
+
             OrderActivity ord = (OrderActivity) getContext();
             ord.displayMyBanking();
         }

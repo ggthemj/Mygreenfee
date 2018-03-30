@@ -190,7 +190,7 @@ public class UpdateMemberRepository {
                         try {
                             regionsData = new RegionsData(new JSONObject(response));
                             context.handleSuccessRegions(regionsData);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -198,11 +198,13 @@ public class UpdateMemberRepository {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("DEBUG","That didn't work! "+error.getMessage());
-                try {
-                    JSONObject messageErreur = new JSONObject(error.getMessage());
-                    context.handleErrorRegions(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if(error!=null) {
+                    try {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleErrorRegions(messageErreur.getString("error_message"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }) {

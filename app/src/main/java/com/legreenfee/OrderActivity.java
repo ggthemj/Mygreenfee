@@ -94,7 +94,12 @@ public class OrderActivity extends AppCompatActivity {
         transaction.disallowAddToBackStack();
 
         // Commit the transaction
-        transaction.commit();
+        try {
+            transaction.commit();
+        }
+        catch (Exception e){
+            Log.d("Exception", "exception");
+        }
 
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);

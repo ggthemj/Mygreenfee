@@ -264,8 +264,9 @@ public class HomeMapsActivity extends AppCompatActivity {
 
     public void handleUpdateResa(ReservationData[] open, ReservationData[] closed, boolean isEnCours, boolean hasSucceeded){
         final ProgressBar simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
-        simpleProgressBar.setVisibility(View.GONE);
-
+        if(simpleProgressBar!=null) {
+            simpleProgressBar.setVisibility(View.GONE);
+        }
         LinearLayout fragContainer = (LinearLayout) findViewById(R.id.formulaire);
         TextView enCours = findViewById(R.id.compteurResa);
 

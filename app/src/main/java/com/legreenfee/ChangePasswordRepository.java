@@ -57,7 +57,7 @@ public class ChangePasswordRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

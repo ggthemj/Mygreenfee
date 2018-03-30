@@ -61,7 +61,7 @@ public class ReservationsRepository {
                                 closedResas[i] = new ReservationData(closed.getJSONObject(i));
                             }
                             context.handleSuccess(enCours, closedResas);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -77,7 +77,7 @@ public class ReservationsRepository {
                     else{
                         context.handleError("Unknown Error...");
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

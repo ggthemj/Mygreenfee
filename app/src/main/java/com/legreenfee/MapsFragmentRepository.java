@@ -75,7 +75,7 @@ public class MapsFragmentRepository {
                         if (clubListContext != null) {
                             clubListContext.updateclubs();
                         }
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -92,7 +92,7 @@ public class MapsFragmentRepository {
                     if (clubListContext != null) {
                         clubListContext.handleError(messageErreur.getString("error_message"));
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }

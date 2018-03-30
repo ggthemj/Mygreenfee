@@ -53,7 +53,7 @@ public class OrderRepository {
                         try {
                             userData = new UserData(new JSONObject(response));
                             context.handleSuccessLogin(userData);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -64,7 +64,7 @@ public class OrderRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleErrorLogin();
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -119,7 +119,7 @@ public class OrderRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleError(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -182,7 +182,7 @@ public class OrderRepository {
                 try {
                     JSONObject messageErreur = new JSONObject(error.getMessage());
                     context.handleErrorPayment(messageErreur.getString("error_message"));
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -242,7 +242,7 @@ public class OrderRepository {
 
                             String order_id = json.getString("order_id");
                             context.handleBookSuccess(order_id);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

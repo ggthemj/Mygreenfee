@@ -247,7 +247,7 @@ public class CreateMemberRepository {
 
                             String order_id = json.getString("order_id");
                             context.handleBookSuccess(order_id, clubS, priceS, date);
-                        } catch (JSONException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
