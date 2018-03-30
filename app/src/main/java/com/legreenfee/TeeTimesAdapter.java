@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -33,6 +34,8 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
         TextView sale_price;
         TextView slots_free;
         Button book;
+        TextView reduction;
+        ImageView etiquette;
     }
 
     public TeeTimesAdapter(Context applicationContext) {
@@ -73,6 +76,8 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
             viewHolder.time = (TextView) convertView.findViewById(R.id.booking_time_view);
             viewHolder.sale_price = (TextView) convertView.findViewById(R.id.booking_price_view);
             viewHolder.book = (Button) convertView.findViewById(R.id.booking_button);
+            viewHolder.reduction = (TextView) convertView.findViewById(R.id.booking_reduc_view);
+            viewHolder.etiquette = (ImageView) convertView.findViewById(R.id.booking_etiquette);
 
             result = convertView;
 
@@ -88,6 +93,15 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
         String moneyString = df.format(dataModel.getSale_price());
         viewHolder.sale_price.setText(moneyString + "€");
         viewHolder.book.setTag(position);
+        if (dataModel.getReduction() != 0) {
+            viewHolder.reduction.setVisibility(View.VISIBLE);
+            viewHolder.reduction.setText("-" + dataModel.getReduction() + "%");
+            viewHolder.etiquette.setVisibility(View.VISIBLE);
+        }
+        else {
+            viewHolder.reduction.setVisibility(View.INVISIBLE);
+            viewHolder.etiquette.setVisibility(View.INVISIBLE);
+        }
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
