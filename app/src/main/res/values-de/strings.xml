@@ -130,5 +130,4 @@
     <string name="info_title">Platzinformation</string>
     <string name="title_activity_reservations">Reservierungsübersicht</string>
     <string name="order_id">Buchungsnummer</string>
-    <string name="URL_advertisement">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
 </resources>

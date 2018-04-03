@@ -140,5 +140,4 @@
 <string name="info_title">Course information</string>
 <string name="title_activity_reservations">ReservationsActivity</string>
 <string name="order_id">order_id</string>
-<string name="URL_advertisement">https://dev.mygreenfee.fr/api.php?sid=clubs</string>
-    </resources>
+</resources>
