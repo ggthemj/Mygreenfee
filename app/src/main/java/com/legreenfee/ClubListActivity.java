@@ -74,7 +74,9 @@ public class ClubListActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if (newText.length() == 0) {
                     arrayAdapter.clear();
-                    arrayAdapter.addAll(listClub);
+                    if (listClub != null) {
+                        arrayAdapter.addAll(listClub);
+                    }
                 } else {
                     List<ClubData> newlist = new ArrayList<ClubData>();
                     for (ClubData clubData : listClub) {
