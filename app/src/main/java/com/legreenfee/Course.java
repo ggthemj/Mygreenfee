@@ -44,7 +44,7 @@ public class Course{
 
             if (json.has("colors")) {
                 JSONArray a = json.getJSONArray("colors");
-                if (a != null) {
+                if (a != null && a.length() != 0) {
                     json = a.getJSONObject(0);
                     if (json.has("color")) {
                         this.color = json.getString("color");

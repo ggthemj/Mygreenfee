@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
@@ -12,9 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/booking_time_view"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/booking_time_view"
+        android:singleLine="true"
         android:text="@string/booking_dipo"
+        android:textAlignment="textEnd"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/black" />
 
@@ -80,15 +85,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_alignEnd="@+id/booking_etiquette"
-        android:layout_alignRight="@+id/booking_etiquette"
-        android:layout_alignTop="@+id/booking_price_view"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_alignEnd="@+id/booking_button"
+        android:layout_alignRight="@+id/booking_button"
+        android:layout_alignTop="@+id/booking_button"
+        android:layout_marginRight="110dp"
+        android:layout_marginTop="22dp"
         android:maxHeight="30dp"
         android:maxWidth="30dp"
         android:rotation="-20"
-        android:text="-10 %"
+        android:text="-29%"
         android:textColor="@android:color/black"
         android:textSize="10sp"
         android:textStyle="bold" />

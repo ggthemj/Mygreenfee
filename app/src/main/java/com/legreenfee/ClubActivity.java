@@ -1,16 +1,23 @@
 package com.legreenfee;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
+import com.squareup.picasso.Picasso;
 
 public class ClubActivity extends AppCompatActivity {
 
@@ -36,7 +43,7 @@ public class ClubActivity extends AppCompatActivity {
 
         if (!"".equals(club.image_url)) {
             ImageView imageView = (ImageView) findViewById(R.id.club_app_bar_image);
-            imageView.setImageURI(Uri.parse(club.image_url));
+            Picasso.with(this).load(club.image_url).into(imageView);
         }
 
         final Toolbar toolbar = findViewById(R.id.club_toolbar);
@@ -62,4 +69,5 @@ public class ClubActivity extends AppCompatActivity {
         //collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(android.R.color.transparent));
 
     }
+
 }
