@@ -149,8 +149,13 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String lang = sharedPref.getString("language", "EN");
 
-
+        progressBar.setVisibility(View.VISIBLE);
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
         coursesRepo.updateTeeTimes(lang, clubId, dateFormat2.format(calendar.getTime()), teeID);
+
     }
 
     public void addPlayer(View view)
@@ -162,6 +167,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             nbPlayers = 1;
         }
         setPlayerView();
+        if (arrayAdapter != null) {
+            arrayAdapter.notifyDataSetChanged();
+        }
 
     }
 
@@ -174,6 +182,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             nbPlayers = 4;
         }
         setPlayerView();
+        if (arrayAdapter != null) {
+            arrayAdapter.notifyDataSetChanged();
+        }
     }
 
     private void setPlayerView() {
@@ -186,7 +197,6 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     }
 
     public void updateCourses() {
-
         List<TeeSpinnerDTO> courses = new ArrayList<TeeSpinnerDTO>();
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String lang = sharedPref.getString("language", "EN");
@@ -212,7 +222,6 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
         dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         coursesSpinner.setAdapter(dataAdapter);
-
 
     }
 
@@ -255,6 +264,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        progressBar.setVisibility(View.VISIBLE);
+        if (arrayAdapter != null) {
+            arrayAdapter.clear();
+            arrayAdapter.notifyDataSetChanged();
+        }
         TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
         //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
         teeID = item.getId();

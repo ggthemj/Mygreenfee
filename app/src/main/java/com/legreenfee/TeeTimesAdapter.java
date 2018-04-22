@@ -87,10 +87,11 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
             result = convertView;
         }
 
+        BookingActivity context = (BookingActivity) getContext();
         viewHolder.slots_free.setText(String.valueOf(dataModel.getSlots_free()) + " " + getContext().getResources().getText(R.string.slotsFree));
         viewHolder.time.setText(String.valueOf(dataModel.getTime()));
         DecimalFormat df = new DecimalFormat("#.00");
-        String moneyString = df.format(dataModel.getSale_price());
+        String moneyString = df.format(dataModel.getSale_price() * context.getNbPlayers());
         viewHolder.sale_price.setText(moneyString + "€");
         viewHolder.book.setTag(position);
         if (dataModel.getReduction() != 0) {
@@ -106,10 +107,11 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                BookingActivity context = (BookingActivity) getContext();
                 ViewHolder i = (ViewHolder) v.getTag();
                 Button b = ((RelativeLayout) v).findViewById(R.id.booking_button);
                 Integer position = (Integer) b.getTag();
-                BookingActivity context = (BookingActivity) getContext();
+
                 TeeTime teeTime = getItem(position);
 
                 final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
