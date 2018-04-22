@@ -71,7 +71,7 @@
                 android:clickable="true"
                 android:contextClickable="false"
                 android:src="@drawable/icon_club_info"
-                map:backgroundTint="@color/red_maps" />
+                map:backgroundTint="@color/greenAlbaColor" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                 android:elevation="16dp"
                 android:text="@string/maps_button1"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/red_maps"
+                android:textColor="@color/greenAlbaColor"
                 android:textSize="16sp" />
 
             <android.support.design.widget.FloatingActionButton
@@ -96,7 +96,7 @@
                 android:layout_marginRight="16dp"
                 android:clickable="true"
                 android:contextClickable="false"
-                map:backgroundTint="@color/red_maps"
+                map:backgroundTint="@color/greenAlbaColor"
                 map:srcCompat="@drawable/icon_club_flag" />
 
             <TextView
@@ -109,7 +109,7 @@
                 android:elevation="16dp"
                 android:text="@string/maps_button2"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/red_maps"
+                android:textColor="@color/greenAlbaColor"
                 android:textSize="16sp" />
 
         </LinearLayout>

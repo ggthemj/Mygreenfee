@@ -33,7 +33,7 @@ public class UpdateMemberRepository {
     }
 
     public void updateMember(final String lan, final String mid, final String civilite, final String nom, final String prenom, final String email, final String dob, final String country, final String region_id, final String phone){
-        Log.d("DEBUG", "Debut de la requete de modification de compte");
+        Log.d("DEBUG", "Debut de la requete de modification de compte avec les params "+mid+"/"+civilite+"/"+prenom+"/"+nom+"/"+dob+"/"+email+"/"+country+"/"+region_id+"/"+phone);
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context.getContext());
@@ -57,12 +57,9 @@ public class UpdateMemberRepository {
                     @Override
                     public void onResponse(String response) {
                         Log.d("DEBUG", "response : "+response);
-                        try {
-                            userData = new UserData(new JSONObject(response));
-                            context.handleSuccessUpdate(userData);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+
+                        context.handleSuccessUpdate(civilite, prenom, nom, dob, email, country, Integer.parseInt(region_id), phone);
+
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -26,6 +26,8 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
+        Log.d("DEBUG", "ORDER ACTIVITY");
+
         //Mise en place de la custom app bar
         Toolbar myToolbar = findViewById(R.id.my_toolbar2);
         setSupportActionBar(myToolbar);
@@ -72,13 +74,24 @@ public class OrderActivity extends AppCompatActivity {
         final TextView prix = (TextView)findViewById(R.id.prix);
         prix.setText(sharedPref.getString("order_price", "Non défini"));
 
-        String is_order = sharedPref.getString("order_id", "false");
+        String is_order = sharedPref.getString("order_id", "blabla");
+        Log.d("DEBUG", "ORDER ID GET "+is_order);
         String email = sharedPref.getString("user_email", "false");
         String password = sharedPref.getString("user_password", "false");
         String lang = sharedPref.getString("language", "EN");
 
-
-        orderRepository.login(lang, email,password);
+        if(is_order.equals("blabla")){
+            if(email.equals("false")){
+                this.displayMonCompte();
+            }
+            else {
+                orderRepository.login(lang, email,password);
+            }
+        }
+        else{
+            orderRepository.cancelOrder(is_order, lang);
+        }
+        //String lang = sharedPref.getString("order", "EN");
     }
 
     protected void displayMyBanking(){
@@ -206,16 +219,35 @@ public class OrderActivity extends AppCompatActivity {
         orderRepository.book(lang, arg1, arg2, arg3, arg4, arg5, u.email, arg6, arg7);
     }
 
-    public void handleErrorLogin(){
+    public void handleErrorLogin(String s){
+        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
         this.displayMonCompte();
     }
 
     public void handleBookSuccess(String orderId){
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.order_id), orderId);
+        editor.putString("order_id", orderId);
+        Log.d("DEBUG", "ORDER ID PUSH"+orderId);
+
         editor.commit();
+
+        String is_order = sharedPref.getString("order_id", "false");
+        Log.d("DEBUG", "ORDER ID GETAFTERPUSH "+is_order);
         this.displayMyBanking();
+    }
+
+    public void handleCancelOrder(){
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("order_id", "false");
+        editor.commit();
+
+        String email = sharedPref.getString("user_email", "false");
+        String password = sharedPref.getString("user_password", "false");
+        String lang = sharedPref.getString("language", "EN");
+        orderRepository.login(lang, email, password);
     }
 
     public void handleConfirm(){
@@ -237,6 +269,25 @@ public class OrderActivity extends AppCompatActivity {
     public void handleError(String s){
         Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
         toast.show();
+    }
+
+    public void handleErrorCancel(String s){
+        Log.d("DEBUG", "FAIL CANCEL");
+
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+
+        String email = sharedPref.getString("user_email", "false");
+        String password = sharedPref.getString("user_password", "false");
+        String lang = sharedPref.getString("language", "EN");
+        orderRepository.login(lang, email,password);
+    }
+
+    public void handleErrorBook(String s){
+        Toast toast = Toast.makeText(this, s, Toast.LENGTH_LONG);
+        toast.show();
+
+        Intent intent = new Intent(this, HomeMapsActivity.class);
+        startActivity(intent);
     }
 
     public void handleErrorPayment(String s){

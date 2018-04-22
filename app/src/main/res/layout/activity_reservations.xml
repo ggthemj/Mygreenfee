@@ -50,7 +50,7 @@
             <TextView
                 android:id="@+id/compteurResa"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:background="@color/lightGrayColor"
                 android:fontFamily="@font/helveticaneue"
                 android:gravity="center"

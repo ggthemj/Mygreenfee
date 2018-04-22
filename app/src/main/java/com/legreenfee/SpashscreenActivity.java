@@ -54,9 +54,9 @@ public class SpashscreenActivity extends Activity {
                 SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
                 String is_connected = sharedPref.getString("has_ended_tutorial", "false");
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("order_id", "false");
                 editor.putString("home_state", "1");
-                editor.putString("language", language);
+                //editor.putString("language", language);
+
                 editor.commit();
 
                 Log.d("DEBUG", "home_state "+sharedPref.getString("home_state", "beuh"));

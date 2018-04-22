@@ -13,7 +13,7 @@
     <string name="mesResas_titre1">In Bearbeitung</string>
     <string name="mesResas_titre2">Frühere Buchungen</string>
     <string name="mesResas_title">Meine Buchungen</string>
-    <string name="mesResas_commande">buchung</string>
+    <string name="mesResas_commande">buchung/en</string>
     <string name="mesResas_status">vergangen</string>
     <string name="mesResas_enCours">In Bearbeitung</string>
     <string name="mesResas_personne">Spieler</string>
@@ -58,7 +58,7 @@
     <string name="creationCompte_Pays">Land</string>
     <string name="creationCompte_Region">Region</string>
     <string name="creationCompte_Birthday">Geburtsdatum</string>
-    <string name="creationCompte_Boutonvalider">Info verifizieren</string>
+    <string name="creationCompte_Boutonvalider">Angaben bestätigen</string>
     <string name="creationCompte_Mentions">Rechtliche Hinweise</string>
     <string name="creationCompte_ErreurPrenom">Bitte Vornamen eingeben</string>
     <string name="creationCompte_ErreurNom">Bitte Nachnamen eingeben</string>
@@ -92,10 +92,9 @@
     <string name="profile_titleCartes">Meine Kreditkarten</string>
     <string name="profile_parametres">Logout</string>
     <string name="profile_Title">Mein Konto</string>
-    <string name="order_ValidationText">Getätigte Buchungen ??? Not clear without context</string>
+    <string name="order_ValidationText">Kreditkarte hinzufügen</string>
     <string-array name="civiliteArray"> Anrede Feld
         <item>Anrede</item>
-        <item> </item>
         <item>Frau</item>
         <item>Herr</item>
     </string-array>
@@ -129,5 +128,6 @@
     <string name="booking_reserver">Buchen</string>
     <string name="info_title">Platzinformation</string>
     <string name="title_activity_reservations">Reservierungsübersicht</string>
+    <string name="URL_advertisement">https://mygreenfee.com/api.php?sid=clubs</string>
     <string name="order_id">Buchungsnummer</string>
 </resources>

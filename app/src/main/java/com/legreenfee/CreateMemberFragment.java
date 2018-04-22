@@ -47,13 +47,28 @@ public class CreateMemberFragment extends Fragment {
         updateMdpStatus();
         updateMdpcStatus();
         updateBdayStatus();
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
 
         if(is_mail_ok && is_phone_ok && is_lname_ok && is_fname_ok && is_mdp_ok && is_mdpc_ok && is_bday_ok) {
             //Récupération des données du formulaires et passation au Repo
             String civ = "";
             Spinner mySpinner = getView().findViewById(R.id.spinnerCivilite);
             if ((int) mySpinner.getSelectedItemId() != 0) {
-                civ = mySpinner.getSelectedItem().toString();
+                if((int) mySpinner.getSelectedItemId() == 1){
+                    civ = "Ms";
+                }
+                else if((int) mySpinner.getSelectedItemId() == 2){
+                    if(lang.equals("DE")) {
+                        civ = "Mr";
+                    }
+                    else {
+                        civ = "Mrs";
+                    }
+                }
+                else if((int) mySpinner.getSelectedItemId() == 3){
+                    civ = "Mr";
+                }
             }
 
             EditText editText = getView().findViewById(R.id.nom);
@@ -75,24 +90,25 @@ public class CreateMemberFragment extends Fragment {
             String dob = editText.getText().toString();
 
             mySpinner = getView().findViewById(R.id.spinnerPays);
-            String pay = mySpinner.getSelectedItem().toString();
-            switch (pay) {
-                case "Afrique du Sud":
+            int pays = mySpinner.getSelectedItemPosition();
+            String pay = "";
+            switch (pays) {
+                case 1:
                     pay = "ZA";
                     break;
-                case "Allemagne":
+                case 2:
                     pay = "DE";
                     break;
-                case "Autriche":
+                case 3:
                     pay = "AT";
                     break;
-                case "France":
+                case 4:
                     pay = "FR";
                     break;
-                case "Suisse":
+                case 5:
                     pay = "CH";
                     break;
-                case "Belgique":
+                case 6:
                     pay = "BE";
                     break;
             }
@@ -106,9 +122,6 @@ public class CreateMemberFragment extends Fragment {
             else{
                 region_id = this.regionsData.regionsData[rid - 1].public_id;
             }
-
-            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-            String lang = sharedPref.getString("language", "EN");
 
             SharedPreferences.Editor editor = sharedPref.edit();
 
@@ -387,6 +400,9 @@ public class CreateMemberFragment extends Fragment {
                     else if(position==5) {
                         paysISO = "CH" ;
                     }
+                    else if(position==6) {
+                        paysISO = "BE" ;
+                    }
                     SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
                     String lang = sharedPref.getString("language", "EN");
 
@@ -649,11 +665,6 @@ public class CreateMemberFragment extends Fragment {
         Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
         toast.show();
 
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("order_id", "false");
-        editor.commit();
-
         if(getContext() instanceof OrderActivity) {
             Intent intent = new Intent(getContext(), HomeMapsActivity.class);
             startActivity(intent);
@@ -663,7 +674,7 @@ public class CreateMemberFragment extends Fragment {
     public void handleBookSuccess(String orderId, String orderClub, String orderPrice, String orderDate) {
         SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.order_id), orderId);
+        editor.putString("order_id", orderId);
         editor.commit();
 
         if(getContext() instanceof OrderActivity) {

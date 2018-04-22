@@ -51,6 +51,9 @@ public class MonCompteFragment extends Fragment {
             editor.commit();
         }
 
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         updateMemberRepository = new UpdateMemberRepository(this);
 
         final Button buttonValidation = view.findViewById(R.id.buttonvalidation);
@@ -178,17 +181,26 @@ public class MonCompteFragment extends Fragment {
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinnerCivilite.setAdapter(spinnerArrayAdapter);
 
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
         String civilite = sharedPref.getString("user_title", "");
         int positionCivilite = 0 ;
         if(civilite.equals("Ms")) {
             positionCivilite = 1 ;
         }
         else if(civilite.equals("Mrs")) {
-            positionCivilite = 2 ;
+            if(lang.equals("DE")) {
+                positionCivilite = 1;
+            }
+            else{
+                positionCivilite = 2;
+            }
         }
         else if(civilite.equals("Mr")) {
-            positionCivilite = 3 ;
+            if(lang.equals("DE")) {
+                positionCivilite = 2;
+            }
+            else{
+                positionCivilite = 3;
+            }
         }
         spinnerCivilite.setSelection(positionCivilite);
 
@@ -263,6 +275,9 @@ public class MonCompteFragment extends Fragment {
         else if(pays.equals("CH")) {
             positionPays = 5 ;
         }
+        else if(pays.equals("BE")) {
+            positionPays = 6 ;
+        }
         spinnerPays.setSelection(positionPays);
 
         spinnerPays.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -286,8 +301,13 @@ public class MonCompteFragment extends Fragment {
                     else if(position==5) {
                         paysISO = "CH" ;
                     }
+                    else if(position==6) {
+                        paysISO = "BE" ;
+                    }
                     SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
                     String lang = sharedPref.getString("language", "EN");
+
+                    Log.d("DEBUG", "Je recharge les régions");
 
                     updateMemberRepository.updateRegions(lang, paysISO);
                 }
@@ -405,12 +425,11 @@ public class MonCompteFragment extends Fragment {
 
 
         sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String lang = sharedPref.getString("language", "EN");
 
         String mailenr = sharedPref.getString("user_email", "false");
         String mdp = sharedPref.getString("user_password", "false");
 
-        Log.d("DEBUG", "Début de la requête login avec les identifiants "+mailenr+"/"+mdp);
+        Log.d("DEBUG", "Je récupère les données de profil "+mailenr+"/"+mdp);
 
         updateMemberRepository.update(lang, mailenr, mdp);
 
@@ -458,12 +477,28 @@ public class MonCompteFragment extends Fragment {
         updateMailStatus();
         updateBdayStatus();
 
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
         if (is_mail_ok && is_phone_ok && is_lname_ok && is_fname_ok && is_bday_ok) {
             //Récupération des données du formulaires et passation au Repo
             String civ = "";
             Spinner mySpinner = getView().findViewById(R.id.spinnerCivilite);
             if ((int) mySpinner.getSelectedItemId() != 0) {
-                civ = mySpinner.getSelectedItem().toString();
+                if((int) mySpinner.getSelectedItemId() == 1){
+                    civ = "Ms";
+                }
+                else if((int) mySpinner.getSelectedItemId() == 2){
+                    if(lang.equals("DE")) {
+                        civ = "Mr";
+                    }
+                    else {
+                        civ = "Mrs";
+                    }
+                }
+                else if((int) mySpinner.getSelectedItemId() == 3){
+                    civ = "Mr";
+                }
             }
 
             EditText editText = getView().findViewById(R.id.nom);
@@ -482,30 +517,28 @@ public class MonCompteFragment extends Fragment {
             String dob = editText.getText().toString();
 
             mySpinner = getView().findViewById(R.id.spinnerPays);
-            String pay = mySpinner.getSelectedItem().toString();
-            switch (pay) {
-                case "Afrique du Sud":
+            int pays = mySpinner.getSelectedItemPosition();
+            String pay="";
+            switch (pays) {
+                case 1:
                     pay = "ZA";
                     break;
-                case "Allemagne":
+                case 2:
                     pay = "DE";
                     break;
-                case "Autriche":
+                case 3:
                     pay = "AT";
                     break;
-                case "France":
+                case 4:
                     pay = "FR";
                     break;
-                case "Suisse":
+                case 5:
                     pay = "CH";
                     break;
-                case "Belgique":
+                case 6:
                     pay = "BE";
                     break;
             }
-
-            SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-            String lang = sharedPref.getString("language", "EN");
 
             int id = sharedPref.getInt("user_id", 12);
             String sid = ""+id;
@@ -610,11 +643,19 @@ public class MonCompteFragment extends Fragment {
     public void handleSuccessRegions(RegionsData r){
         this.regionsData = r;
 
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        int regionid = sharedPref.getInt("user_region", -1);
+        int positionTo = 0;
+
         final Spinner spinnerRegions = getView().findViewById(R.id.spinnerRegions);
         String[] arraySpinner = new String[this.regionsData.regionsData.length+1];
         arraySpinner[0] = "Région";
         for (int i = 0 ; i < this.regionsData.regionsData.length ; i++) {
             arraySpinner[i+1] = this.regionsData.regionsData[i].name;
+            //Log.d("DEBUG", "Je compare -"+this.regionsData.regionsData[i].public_id+"- et -"+regionid);
+            if(this.regionsData.regionsData[i].public_id.equals(""+regionid)){
+                positionTo = i+1;
+            }
         }
 
         this.spinnerArrayAdapterRegions = new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,arraySpinner){
@@ -661,8 +702,12 @@ public class MonCompteFragment extends Fragment {
                 return view;
             }
         };
+        Log.d("DEBUG", "J'initialise le spinner région en position "+positionTo);
+
         spinnerArrayAdapterRegions.setDropDownViewResource(R.layout.spinner_item);
         spinnerRegions.setAdapter(spinnerArrayAdapterRegions);
+
+        spinnerRegions.setSelection(positionTo);
     }
 
     public void handleErrorRegions(String s){
@@ -721,17 +766,24 @@ public class MonCompteFragment extends Fragment {
         but.setVisibility(View.VISIBLE);
         but = (Button)getView().findViewById(R.id.buttonvalidation2);
         but.setVisibility(View.VISIBLE);
-
-        Toast toast = Toast.makeText(getContext(), "Informations enregistrées", Toast.LENGTH_LONG);
-        toast.show();
     }
 
     // Méthode appelée quand le login est réussi !
-    public void handleSuccessUpdate(UserData u){
-        //Remplit le fichier offline avec les informations de l'utilisateur - a optimiser pour stockage in app
+    public void handleSuccessUpdate(String civ, String prenom, String nom, String dob, String email, String country, int rid, String phone){
+        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("user_title", civ);
+        editor.putString("user_fname", prenom);
+        editor.putString("user_lname", nom);
+        editor.putString("user_dob", dob);
+        editor.putString("user_email", email);
+        editor.putString("user_country", country);
+        editor.putInt("user_region", rid);
+        editor.putString("user_phone", phone);
+        editor.commit();
+
         HomeMapsActivity hom = (HomeMapsActivity)getContext();
         hom.displayCompte();
-
     }
 
     // Méthode appelée quand le login est refusé (avec message d'erreur) !

@@ -309,7 +309,6 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     public void book(String orderId, String orderClub, String orderPrice, String orderDate) {
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(getString(R.string.order_id), orderId);
         editor.putString("order_price", orderPrice);
         editor.putString("order_club", orderClub);
         editor.putString("order_date", orderDate);

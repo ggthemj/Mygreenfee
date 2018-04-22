@@ -68,7 +68,7 @@ public class HomeMapsActivity extends AppCompatActivity {
         transaction.commit();
 
         final TextView textViewTitle = (TextView) findViewById(R.id.textViewTitle);
-        textViewTitle.setText("Mes réservations");
+        textViewTitle.setText(getResources().getString(R.string.mesResas_title));
         textViewTitle.setVisibility(View.VISIBLE);
 
         final ImageButton rb = (ImageButton) findViewById(R.id.recherche_button);
@@ -349,10 +349,6 @@ public class HomeMapsActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         this.is_connected = sharedPref.getString("home_state", "0");
         Log.d("DEBUG", "LANGUAGE "+sharedPref.getString("language", "BEUH"));
-
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("order_id", "false");
-        editor.commit();
 
         Log.d("DEBUG", "INIT "+is_connected);
         if(is_connected.equals("1")){

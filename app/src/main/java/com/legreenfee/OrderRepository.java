@@ -62,8 +62,72 @@ public class OrderRepository {
             public void onErrorResponse(VolleyError error) {
                 Log.d("DEBUG","Erreur !"+error.getMessage());
                 try {
-                    JSONObject messageErreur = new JSONObject(error.getMessage());
-                    context.handleErrorLogin();
+                    if(error.getMessage()!=null) {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleErrorLogin(messageErreur.getString("error_message"));
+                    }
+                    else{
+                        context.handleErrorLogin("Unknown Error...");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                return mParams;
+            }
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        queue.add(stringRequest);
+    }
+
+    //Tentative de login :)
+    public void cancelOrder(final String is_order, final String lan){
+
+        Log.d("DEBUG", "Début de la requête cancel");
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.context);
+        String url = context.getResources().getString(R.string.URL_order)+"/"+is_order+"/cancel";
+        mHeaders = new HashMap<String, String>();
+        mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
+        mHeaders.put("CONTENT-LANGUAGE", lan);
+        mParams = new HashMap<String, String>();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "réponse login : "+response);
+
+                        context.handleCancelOrder();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","Erreur !"+error.getMessage());
+                try {
+                    if(error.getMessage()!=null) {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleErrorCancel(messageErreur.getString("error_message"));
+                    }
+                    else{
+                        context.handleErrorCancel("Unknown Error...");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -158,7 +222,7 @@ public class OrderRepository {
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.context);
 
-        String url = "https://dev.mygreenfee.fr/api.php?sid=orders/"+id+"/card";
+        String url = context.getResources().getString(R.string.URL_order)+"/"+id+"/card";
         mHeaders = new HashMap<String, String>();
         mHeaders.put("X-API-KEY", context.getResources().getString(R.string.API_KEY));
         mHeaders.put("CONTENT-LANGUAGE", lan);
@@ -180,8 +244,13 @@ public class OrderRepository {
             public void onErrorResponse(VolleyError error) {
                 Log.d("DEBUG","Erreur !"+error.getMessage());
                 try {
-                    JSONObject messageErreur = new JSONObject(error.getMessage());
-                    context.handleErrorPayment(messageErreur.getString("error_message"));
+                    if(error.getMessage()!=null) {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleError(messageErreur.getString("error_message"));
+                    }
+                    else{
+                        context.handleError("Unknown Error...");
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -249,7 +318,18 @@ public class OrderRepository {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("DEBUG","That didn't work! " + error.getMessage());
+                Log.d("DEBUG","Erreur !"+error.getMessage());
+                try {
+                    if(error.getMessage()!=null) {
+                        JSONObject messageErreur = new JSONObject(error.getMessage());
+                        context.handleErrorBook(messageErreur.getString("error_message"));
+                    }
+                    else{
+                        context.handleErrorBook("Unknown Error...");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }) {
             @Override

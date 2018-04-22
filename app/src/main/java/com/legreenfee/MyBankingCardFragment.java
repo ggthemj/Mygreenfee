@@ -81,9 +81,6 @@ public class MyBankingCardFragment extends Fragment {
 
         final ImageView imagev = (ImageView) getView().findViewById(R.id.CB);
         imagev.setVisibility(View.VISIBLE);
-
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_order = sharedPref.getString("order_id", "false");
     }
 
     public void handleSuccess(CardData carddata){
@@ -110,24 +107,6 @@ public class MyBankingCardFragment extends Fragment {
 
         final ProgressBar simpleProgressBar = (ProgressBar) getView().findViewById(R.id.simpleProgressBar);
         simpleProgressBar.setVisibility(View.GONE);
-
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String is_order = sharedPref.getString("order_id", "false");
-        String mail = sharedPref.getString("user_email", "false");
-    }
-
-    public void handleSuccessPayment(CardData carddata){
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("order_id", "false");
-
-        if(getContext() instanceof HomeMapsActivity){
-
-        }
-        else{
-
-        }
-
     }
 
     public void handleError(String s){
@@ -142,18 +121,6 @@ public class MyBankingCardFragment extends Fragment {
             OrderActivity hom = (OrderActivity) getContext();
             hom.displayAddPaymentCard();
         }
-    }
-
-    public void handleErrorPay(String s){
-        Toast toast = Toast.makeText(getContext(), s, Toast.LENGTH_LONG);
-        toast.show();
-
-        SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("order_id", "false");
-
-        Intent intent = new Intent(getContext(), HomeMapsActivity.class);
-        startActivity(intent);
     }
 
     public void handleValidation(){

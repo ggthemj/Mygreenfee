@@ -1,7 +1,9 @@
 package com.legreenfee;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -184,7 +186,7 @@ public class ConnectMemberFragment extends Fragment {
         if(getContext() instanceof OrderActivity) {
             SharedPreferences sharedPref = getContext().getSharedPreferences("appData", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString(getString(R.string.order_id), orderId);
+            editor.putString("order_id", orderId);
             editor.commit();
 
             OrderActivity ord = (OrderActivity) getContext();

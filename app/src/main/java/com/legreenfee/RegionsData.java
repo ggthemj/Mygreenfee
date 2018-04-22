@@ -18,7 +18,7 @@ public class RegionsData {
             this.regionsData = new RegionData[reponseJSON.length()];
             for (int i = 0 ; i < reponseJSON.length() ;i++){
                 this.regionsData[i] = new RegionData(reponseJSON.getJSONObject(i));
-                Log.d("DEBUG","Région "+this.regionsData[i].name+" ajouté");
+                //Log.d("DEBUG","Région "+this.regionsData[i].name+" ajouté");
             }
         } catch (JSONException e) {
             e.printStackTrace();

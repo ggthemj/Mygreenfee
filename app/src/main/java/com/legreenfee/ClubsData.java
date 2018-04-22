@@ -17,7 +17,7 @@ public class ClubsData {
             this.clubsdata = new ClubData[reponseJSON.length()];
             for (int i = 0 ; i < reponseJSON.length() ;i++){
                 this.clubsdata[i] = new ClubData(reponseJSON.getJSONObject(i));
-                Log.d("DEBUG","Club "+this.clubsdata[i].name+" ajouté");
+                //Log.d("DEBUG","Club "+this.clubsdata[i].name+" ajouté");
             }
         } catch (JSONException e) {
             e.printStackTrace();

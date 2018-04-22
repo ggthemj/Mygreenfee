@@ -102,16 +102,6 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/cgr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/helveticaneue"
-                android:text="@string/cgr"
-                android:textAlignment="center"
-                android:textSize="14sp" />
-
-            <TextView
                 android:id="@+id/creaCompte"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

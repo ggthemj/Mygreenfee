@@ -28,6 +28,6 @@ public class RegionData {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("DEBUG","J'ajoute la région : "+ this.name);
+        //Log.d("DEBUG","J'ajoute la région : "+ this.name);
     }
 }

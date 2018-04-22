@@ -101,7 +101,7 @@ public class ClubData implements Parcelable{
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d("DEBUG","J'ajoute le club : "+ this.name);
+        //Log.d("DEBUG","J'ajoute le club : "+ this.name);
     }
 
 

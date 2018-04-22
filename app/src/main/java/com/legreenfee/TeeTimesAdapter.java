@@ -118,7 +118,6 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
                 String is_logged = sharedPref.getString("user_email", "false");
 
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putString("order_id", "true");
                 editor.putInt("order_arg1", context.getClubId());
                 editor.putString("order_arg2", teeTime.getTee_public_id());
                 editor.putString("order_arg3", teeTime.getTime());
