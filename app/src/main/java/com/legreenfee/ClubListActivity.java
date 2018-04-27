@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -41,7 +42,9 @@ public class ClubListActivity extends AppCompatActivity {
 
         clubsList = (ListView) findViewById(R.id.club_list_view);
 
+
         searchView = findViewById(R.id.club_list_search);
+        searchView.setQueryHint(Html.fromHtml("<font color = #ffffff>" + getResources().getString(R.string.search) + "</font>"));
 
         arrayAdapter = new ClubsAdapter(getApplicationContext());
 
@@ -57,7 +60,7 @@ public class ClubListActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ClubData item = (ClubData) arrayAdapter.getItem(position);
 
-                Intent intent = new Intent(getApplicationContext(), BookingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ClubActivity.class);
                 intent.putExtra("currentClub", item);
                 startActivity(intent);
             }
