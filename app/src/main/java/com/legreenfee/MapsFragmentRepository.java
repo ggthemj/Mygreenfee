@@ -3,6 +3,7 @@ package com.legreenfee;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -43,6 +44,10 @@ public class MapsFragmentRepository {
 
         String url = clubListContext.getResources().getString(R.string.URL_getAllClubs);
         StringRequest stringRequest = updateClubs(url);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }
 
@@ -55,6 +60,10 @@ public class MapsFragmentRepository {
         RequestQueue queue = Volley.newRequestQueue(activityContext);
         String url = activityContext.getResources().getString(R.string.URL_getAllClubs);
         StringRequest stringRequest = updateClubs(url);
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(stringRequest);
     }
 
