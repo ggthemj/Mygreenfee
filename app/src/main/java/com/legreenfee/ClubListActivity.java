@@ -82,13 +82,16 @@ public class ClubListActivity extends AppCompatActivity {
                     }
                 } else {
                     List<ClubData> newlist = new ArrayList<ClubData>();
-                    for (ClubData clubData : listClub) {
-                        if (clubData.name.toLowerCase(Locale.getDefault()).contains(newText)) {
-                            newlist.add(clubData);
+                    if (listClub != null) {
+                        for (ClubData clubData : listClub) {
+                            if (clubData.name.toLowerCase(Locale.getDefault()).contains(newText)) {
+                                newlist.add(clubData);
+                            }
                         }
+                        arrayAdapter.clear();
+                        arrayAdapter.addAll(newlist);
                     }
-                    arrayAdapter.clear();
-                    arrayAdapter.addAll(newlist);
+
                 }
                 arrayAdapter.notifyDataSetChanged();
                 return true;

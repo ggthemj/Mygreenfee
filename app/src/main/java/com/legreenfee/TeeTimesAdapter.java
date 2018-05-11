@@ -88,15 +88,22 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
         }
 
         BookingActivity context = (BookingActivity) getContext();
+        int reduction = dataModel.getReduction();
+
+        if (context.getClubCard() != null && reduction < context.getClubCard().getDiscount()) {
+            reduction = context.getClubCard().getDiscount();
+        }
+
         viewHolder.slots_free.setText(String.valueOf(dataModel.getSlots_free()) + " " + getContext().getResources().getText(R.string.slotsFree));
         viewHolder.time.setText(String.valueOf(dataModel.getTime()));
         DecimalFormat df = new DecimalFormat("#.00");
-        String moneyString = df.format(dataModel.getSale_price() * context.getNbPlayers());
+        String moneyString = df.format((dataModel.getSale_price() - dataModel.getSale_price() * reduction / 100) * context.getNbPlayers());
+
         viewHolder.sale_price.setText(moneyString + "€");
         viewHolder.book.setTag(position);
-        if (dataModel.getReduction() != 0) {
+        if (reduction != 0) {
             viewHolder.reduction.setVisibility(View.VISIBLE);
-            viewHolder.reduction.setText("-" + dataModel.getReduction() + "%");
+            viewHolder.reduction.setText("-" + reduction + "%");
             viewHolder.etiquette.setVisibility(View.VISIBLE);
         }
         else {

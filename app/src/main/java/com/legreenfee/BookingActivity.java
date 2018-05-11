@@ -34,6 +34,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private TextView titleView;
     private TextView dateView;
     private Spinner coursesSpinner;
+    private Spinner clubCardsSpinner;
     private CoursesRepository coursesRepo;
     private Button minusButton;
     private Button plusButton;
@@ -44,6 +45,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     private ArrayAdapter<TeeTime> arrayAdapter;
 
     private int clubId;
+    private String courseId;
     private String teeID;
     private String dateSelected;
     private ClubData club;
@@ -53,6 +55,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     ProgressBar progressBar;
     private TextView tv;
     private boolean popHasTobeCreated = true;
+    private int clubCardId;
+    private ClubCard clubCard;
 
 
     @Override
@@ -71,6 +75,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             // Récupération des parcours du club
             this.coursesRepo = new CoursesRepository(lang, this);
             coursesRepo.update(lang, club);
+            coursesRepo.updateClubCards(lang, club);
 
             // Titre de l'écran
             titleView = (TextView) findViewById(R.id.bookingTitleView);
@@ -91,6 +96,10 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             // Courses
             coursesSpinner = (Spinner) findViewById(R.id.bookingCoursesSpinner);
             coursesSpinner.setOnItemSelectedListener(this);
+
+            // Cards
+            clubCardsSpinner = (Spinner) findViewById(R.id.bookingCardsSpinner);
+            clubCardsSpinner.setOnItemSelectedListener(this);
 
             // number of players
             plusButton = (Button) findViewById(R.id.bookingPlusButton);
@@ -223,7 +232,25 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         coursesSpinner.setAdapter(dataAdapter);
 
+
+
     }
+    public void updateClubCard() {
+        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+        String lang = sharedPref.getString("language", "EN");
+
+        ArrayAdapter<ClubCard> dataAdapter = new ArrayAdapter<ClubCard>(this, R.layout.spinner_item_booking, coursesRepo.getClubCards());
+        dataAdapter.setDropDownViewResource(R.layout.spinner_item);
+        clubCardsSpinner.setAdapter(dataAdapter);
+        if (dataAdapter == null) {
+            clubCardsSpinner.setVisibility(View.INVISIBLE);
+        }
+        else {
+            clubCardsSpinner.setVisibility(View.VISIBLE);
+        }
+
+    }
+
 
     public void updateTeeTimes() {
         TeeTime[] teeTimeArray = coursesRepo.getTeeTimes();
@@ -264,23 +291,36 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        progressBar.setVisibility(View.VISIBLE);
-        if (arrayAdapter != null) {
-            arrayAdapter.clear();
-            arrayAdapter.notifyDataSetChanged();
+
+        Spinner spinner = (Spinner) parent;
+        if(spinner.getId() == R.id.bookingCoursesSpinner)
+        {
+            progressBar.setVisibility(View.VISIBLE);
+            if (arrayAdapter != null) {
+                arrayAdapter.clear();
+                arrayAdapter.notifyDataSetChanged();
+            }
+            TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
+            //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
+            teeID = item.getId();
+            courseId = item.getCourseId();
+            final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+
+            SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
+            String lang = sharedPref.getString("language", "EN");
+
+            coursesRepo.updateTeeTimes(lang, getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
+            coursesRepo.updateAd(lang, courseId, getClubId());
         }
-        TeeSpinnerDTO item = (TeeSpinnerDTO) parent.getItemAtPosition(position);
-        //User user = (User) ( (Spinner) findViewById(R.id.user) ).getSelectedItem();
-        teeID = item.getId();
-        String courseId = item.getCourseId();
-        final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+        else if (spinner.getId() == R.id.bookingCardsSpinner)
+        {
+            clubCard = (ClubCard) parent.getItemAtPosition(position);
+            clubCardId = clubCard.getPublic_id();
+            if (arrayAdapter != null) {
+                arrayAdapter.notifyDataSetChanged();
+            }
+        }
 
-        SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
-        String lang = sharedPref.getString("language", "EN");
-
-
-        coursesRepo.updateTeeTimes(lang, getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
-        coursesRepo.updateAd(lang, courseId, getClubId());
     }
 
     @Override
@@ -382,4 +422,27 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         this.club = club;
     }
 
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public int getClubCardId() {
+        return clubCardId;
+    }
+
+    public void setClubCardId(int clubCardId) {
+        this.clubCardId = clubCardId;
+    }
+
+    public ClubCard getClubCard() {
+        return clubCard;
+    }
+
+    public void setClubCard(ClubCard clubCard) {
+        this.clubCard = clubCard;
+    }
 }

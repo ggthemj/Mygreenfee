@@ -33,6 +33,7 @@ public class CoursesRepository {
 
     private Course[] courses;
     private TeeTime[] teeTimes;
+    private ClubCard[] clubCards;
 
     //Constructeur
     public CoursesRepository(final String lang, BookingActivity c){
@@ -78,6 +79,62 @@ public class CoursesRepository {
                                 bookingContext.setClubId(club.public_id);
                             }
                             bookingContext.updateCourses();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("DEBUG","That didn't work! " + error.getMessage());
+            }
+        }) {
+            @Override
+            //protected Map<String, String> getParams() {
+            //    return mParams;
+            //}
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+    }
+
+    public void updateClubCards(final String lan, final ClubData club){
+        Log.d("DEBUG", "Debut de la requete de création des cartes de club");
+
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
+        String url = bookingContext.getResources().getString(R.string.URL_cards) + "&data%5Bclub_id%5D=" + club.public_id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "response : "+response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            JSONArray reponseJSON = json.getJSONArray("discounts");
+                            setClubCards(new ClubCard[reponseJSON.length()]);
+                            for (int i = 0 ; i < reponseJSON.length() ; i++) {
+                                getClubCards()[i] = new ClubCard(reponseJSON.getJSONObject(i));
+                            }
+                            bookingContext.updateClubCard();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -242,6 +299,14 @@ public class CoursesRepository {
 
     public void setCourses(Course[] courses) {
         this.courses = courses;
+    }
+
+    public ClubCard[] getClubCards() {
+        return clubCards;
+    }
+
+    public void setClubCards(ClubCard[] clubCards) {
+        this.clubCards = clubCards;
     }
 
     public TeeTime[] getTeeTimes() {
