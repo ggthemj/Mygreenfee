@@ -89,9 +89,14 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
         BookingActivity context = (BookingActivity) getContext();
         int reduction = dataModel.getReduction();
-
-        if (context.getClubCard() != null && reduction < context.getClubCard().getDiscount()) {
-            reduction = context.getClubCard().getDiscount();
+        if (context.getClubCard() != null && context.getClubCard().getCoursesId() != null) {
+            for (int i = 0; i < context.getClubCard().getCoursesId().size(); i++) {
+                if (reduction < context.getClubCard().getDiscount()
+                        && context.getClubCard().getCoursesId().get(i) == Integer.valueOf(context.getCourseId()).intValue()) {
+                    reduction = context.getClubCard().getDiscount();
+                    break;
+                }
+            }
         }
 
         viewHolder.slots_free.setText(String.valueOf(dataModel.getSlots_free()) + " " + getContext().getResources().getText(R.string.slotsFree));

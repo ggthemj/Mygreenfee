@@ -224,11 +224,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                 for (Tee tee : course.getTees()) {
                     String fmt = getResources().getText(R.string.holes).toString();
 
-                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName() + " " + MessageFormat.format(fmt, course.getLength()) + " - " + tee.getName()));
+                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
                 }
             }
             else {
-                courses.add(new TeeSpinnerDTO(course.getPublic_id(), "0", course.getName() + " - Tee 1"));
+                courses.add(new TeeSpinnerDTO(course.getPublic_id(), "0", course.getName()));
             }
         }
         ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
@@ -244,6 +244,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         ClubCard[] cc = new ClubCard[1];
         cc[0] = new ClubCard();
         cc[0].setDiscount(0);
+        cc[0].setCoursesId(new ArrayList<Integer>());
         cc[0].setName("" + getResources().getText(R.string.clubcard));
 
         int aLen = cc.length;

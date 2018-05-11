@@ -75,7 +75,7 @@ public class CoursesRepository {
                                     rightNow.add(Calendar.DATE, 1);
                                 }
                                 Date today = rightNow.getTime();
-                                updateTeeTimes(lan, club.public_id, df.format(today), "0");
+                  //              updateTeeTimes(lan, club.public_id, df.format(today), "0");
                                 bookingContext.setClubId(club.public_id);
                             }
                             bookingContext.updateCourses();
