@@ -141,5 +141,6 @@
 <string name="title_activity_reservations">ReservationsActivity</string>
 <string name="order_id">order_id</string>
 <string name="search">Search</string>
+<string name="clubcard" >Discount cart</string>
 
 </resources>

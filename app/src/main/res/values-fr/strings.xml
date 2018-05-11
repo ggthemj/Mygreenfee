@@ -140,4 +140,5 @@
     <string name="URL_advertisement">https://mygreenfee.com/api.php?sid=clubs</string>
     <string name="order_id">order_id</string>
     <string name="search">Rechercher</string>
+    <string name="clubcard" >Cartes de réduction</string>
 </resources>

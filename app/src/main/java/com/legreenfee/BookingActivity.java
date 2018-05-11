@@ -21,10 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -163,6 +165,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             arrayAdapter.clear();
             arrayAdapter.notifyDataSetChanged();
         }
+        coursesRepo.updateAd(lang, courseId, getClubId());
         coursesRepo.updateTeeTimes(lang, clubId, dateFormat2.format(calendar.getTime()), teeID);
 
     }
@@ -238,16 +241,24 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     public void updateClubCard() {
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String lang = sharedPref.getString("language", "EN");
+        ClubCard[] cc = new ClubCard[1];
+        cc[0] = new ClubCard();
+        cc[0].setDiscount(0);
+        cc[0].setName("" + getResources().getText(R.string.clubcard));
 
-        ArrayAdapter<ClubCard> dataAdapter = new ArrayAdapter<ClubCard>(this, R.layout.spinner_item_booking, coursesRepo.getClubCards());
+        int aLen = cc.length;
+        int bLen = coursesRepo.getClubCards().length;
+
+        @SuppressWarnings("unchecked")
+        ClubCard[] c = (ClubCard[]) Array.newInstance(cc.getClass().getComponentType(), aLen + bLen);
+        System.arraycopy(cc, 0, c, 0, aLen);
+        System.arraycopy(coursesRepo.getClubCards(), 0, c, aLen, bLen);
+
+        ArrayAdapter<ClubCard> dataAdapter = new ArrayAdapter<ClubCard>(this, R.layout.spinner_item_booking, c);
+
+
         dataAdapter.setDropDownViewResource(R.layout.spinner_item);
         clubCardsSpinner.setAdapter(dataAdapter);
-        if (dataAdapter == null) {
-            clubCardsSpinner.setVisibility(View.INVISIBLE);
-        }
-        else {
-            clubCardsSpinner.setVisibility(View.VISIBLE);
-        }
 
     }
 

@@ -45,6 +45,7 @@ public class ClubListActivity extends AppCompatActivity {
 
         searchView = findViewById(R.id.club_list_search);
         searchView.setQueryHint(Html.fromHtml("<font color = #ffffff>" + getResources().getString(R.string.search) + "</font>"));
+        searchView.setIconified(false);
 
         arrayAdapter = new ClubsAdapter(getApplicationContext());
 
