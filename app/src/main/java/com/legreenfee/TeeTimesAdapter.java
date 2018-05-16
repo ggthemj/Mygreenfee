@@ -89,11 +89,13 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
 
         BookingActivity context = (BookingActivity) getContext();
         int reduction = dataModel.getReduction();
+        boolean hasSale = true;
         if (context.getClubCard() != null && context.getClubCard().getCoursesId() != null) {
             for (int i = 0; i < context.getClubCard().getCoursesId().size(); i++) {
                 if (reduction < context.getClubCard().getDiscount()
                         && context.getClubCard().getCoursesId().get(i) == Integer.valueOf(context.getCourseId()).intValue()) {
                     reduction = context.getClubCard().getDiscount();
+                    hasSale = false;
                     break;
                 }
             }
@@ -102,7 +104,14 @@ public class TeeTimesAdapter extends ArrayAdapter<TeeTime> {
         viewHolder.slots_free.setText(String.valueOf(dataModel.getSlots_free()) + " " + getContext().getResources().getText(R.string.slotsFree));
         viewHolder.time.setText(String.valueOf(dataModel.getTime()));
         DecimalFormat df = new DecimalFormat("#.00");
-        String moneyString = df.format((dataModel.getTotal_price() - dataModel.getTotal_price() * reduction / 100) * context.getNbPlayers());
+        String moneyString;
+        if (hasSale) {
+            moneyString = df.format(dataModel.getSale_price() * context.getNbPlayers());
+        }
+        else
+        {
+            moneyString = df.format((dataModel.getTotal_price() - dataModel.getTotal_price() * reduction / 100) * context.getNbPlayers());
+        }
 
         viewHolder.sale_price.setText(moneyString + "€");
         viewHolder.book.setTag(position);
