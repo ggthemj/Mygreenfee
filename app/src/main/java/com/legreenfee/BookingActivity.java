@@ -23,10 +23,8 @@ import android.widget.TextView;
 
 import java.lang.reflect.Array;
 import java.text.DateFormat;
-import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -216,25 +214,22 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         List<TeeSpinnerDTO> courses = new ArrayList<TeeSpinnerDTO>();
         SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
         String lang = sharedPref.getString("language", "EN");
-
+        final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
         int i = 0;
         for (Course course : coursesRepo.getCourses()) {
             if (course.getTees() != null) {
                 if (i == 0) {
-                    final DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
                     coursesRepo.updateAd(lang, String.valueOf(course.getPublic_id()), getClubId(), dateFormat2.format(calendarSelected.getTime()));
                     i = 1;
                 }
+                int j = 1;
                 for (Tee tee : course.getTees()) {
-                    String fmt = getResources().getText(R.string.holes).toString();
-
-                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
-                    break;
+                    if (j == course.getTees().length) {
+                        courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
+                    }
+                    j++;
                 }
-            }
-            else {
-                courses.add(new TeeSpinnerDTO(course.getPublic_id(), "0", course.getName()));
             }
         }
         ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
@@ -470,5 +465,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     public void setClubCard(ClubCard clubCard) {
         this.clubCard = clubCard;
+    }
+
+    public void addCourse(TeeSpinnerDTO teeSpinnerDTO) {
     }
 }

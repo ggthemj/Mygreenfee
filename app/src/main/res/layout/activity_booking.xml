@@ -228,7 +228,7 @@
                 android:gravity="center"
                 android:inputType="textMultiLine|textPersonName"
                 android:singleLine="true"
-                android:text="texte volontairement trop long pour les biens du test et j'aimerais bien que ça fasse un retour à la ligne"
+                android:text="Tee Times"
                 android:visibility="gone" />
 
             <Button

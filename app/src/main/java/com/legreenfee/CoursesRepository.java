@@ -170,6 +170,59 @@ public class CoursesRepository {
         queue.add(stringRequest);
     }
 
+    public void addTeeTimes(String lang, int clubId, String date, String teeId, final TeeSpinnerDTO teeSpinnerDTO) {
+        Log.d("DEBUG", "Debut de la requete de récupération des tee times");
+
+        //Préparation de la requête
+        RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
+        String stringParams = "&data%5Bclub_id%5D=" + clubId;
+        stringParams += "&data%5Bdate%5D=" + date;
+        if (teeId != null && !"".equals(teeId) && !"0".equals(teeId)) {
+            stringParams += "&data%5Btee_id%5D=" + teeId;
+        }
+        String url = bookingContext.getResources().getString(R.string.URL_teetimes) + stringParams;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("DEBUG", "response : "+response);
+                            bookingContext.addCourse(teeSpinnerDTO);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                setTeeTimes(new TeeTime[0]);
+                Log.d("DEBUG","That didn't work! " + error.getMessage());
+            }
+        }) {
+            @Override
+            //protected Map<String, String> getParams() {
+            //    return mParams;
+            //}
+            public Map<String, String> getHeaders() {
+                return mHeaders;
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError){
+                if(volleyError.networkResponse != null && volleyError.networkResponse.data != null){
+                    VolleyError error = new VolleyError(new String(volleyError.networkResponse.data));
+                    volleyError = error;
+                }
+
+                return volleyError;
+            }
+        };
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(stringRequest);
+
+    }
+
     public void updateTeeTimes(final String lan, int clubId, String date, String teeId){
         Log.d("DEBUG", "Debut de la requete de récupération des tee times");
 
@@ -317,4 +370,5 @@ public class CoursesRepository {
     public void setTeeTimes(TeeTime[] teeTimes) {
         this.teeTimes = teeTimes;
     }
+
 }
