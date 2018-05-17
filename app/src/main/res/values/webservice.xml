@@ -14,7 +14,7 @@
     <string name="URL_addCard" translatable="false">https://mygreenfee.com/api.php?sid=paymentcard/create</string>
     <string name="URL_getReservations" translatable="false">https://mygreenfee.com/api.php?sid=member/reservations</string>
     <string name="URL_order" translatable="false">https://mygreenfee.com/api.php?sid=orders</string>
-    <string name="URL_advertisement">https://mygreenfee.com/api.php?sid=clubs</string>
-    <string name="URL_cards">https://mygreenfee.com/api.php?sid=discounts</string>
+    <string name="URL_advertisement" translatable="false">https://mygreenfee.com/api.php?sid=clubs</string>
+    <string name="URL_cards" translatable="false">https://mygreenfee.com/api.php?sid=discounts</string>
     <string name="CONTENT_LANGUAGE" translatable="false">FR</string>
 </resources>

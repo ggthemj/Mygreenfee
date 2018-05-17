@@ -137,8 +137,8 @@
     <string name="booking_reserver">Réserver</string>
     <string name="info_title">Informations terrains</string>
     <string name="title_activity_reservations">ReservationsActivity</string>
-    <string name="URL_advertisement">https://mygreenfee.com/api.php?sid=clubs</string>
     <string name="order_id">order_id</string>
     <string name="search">Rechercher</string>
     <string name="clubcard" >Cartes de réduction</string>
+    <string name="noTeeTimes">Pas de départ disponible ce jour, veuillez renseigner une autre date ou un autre parcours.</string>
 </resources>

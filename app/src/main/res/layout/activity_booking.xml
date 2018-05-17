@@ -210,15 +210,26 @@
 
             <ListView
                 android:id="@+id/bookingListView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="1dp"
                 android:layout_weight="3"
                 android:addStatesFromChildren="true"
                 tools:layout_editor_absoluteX="8dp"
-                tools:layout_editor_absoluteY="228dp">
+                tools:layout_editor_absoluteY="228dp"></ListView>
 
-            </ListView>
+            <TextView
+                android:id="@+id/bookingTextNoTeetimes"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="textMultiLine|textPersonName"
+                android:singleLine="true"
+                android:text="texte volontairement trop long pour les biens du test et j'aimerais bien que ça fasse un retour à la ligne"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/buttonInfoTerrain"

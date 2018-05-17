@@ -128,8 +128,8 @@
     <string name="booking_reserver">Buchen</string>
     <string name="info_title">Platzinformation</string>
     <string name="title_activity_reservations">Reservierungsübersicht</string>
-    <string name="URL_advertisement">https://mygreenfee.com/api.php?sid=clubs</string>
     <string name="order_id">Buchungsnummer</string>
     <string name="search">Suche</string>
     <string name="clubcard" >Rabattkarte</string>
+    <string name="noTeeTimes">Keine Teetimes verfügbar – bitte wähle ein anderes Datum oder eine andere Golfanlage aus.</string>
 </resources>

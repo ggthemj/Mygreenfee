@@ -142,5 +142,6 @@
 <string name="order_id">order_id</string>
 <string name="search">Search</string>
 <string name="clubcard" >Discount cart</string>
+    <string name="noTeeTimes">Sorry, no tee times available this day, please choose an other date or an other course.</string>
 
 </resources>

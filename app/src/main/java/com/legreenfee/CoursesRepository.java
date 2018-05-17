@@ -234,13 +234,14 @@ public class CoursesRepository {
 
     }
 
-    public void updateAd(final String lan, final String courseId, int clubId) {
+    public void updateAd(final String lan, final String courseId, int clubId, String date) {
         Log.d("DEBUG", "Debut de la requete de récupération des ads");
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
         String stringParams = "/" + clubId + "/ad";
         stringParams += "&data%5Bcourse_id%5D=" + courseId;
+        stringParams += "&data%5Bdate%5D=" + date;
 
 
         String url = bookingContext.getResources().getString(R.string.URL_advertisement) + stringParams;
