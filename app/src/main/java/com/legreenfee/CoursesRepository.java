@@ -231,7 +231,7 @@ public class CoursesRepository {
         String stringParams = "&data%5Bclub_id%5D=" + clubId;
         stringParams += "&data%5Bdate%5D=" + date;
         if (teeId != null && !"".equals(teeId) && !"0".equals(teeId)) {
-            stringParams += "&data%5Btee_id%5D=" + teeId;
+           // stringParams += "&data%5Btee_id%5D=" + teeId;
         }
         String url = bookingContext.getResources().getString(R.string.URL_teetimes) + stringParams;
 

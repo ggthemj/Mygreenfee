@@ -223,12 +223,10 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                     coursesRepo.updateAd(lang, String.valueOf(course.getPublic_id()), getClubId(), dateFormat2.format(calendarSelected.getTime()));
                     i = 1;
                 }
-                int j = 1;
+
                 for (Tee tee : course.getTees()) {
-                    if (j == course.getTees().length) {
-                        courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
-                    }
-                    j++;
+                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
+                    break;
                 }
             }
         }
