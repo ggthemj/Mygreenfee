@@ -21,8 +21,8 @@ android {
         applicationId "com.legreenfee"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 19
-        versionName "2.0.15"
+        versionCode 21
+        versionName "2.0.17"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
