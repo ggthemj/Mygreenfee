@@ -47,7 +47,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     private int clubId;
     private String courseId;
-    private String teeID;
+    private List<String> teeID;
     private String dateSelected;
     private ClubData club;
     private Calendar calendarSelected;
@@ -168,7 +168,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             arrayAdapter.notifyDataSetChanged();
         }
         coursesRepo.updateAd(lang, courseId, getClubId(), dateFormat2.format(calendar.getTime()));
-        coursesRepo.updateTeeTimes(lang, clubId, dateFormat2.format(calendar.getTime()), teeID);
+        coursesRepo.updateTeeTimes(lang, clubId, dateFormat2.format(calendar.getTime()));
 
     }
 
@@ -224,10 +224,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                     i = 1;
                 }
 
+                List<String> ids = new ArrayList<String>();
                 for (Tee tee : course.getTees()) {
-                    courses.add(new TeeSpinnerDTO(course.getPublic_id(), tee.getPublic_id(), course.getName()));
-                    break;
+                    ids.add(tee.getPublic_id());
                 }
+                courses.add(new TeeSpinnerDTO(course.getPublic_id(), ids, course.getName()));
             }
         }
         ArrayAdapter<TeeSpinnerDTO> dataAdapter = new ArrayAdapter<TeeSpinnerDTO>(this, R.layout.spinner_item_booking, courses);
@@ -279,7 +280,14 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             //    arrayAdapter.add(tt.getSlots_free() + " " + getResources().getText(R.string.slotsFree) + tt.getTime() + " " + tt.getSale_price());
             //
             // }
-            arrayAdapter.addAll(teeTimeArray);
+            for (TeeTime teeTime : teeTimeArray) {
+                for (String id : teeID) {
+                    if (teeTime.getTee_public_id().equals(id)) {
+                        arrayAdapter.add(teeTime);
+                        break;
+                    }
+                }
+            }
             arrayAdapter.notifyDataSetChanged();
             progressBar.setVisibility(View.GONE);
         }
@@ -328,7 +336,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
             SharedPreferences sharedPref = getSharedPreferences("appData", Context.MODE_PRIVATE);
             String lang = sharedPref.getString("language", "EN");
 
-            coursesRepo.updateTeeTimes(lang, getClubId(), dateFormat2.format(calendarSelected.getTime()), item.getId());
+            coursesRepo.updateTeeTimes(lang, getClubId(), dateFormat2.format(calendarSelected.getTime()));
             coursesRepo.updateAd(lang, courseId, getClubId(), dateFormat2.format(calendarSelected.getTime()));
         }
         else if (spinner.getId() == R.id.bookingCardsSpinner)
@@ -409,11 +417,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         this.dateSelected = dateSelected;
     }
 
-    public String getTeeID() {
+    public List<String> getTeeID() {
         return teeID;
     }
 
-    public void setTeeID(String teeID) {
+    public void setTeeID(List<String> teeID) {
         this.teeID = teeID;
     }
 

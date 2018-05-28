@@ -223,16 +223,14 @@ public class CoursesRepository {
 
     }
 
-    public void updateTeeTimes(final String lan, int clubId, String date, String teeId){
+    public void updateTeeTimes(final String lan, int clubId, String date){
         Log.d("DEBUG", "Debut de la requete de récupération des tee times");
 
         //Préparation de la requête
         RequestQueue queue = Volley.newRequestQueue(this.bookingContext);
         String stringParams = "&data%5Bclub_id%5D=" + clubId;
         stringParams += "&data%5Bdate%5D=" + date;
-        if (teeId != null && !"".equals(teeId) && !"0".equals(teeId)) {
-           // stringParams += "&data%5Btee_id%5D=" + teeId;
-        }
+
         String url = bookingContext.getResources().getString(R.string.URL_teetimes) + stringParams;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,

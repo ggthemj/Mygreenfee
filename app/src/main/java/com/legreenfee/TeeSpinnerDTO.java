@@ -1,28 +1,30 @@
 package com.legreenfee;
 
+import java.util.List;
+
 /**
  * Created by Julien on 13/01/2018.
  */
 
 public class TeeSpinnerDTO {
 
-    private String id;
+    private List<String> id;
 
     private String name;
 
     private String courseId;
 
-    public TeeSpinnerDTO(int courseId, String teeId, String message) {
+    public TeeSpinnerDTO(int courseId, List<String> teeId, String message) {
         this.id = teeId;
         this.name = message;
         this.courseId = String.valueOf(courseId);
     }
 
-    public String getId() {
+    public List<String> getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(List<String> id) {
         this.id = id;
     }
 
